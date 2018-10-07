@@ -20,6 +20,5 @@ build
 # other
 eclipse
 run
-target
-!target/
+
 demoApplication.log
