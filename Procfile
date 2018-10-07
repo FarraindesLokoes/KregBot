@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* ArchBot
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.nukeologist.archbot.ArchBot
