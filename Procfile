@@ -1,1 +1,1 @@
-worker:work
+web: java
