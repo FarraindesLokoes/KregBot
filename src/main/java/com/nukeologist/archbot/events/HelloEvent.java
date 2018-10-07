@@ -1,0 +1,23 @@
+package com.nukeologist.archbot.events;
+
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
+
+public class HelloEvent extends ListenerAdapter {
+
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+
+            String[] received = event.getMessage().getContentRaw().split("\\s+");
+            if (received[0] != null && !event.getMember().getUser().isBot()) {
+                if (received[0].equalsIgnoreCase("viado")) {
+                    event.getChannel().sendMessage("viado e voce, porra").queue();
+                } else if (received[0].equalsIgnoreCase("fdp")) {
+                    event.getChannel().sendMessage("fim da putaria, pessoal").queue();
+                } else if (received[0].equalsIgnoreCase("bolsonaro")) {
+                    event.getChannel().sendMessage("O MITO").queue();
+                }
+            }
+
+    }
+}
