@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT target/ArchBot.jar
+web: java $JAVA_OPTS -Dserver.port=$PORT com.nukeologist.archbot.ArchBot
