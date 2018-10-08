@@ -21,6 +21,6 @@ public class HelpCommand {
     }
 
     public static void executePrivate(PrivateMessageReceivedEvent event, String[] toDo){
-
+        if(toDo.length == 1) event.getChannel().sendMessage("ArchBot: The Return \n!help: Shows you this\n!roll: Rolls a dice").queue();
     }
 }
