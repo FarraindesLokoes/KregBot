@@ -7,6 +7,7 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,12 @@ public class ArchBot {
 
     private static JDA bot;
 
-    public static void main (String[] args) throws LoginException, InterruptedException {
+    public static void main (String[] args) {
+        SpringApplication.run(ArchBot.class, args);
+        Discord ();
+    }
+
+    private static void Discord(){
         try {
 
             bot = new JDABuilder(AccountType.BOT).setToken(Constants.discordToken).setGame(Game.playing("!help for help")).build().awaitReady();
