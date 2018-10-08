@@ -9,8 +9,7 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-//import org.springframework.context.annotation.Bean;
+
 
 import javax.security.auth.login.LoginException;
 
@@ -38,15 +37,5 @@ public class ArchBot {
             e.printStackTrace();
         }
     }
-    /*
-    @Bean
-    public EmbeddedServletContainerCustomizer containerCustomizer() {
-        return (container -> {
-            container.setContextPath("");
-            container.setPort(Integer.valueOf(System.getenv("PORT")));
-        });
-    }
 
-
-    */
 }

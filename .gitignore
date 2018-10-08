@@ -18,6 +18,7 @@ build
 .gradle
 
 # other
+target
 eclipse
 run
 
