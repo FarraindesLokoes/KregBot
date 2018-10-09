@@ -16,6 +16,9 @@ public class HelpCommand {
                 case "roll":
                     event.getChannel().sendMessage("Usage: !roll <number><d><number> <space>...").queue();
                     break;
+                case "wolfram":
+                    event.getChannel().sendMessage("Usage: !wolfram <anytext>").queue();
+                    break;
             }
         }
     }

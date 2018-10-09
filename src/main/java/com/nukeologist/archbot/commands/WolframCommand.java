@@ -21,11 +21,6 @@ public class WolframCommand {
 
 
     public static void execute(GuildMessageReceivedEvent event, String[] toDo){
-
-
-    }
-
-    public static void executePrivate(PrivateMessageReceivedEvent event, String[] toDo){
         urlstring = "https://api.wolframalpha.com/v1/simple?appid=" + Constants.wolframAPIKey + "&i=";
         if(toDo.length == 1){
             event.getChannel().sendMessage("Wolfram what?").queue();
@@ -35,10 +30,38 @@ public class WolframCommand {
         eb.setTitle("Wolfram|Alpha");
         eb.setDescription("");
         eb.setTimestamp(Instant.now());
+        eb.setAuthor(event.getAuthor().getName());
         String temp = "";
         for(String welp: toDo){
             if(!welp.equals("wolfram")){
-                temp = temp + " " + welp;
+                temp = temp + welp + " ";
+            }
+        }
+
+        urlstring = urlstring + UriUtils.encodeQuery(temp, "UTF-8");
+        MessageBuilder message = new MessageBuilder();
+        eb.setImage(urlstring);
+        message.setEmbed(eb.build());
+        event.getChannel().sendMessage(message.build()).queue();
+    }
+
+
+
+
+    public static void executePrivate(PrivateMessageReceivedEvent event, String[] toDo){
+        urlstring = "https://api.wolframalpha.com/v1/simple?appid=" + Constants.wolframAPIKey + "&i=";
+        if(toDo.length == 1){
+            event.getChannel().sendMessage("Wolfram ...?").queue();
+            return;
+        }
+
+        eb.setTitle("Wolfram|Alpha");
+        eb.setDescription("");
+        eb.setTimestamp(Instant.now());
+        String temp = "";
+        for(String welp: toDo){
+            if(!welp.equals("wolfram")){
+                temp = temp + welp + " ";
             }
         }
 
