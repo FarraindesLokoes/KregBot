@@ -30,6 +30,9 @@ public class Commands extends CommandEvent {
                 case "help":
                     HelpCommand.executePrivate((PrivateMessageReceivedEvent) event, toDo);
                     break;
+                case "wolfram":
+                    WolframCommand.executePrivate((PrivateMessageReceivedEvent)event, toDo);
+                    break;
             }
         }
 

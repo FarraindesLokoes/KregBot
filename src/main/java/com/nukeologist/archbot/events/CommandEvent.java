@@ -7,7 +7,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public abstract class CommandEvent extends ListenerAdapter {
 
-    protected String prefix = "!"; //may change later
+    public String prefix = "!"; //may change later
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
@@ -30,9 +30,10 @@ public abstract class CommandEvent extends ListenerAdapter {
             StringBuilder sb = new StringBuilder(received[0]);
             sb.deleteCharAt(0); //we delete the prefix
             received[0] = sb.toString();
-            doCommand(event, received);
+
 
         }
+        doCommand(event, received);
     }
 
     protected abstract void doCommand(Event event, String[] toDo);
