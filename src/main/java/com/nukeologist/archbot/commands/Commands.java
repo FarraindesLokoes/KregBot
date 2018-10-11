@@ -11,27 +11,29 @@ public class Commands extends CommandEvent {
     @Override
     protected void doCommand(Event event, String[] toDo) {
         if(event instanceof GuildMessageReceivedEvent) {
+            GuildMessageReceivedEvent newEvent = (GuildMessageReceivedEvent) event;
             switch (toDo[0]) {
                 case "roll":
-                    RollCommand.execute((GuildMessageReceivedEvent) event, toDo);
+                    RollCommand.execute(newEvent, toDo);
                     break;
                 case "help":
-                    HelpCommand.execute((GuildMessageReceivedEvent) event, toDo);
+                    HelpCommand.execute(newEvent, toDo);
                     break;
                 case "wolfram":
-                    WolframCommand.execute((GuildMessageReceivedEvent)event, toDo);
+                    WolframCommand.execute(newEvent, toDo);
                     break;
             }
         }else if(event instanceof PrivateMessageReceivedEvent){
+            PrivateMessageReceivedEvent newEvent = (PrivateMessageReceivedEvent) event;
             switch (toDo[0]) {
                 case "roll":
-                    RollCommand.executePrivate((PrivateMessageReceivedEvent) event, toDo);
+                    RollCommand.executePrivate(newEvent, toDo);
                     break;
                 case "help":
-                    HelpCommand.executePrivate((PrivateMessageReceivedEvent) event, toDo);
+                    HelpCommand.executePrivate(newEvent, toDo);
                     break;
                 case "wolfram":
-                    WolframCommand.executePrivate((PrivateMessageReceivedEvent)event, toDo);
+                    WolframCommand.executePrivate(newEvent, toDo);
                     break;
             }
         }

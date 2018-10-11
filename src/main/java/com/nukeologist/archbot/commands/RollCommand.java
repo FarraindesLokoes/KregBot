@@ -16,7 +16,7 @@ public  class RollCommand  {
         String name = event.getMember().getNickname();
         if(name ==null)name = event.getMember().getUser().getName();
         if(toDo.length == 1) {
-            util = doSums(1, 6);
+            util = doSums(1, 20);
             event.getChannel().sendMessage(name + " rolled " + util.numString + " =" + util.num).queue();
         }else if(toDo.length>1){
             event.getChannel().sendMessage(name + " rolled " + parseRolls(toDo)).queue();

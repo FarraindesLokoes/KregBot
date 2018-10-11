@@ -26,7 +26,7 @@ public class ArchBot {
     private static void Discord(){
         try {
 
-            bot = new JDABuilder(AccountType.BOT).setToken(Constants.discordToken).setGame(Game.playing("with your mother")).build().awaitReady();
+            bot = new JDABuilder(AccountType.BOT).setToken(Constants.discordToken).setGame(Game.playing("say !help")).build().awaitReady();
             bot.addEventListener(new HelloEvent());
             bot.addEventListener(new Commands());
 

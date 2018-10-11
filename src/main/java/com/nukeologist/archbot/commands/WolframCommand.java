@@ -65,7 +65,8 @@ public class WolframCommand {
             }
         }
 
-        urlstring = urlstring + UriUtils.encodeQuery(temp, "UTF-8");
+        //urlstring = urlstring + UriUtils.encodeQuery(temp, "UTF-8");
+        urlstring = urlstring + UriUtils.encode(temp, "UTF-8");
         MessageBuilder message = new MessageBuilder();
         eb.setImage(urlstring);
         message.setEmbed(eb.build());

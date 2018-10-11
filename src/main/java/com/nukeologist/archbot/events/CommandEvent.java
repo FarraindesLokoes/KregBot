@@ -26,7 +26,7 @@ public abstract class CommandEvent extends ListenerAdapter {
     public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
         String[] received = event.getMessage().getContentRaw().split("\\s+");
         if(received[0].startsWith(prefix)) {
-            event.getChannel().sendMessage("You do not need a prefix.\n");
+            event.getChannel().sendMessage("You do not need a prefix.\n").queue();
             StringBuilder sb = new StringBuilder(received[0]);
             sb.deleteCharAt(0); //we delete the prefix
             received[0] = sb.toString();
