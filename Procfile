@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes/com/farraindeslokoes/kregbot KregBot
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/KregBot-1.0-SNAPSHOT
