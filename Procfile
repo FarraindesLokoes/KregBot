@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes:target/dependency/* kregbot
+web: java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes/com/farraindeslokoes/kregbot KregBot
