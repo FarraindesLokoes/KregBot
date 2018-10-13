@@ -1,4 +1,4 @@
-package com.nukeologist.archbot.events;
+package com.farraindeslokoes.kregbot.events;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;

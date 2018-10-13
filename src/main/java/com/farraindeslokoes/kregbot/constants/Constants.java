@@ -1,4 +1,4 @@
-package com.nukeologist.archbot.constants;
+package com.farraindeslokoes.kregbot.constants;
 
 public class Constants {
 

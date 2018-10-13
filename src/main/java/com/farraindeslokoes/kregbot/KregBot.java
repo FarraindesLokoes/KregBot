@@ -1,8 +1,8 @@
-package com.nukeologist.archbot;
+package com.farraindeslokoes.kregbot;
 
-import com.nukeologist.archbot.commands.Commands;
-import com.nukeologist.archbot.constants.Constants;
-import com.nukeologist.archbot.events.HelloEvent;
+import com.farraindeslokoes.kregbot.commands.Commands;
+import com.farraindeslokoes.kregbot.constants.Constants;
+import com.farraindeslokoes.kregbot.events.HelloEvent;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -14,12 +14,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import javax.security.auth.login.LoginException;
 
 @SpringBootApplication
-public class ArchBot {
+public class KregBot {
 
     private static JDA bot;
 
     public static void main (String[] args) {
-        SpringApplication.run(ArchBot.class, args);
+        SpringApplication.run(KregBot.class, args);
         Discord ();
     }
 

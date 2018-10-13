@@ -1,4 +1,4 @@
-package com.nukeologist.archbot.util;
+package com.farraindeslokoes.kregbot.util;
 
 public class RollStringUtil {
     public int num;

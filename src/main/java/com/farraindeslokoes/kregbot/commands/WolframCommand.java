@@ -1,6 +1,6 @@
-package com.nukeologist.archbot.commands;
+package com.farraindeslokoes.kregbot.commands;
 
-import com.nukeologist.archbot.constants.Constants;
+import com.farraindeslokoes.kregbot.constants.Constants;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -65,8 +65,9 @@ public class WolframCommand {
             }
         }
 
-        //urlstring = urlstring + UriUtils.encodeQuery(temp, "UTF-8");
-        urlstring = urlstring + UriUtils.encode(temp, "UTF-8");
+
+        //urlstring = urlstring + UriUtils.encode(temp, "UTF-8");
+        urlstring = urlstring + UriUtils.encodeQueryParam(temp, "UTF-8");
         MessageBuilder message = new MessageBuilder();
         eb.setImage(urlstring);
         message.setEmbed(eb.build());

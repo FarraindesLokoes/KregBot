@@ -1,4 +1,4 @@
-package com.nukeologist.archbot.events;
+package com.farraindeslokoes.kregbot.events;
 
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;

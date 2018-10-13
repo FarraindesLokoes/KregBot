@@ -1,4 +1,4 @@
-package com.nukeologist.archbot.commands;
+package com.farraindeslokoes.kregbot.commands;
 
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.priv.PrivateMessageReceivedEvent;
