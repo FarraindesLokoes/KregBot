@@ -10,7 +10,7 @@ public class Commands extends CommandEvent {
 
     @Override
     protected void doCommand(Event event, String[] toDo) {
-        if(event instanceof GuildMessageReceivedEvent) {
+        if(event instanceof GuildMessageReceivedEvent) {    //FOR COMMANDS IN SERVERS
             GuildMessageReceivedEvent newEvent = (GuildMessageReceivedEvent) event;
             switch (toDo[0]) {
                 case "roll":
@@ -23,7 +23,7 @@ public class Commands extends CommandEvent {
                     WolframCommand.execute(newEvent, toDo);
                     break;
             }
-        }else if(event instanceof PrivateMessageReceivedEvent){
+        }else if(event instanceof PrivateMessageReceivedEvent){ //FOR COMMANDS IN DIRECT MESSAGES
             PrivateMessageReceivedEvent newEvent = (PrivateMessageReceivedEvent) event;
             switch (toDo[0]) {
                 case "roll":

@@ -16,6 +16,8 @@ public class HelloEvent extends ListenerAdapter {
                     event.getChannel().sendMessage("fim da putaria, pessoal").queue();
                 } else if (received[0].equalsIgnoreCase("bolsonaro")) {
                     event.getChannel().sendMessage("O MITO").queue();
+                }else if (received[0].equalsIgnoreCase("haddad") ||received[0].equalsIgnoreCase("andrade")) {
+                    event.getChannel().sendMessage("seu fascista").queue();
                 }
             }
 
