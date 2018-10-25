@@ -22,6 +22,11 @@ public class Commands extends CommandEvent {
                 case "wolfram":
                     WolframCommand.execute(newEvent, toDo);
                     break;
+                case "insult":  //aqui comecam as coisas do danilo
+                    Insult.insult(newEvent, toDo);
+                case "insult add":
+                    Insult.addInsult(newEvent, toDo);
+                    break;
             }
         }else if(event instanceof PrivateMessageReceivedEvent){ //FOR COMMANDS IN DIRECT MESSAGES
             PrivateMessageReceivedEvent newEvent = (PrivateMessageReceivedEvent) event;
@@ -34,6 +39,11 @@ public class Commands extends CommandEvent {
                     break;
                 case "wolfram":
                     WolframCommand.executePrivate(newEvent, toDo);
+                    break;
+                case "insult":  //aqui comecam as coisas do danilo
+                    Insult.insult(newEvent, toDo);
+                case "insult add":
+                    Insult.addInsult(newEvent, toDo);
                     break;
             }
         }
