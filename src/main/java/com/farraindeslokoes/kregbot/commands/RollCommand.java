@@ -31,12 +31,18 @@ public  class RollCommand  {
     private static String parseRolls(String[] toDo){    //returns final string with parentheses and shit
         String finalString = "";
         int total = 0;
-        for(String opa : toDo){
-            if(opa.matches("\\d+d\\d+")){
+        for(String opa : toDo) {
+            if (opa.matches("\\d+d\\d+")) {
                 String temp = opa;
                 int dice = Integer.parseInt(temp.replaceAll("^\\D*?(-?\\d+).*$", "$1")); //parses int before d
                 int diceNumber = Integer.parseInt(opa.replaceFirst("\\d+d", ""));
                 RollStringUtil tempVar = doSums(dice, diceNumber);
+                finalString = finalString + tempVar.numString + " + ";
+                total += tempVar.num;
+            }else if(opa.matches("d\\d+")){
+                String temp = opa;
+                int diceNumber = Integer.parseInt(temp.replaceAll("^\\D*?(-?\\d+).*$", "$1"));
+                RollStringUtil tempVar = doSums(1, diceNumber);
                 finalString = finalString + tempVar.numString + " + ";
                 total += tempVar.num;
             }else if(opa.matches("-?\\d+")) { //checks if there is a whole number in string
