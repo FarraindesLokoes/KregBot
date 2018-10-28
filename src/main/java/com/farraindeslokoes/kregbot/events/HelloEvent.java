@@ -39,8 +39,10 @@ public class HelloEvent extends ListenerAdapter {
                     break;
                 case "andrade":
                     event.getChannel().sendMessage("Fascista").queue();
+                    break;
                 case "haddad":
                     event.getChannel().sendMessage("Fascista").queue();
+                    break;
             }
         }
 

@@ -24,7 +24,7 @@ public class Commands extends CommandEvent {
                     break;
                 case "insult":  //aqui comecam as coisas do danilo
                     Insult.insult(newEvent, toDo);
-                case "insult add":
+                case "insultadd":
                     Insult.addInsult(newEvent, toDo);
                     break;
             }
