@@ -37,6 +37,10 @@ public class HelloEvent extends ListenerAdapter {
                 case "lula":
                     event.getChannel().sendMessage("O Lula ta preso, babaca!").queue();
                     break;
+                case "andrade":
+                    event.getChannel().sendMessage("Fascista").queue();
+                case "haddad":
+                    event.getChannel().sendMessage("Fascista").queue();
             }
         }
 

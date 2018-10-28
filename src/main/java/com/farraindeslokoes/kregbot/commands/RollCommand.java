@@ -39,12 +39,14 @@ public  class RollCommand  {
                 RollStringUtil tempVar = doSums(dice, diceNumber);
                 finalString = finalString + tempVar.numString + " + ";
                 total += tempVar.num;
-            }else if(opa.matches("d\\d+")){
+            } else if (opa.matches("d\\d+")) {
                 String temp = opa;
                 int diceNumber = Integer.parseInt(temp.replaceAll("^\\D*?(-?\\d+).*$", "$1"));
                 RollStringUtil tempVar = doSums(1, diceNumber);
                 finalString = finalString + tempVar.numString + " + ";
                 total += tempVar.num;
+            }else if(opa.matches("\\+")){
+
             }else if(opa.matches("-?\\d+")) { //checks if there is a whole number in string
                 int num = Integer.parseInt(opa);
                 finalString = finalString + " (" + num + ") + ";
