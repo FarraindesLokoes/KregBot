@@ -6,9 +6,29 @@ import net.dv8tion.jda.core.events.message.priv.PrivateMessageReceivedEvent;
 
 import java.util.ArrayList;
 
-public class Insult {
+/** Essa classe contem o comando "insulto" Originalmente, criado por Spicy Ferret.
+ *  Modificado para funcionar melhor no novo sistema por Nukeologist
+ *  Originalmente se chamava apenas "Insult". Modificado para se adequar.
+ *  *Nao sei se funciona - Nukeologist *
+ * @author Spicy Ferret
+ * @author Nukeologist
+ * @since 0.2
+ */
+public class InsultCommand implements ICommand{
 
     private static ArrayList<String> insults = new ArrayList<>();
+
+    @Override
+    public void execute(GuildMessageReceivedEvent event, String[] toDo) {
+        if(toDo[0].equals("insult")) insult(event, toDo);
+        else if(toDo[0].equals("insultadd")) addInsult(event, toDo);
+    }
+
+    @Override
+    public void executePrivate(PrivateMessageReceivedEvent event, String[] toDo) {
+        if(toDo[0].equals("insult")) insult(event, toDo);
+        else if(toDo[0].equals("insultadd")) addInsult(event, toDo);
+    }
 
     //trows a insult
     public static void insult(GuildMessageReceivedEvent event, String[] strings) {

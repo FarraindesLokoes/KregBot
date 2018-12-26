@@ -9,18 +9,20 @@ import org.springframework.web.util.UriUtils;
 
 import java.time.Instant;
 
-
-
-
-
-public class WolframCommand {
+/** Essa classe contem o comando "wolfram"
+ *  Modificado para funcionar melhor no novo sistema por Nukeologist
+ *  Usa o Wolfram API para gerar uma imagem relacionada
+ * @author Nukeologist
+ * @since 0.2
+ */
+public class WolframCommand implements ICommand {
 
     private static EmbedBuilder eb = new EmbedBuilder();
     private static String urlstring;
 
 
 
-    public static void execute(GuildMessageReceivedEvent event, String[] toDo){
+    public void execute(GuildMessageReceivedEvent event, String[] toDo){
         urlstring = "https://api.wolframalpha.com/v1/simple?appid=" + Constants.wolframAPIKey + "&i=";
         if(toDo.length == 1){
             event.getChannel().sendMessage("Wolfram what?").queue();
@@ -49,7 +51,7 @@ public class WolframCommand {
 
 
 
-    public static void executePrivate(PrivateMessageReceivedEvent event, String[] toDo){
+    public void executePrivate(PrivateMessageReceivedEvent event, String[] toDo){
         urlstring = "https://api.wolframalpha.com/v1/simple?appid=" + Constants.wolframAPIKey + "&i=";
         if(toDo.length == 1){
             event.getChannel().sendMessage("Wolfram ...?").queue();

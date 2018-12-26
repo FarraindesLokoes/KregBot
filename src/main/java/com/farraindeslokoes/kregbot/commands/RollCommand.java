@@ -7,10 +7,17 @@ import net.dv8tion.jda.core.events.message.priv.PrivateMessageReceivedEvent;
 
 import java.util.Random;
 
-public  class RollCommand  {
+
+/** Essa classe contem o comando "roll"
+ *  Modificado para funcionar melhor no novo sistema por Nukeologist
+ *  Usa Pseudo-Random para jogar dados virtuais de d&d.
+ * @author Nukeologist
+ * @since 0.1
+ */
+public class RollCommand implements ICommand  {
 
 
-    public static void execute(GuildMessageReceivedEvent event, String[] toDo) {
+    public void execute(GuildMessageReceivedEvent event, String[] toDo) {
         Random rand = new Random();
         RollStringUtil util;
         String name = event.getMember().getNickname();
@@ -24,11 +31,12 @@ public  class RollCommand  {
 
     }
 
-    public static void executePrivate(PrivateMessageReceivedEvent event, String[] toDo){
-
+    public void executePrivate(PrivateMessageReceivedEvent event, String[] toDo){
+        //TODO: FIXTHIS
+        event.getChannel().sendMessage("Not yet supported...(DMs)").queue();
     }
 
-    private static String parseRolls(String[] toDo){    //returns final string with parentheses and shit
+    private  String parseRolls(String[] toDo){    //returns final string with parentheses and shit
         String finalString = "";
         int total = 0;
         for(String opa : toDo) {

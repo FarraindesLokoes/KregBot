@@ -4,7 +4,7 @@
   <groupId>com.farraindeslokoes.kregbot</groupId>
   <artifactId>KregBot</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.2</version>
   <name>kregbot</name>
   <url>http://maven.apache.org</url>
     <repositories>
