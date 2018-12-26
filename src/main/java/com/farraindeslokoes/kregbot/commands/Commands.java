@@ -21,7 +21,7 @@ public class Commands extends ListenerAdapter {
     private Map<String, ICommand> commands;
 
     /*Construtor default */
-    public void Commands(){
+    public Commands(){
         prefix = "!";
         commands = new HashMap<>();
         initializeHashMap();
