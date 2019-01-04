@@ -13,7 +13,8 @@ public class HelpCommand implements ICommand {
 
     public void execute(GuildMessageReceivedEvent event, String[] toDo) {
         if(toDo.length == 1){
-            event.getChannel().sendMessage("ArchBot: The Return \n!help: Shows you this\n!roll: Rolls a dice").queue();
+            event.getChannel().sendMessage("ArchBot: The Return \n!help <command> : shows more info\n!roll: Rolls a dice\n" +
+                    "!wolfram: Tries to infer WolframAlpha API\n!insult: Insults...\n !insultadd: adds insult"          ).queue();
         }else if(toDo.length == 2){
             switch (toDo[1]){
                 /*Nuke commands */

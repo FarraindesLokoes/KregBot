@@ -17,7 +17,7 @@ public interface ICommand {
     /**
      * Executa o comando em servidores.
      * @param event o evento de mensagem em servidor.
-     * @param toDo array de strings, veio do comando, porem SEPARADO POR ESPACOS.
+     * @param toDo array de strings, veio do comando, cada indice uma palavra (SEM ESPACOS)
      *
      */
     void execute(GuildMessageReceivedEvent event, String[] toDo);
@@ -25,7 +25,7 @@ public interface ICommand {
     /**
      *  Executa o comando em DM (mensagens privadas)
      * @param event o evento de mensagem privada.
-     * @param toDo array de strings, veio do comando, porem SEPARADO POR ESPACOS.
+     * @param toDo array de strings, veio do comando, cada indice uma palavra (SEM ESPACOS)
      */
     void executePrivate(PrivateMessageReceivedEvent event, String[] toDo);
 }

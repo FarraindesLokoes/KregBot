@@ -40,6 +40,7 @@ public class Commands extends ListenerAdapter {
         commands.put("insultadd", new InsultCommand());
     }
 
+    //Aqui os espacos sao separados. Talvez seja melhor adicionar um boolean para se a pessoa quiser?
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String[] received = event.getMessage().getContentRaw().split("\\s+"); //makes the array be strings separated by spaces
@@ -50,10 +51,9 @@ public class Commands extends ListenerAdapter {
             }
             received[0] = sb.toString();
             findAndExecute(received, event);
-            // doCommand(event, received); //sending the command
         }
     }
-
+    //Mesma coisa, mas privada. Privado nao precisa de Prefixo!!
     @Override
     public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
         String[] received = event.getMessage().getContentRaw().split("\\s+");
@@ -66,7 +66,6 @@ public class Commands extends ListenerAdapter {
 
         }
         findAndExecute(received, event);
-        //doCommand(event, received);
     }
 
     /** Encontra o comando pelo seu identificador(string[0])

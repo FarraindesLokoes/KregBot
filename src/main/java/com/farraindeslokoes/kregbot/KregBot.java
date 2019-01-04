@@ -13,6 +13,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.security.auth.login.LoginException;
 
+/** Classe principal. Ainda ha algumas coisas a fazer, como melhorar as Exceptions...
+ *  Usa Spring para facilitar "compilacao" no host remoto, com uma port especifica.
+ *  EventListeners sao auto-explicatorios.
+ * @author Nukeologist
+ * @since 0.1
+ */
 @SpringBootApplication
 public class KregBot {
 
