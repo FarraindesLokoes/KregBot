@@ -21,10 +21,10 @@ public class RollCommand implements ICommand  {
         Random rand = new Random();
         RollStringUtil util;
         String name = event.getMember().getNickname();
-        if(name ==null)name = event.getMember().getUser().getName();
+        if(name == null)name = event.getMember().getUser().getName();
         if(toDo.length == 1) {
             util = doSums(1, 20);
-            event.getChannel().sendMessage(name + " rolled " + util.numString + " =" + util.num).queue();
+            event.getChannel().sendMessage(name + " rolled " + util.numString + " = " + util.num).queue();
         }else if(toDo.length>1){
             event.getChannel().sendMessage(name + " rolled " + parseRolls(toDo)).queue();
         }
@@ -32,11 +32,18 @@ public class RollCommand implements ICommand  {
     }
 
     public void executePrivate(PrivateMessageReceivedEvent event, String[] toDo){
-        //TODO: FIXTHIS
-        event.getChannel().sendMessage("Not yet supported...(DMs)").queue();
+        Random rand = new Random();
+        RollStringUtil util;
+        //Mesma coisa, porem sem o nome no comeco.
+        if(toDo.length == 1) {
+            util = doSums(1, 20);
+            event.getChannel().sendMessage("You" + " rolled " + util.numString + " = " + util.num).queue();
+        }else if(toDo.length>1){
+            event.getChannel().sendMessage("You" + " rolled " + parseRolls(toDo)).queue();
+        }
     }
 
-    private  String parseRolls(String[] toDo){    //returns final string with parentheses and shit
+    private String parseRolls(String[] toDo){    //returns final string with parentheses and shit
         String finalString = "";
         int total = 0;
         for(String opa : toDo) {
@@ -77,7 +84,7 @@ public class RollCommand implements ICommand  {
 
         resultString = "(";
 
-        for(int i =0; i<numberOfDice; i++){
+        for(int i = 0; i<numberOfDice; i++){
             roll = rand.nextInt(diceType) + 1;
             resultString = resultString + roll + " + ";
             total+= roll;
