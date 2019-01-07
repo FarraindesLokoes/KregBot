@@ -28,4 +28,10 @@ public interface ICommand {
      * @param toDo array de strings, veio do comando, cada indice uma palavra (SEM ESPACOS)
      */
     void executePrivate(PrivateMessageReceivedEvent event, String[] toDo);
+
+    /** @see HelpCommand
+     *
+     * @return string mostrada no comando !help -command-
+     */
+    String getHelpString();
 }

@@ -99,4 +99,9 @@ public class RollCommand implements ICommand  {
         return new RollStringUtil(total, resultString + ")");
 
     }
+
+    @Override
+    public String getHelpString() {
+        return "Usage: !roll <ndN>, where n = dice amount and N = number of sides.";
+    }
 }

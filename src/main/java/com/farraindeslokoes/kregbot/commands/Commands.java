@@ -34,6 +34,7 @@ public class Commands extends ListenerAdapter {
         commands.put("help", new HelpCommand());
         commands.put("wolfram", new WolframCommand());
         commands.put("roll", new RollCommand());
+        commands.put("lmgtfy", new LMGTFYCommand());
 
         /*Comandos do SpicyFerret */
         commands.put("insult", new InsultCommand());
@@ -66,6 +67,10 @@ public class Commands extends ListenerAdapter {
 
         }
         findAndExecute(received, event);
+    }
+
+    public Map<String, ICommand> getHashMap(){
+        return this.commands;
     }
 
     /** Encontra o comando pelo seu identificador(string[0])

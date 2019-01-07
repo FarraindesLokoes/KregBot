@@ -23,18 +23,22 @@ import javax.security.auth.login.LoginException;
 public class KregBot {
 
     private static JDA bot;
+    private static Commands commands;
 
     public static void main (String[] args) {
         SpringApplication.run(KregBot.class, args);
+        commands = new Commands();
         Discord ();
+
     }
 
     private static void Discord(){
         try {
 
             bot = new JDABuilder(AccountType.BOT).setToken(Constants.discordToken).setGame(Game.playing("say !help")).build().awaitReady();
+            //Commands commands = new Commands();
             bot.addEventListener(new HelloEvent());
-            bot.addEventListener(new Commands());
+            bot.addEventListener(commands);
 
 
         }catch (LoginException e) {
@@ -42,6 +46,10 @@ public class KregBot {
         }catch (InterruptedException e){
             e.printStackTrace();
         }
+    }
+
+    public static Commands getCommands(){
+        return commands;
     }
 
 }

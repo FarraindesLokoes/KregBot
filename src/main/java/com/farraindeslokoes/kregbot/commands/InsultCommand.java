@@ -61,4 +61,9 @@ public class InsultCommand implements ICommand{
         insults.add(Compacter.compactString(newInsult));
         event.getChannel().sendMessage("Insult added.").queue();
     }
+
+    @Override
+    public String getHelpString() {
+        return "Insults someone/thing";
+    }
 }

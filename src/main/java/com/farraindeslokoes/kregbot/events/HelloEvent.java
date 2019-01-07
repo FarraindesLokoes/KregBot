@@ -9,10 +9,10 @@ public class HelloEvent extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
 
         String[] received = event.getMessage().getContentRaw().toLowerCase().split("\\s+"); //consertei esta parte.(com tolowercase!)
-        if (received[0] != null && !event.getMember().getUser().isBot()) {  //TODO: FIX SECOND MEMBER OF NULL
+        //if (received[0] != null && !event.getMember().getUser().isBot()) {  //TODO: FIX SECOND MEMBER OF NULL
 
 
-            /**
+            /*
              *          Switch napo e a resposta para tudo!!!!! -bignelli
              */
             //BIGNELI SHIT
@@ -44,7 +44,7 @@ public class HelloEvent extends ListenerAdapter {
                     event.getChannel().sendMessage("Fascista").queue();
                     break;
             }
-        }
+        //}
 
     }
 }

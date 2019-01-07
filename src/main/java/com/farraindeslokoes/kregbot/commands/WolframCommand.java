@@ -16,7 +16,6 @@ import java.time.Instant;
  * @since 0.2
  */
 public class WolframCommand implements ICommand {
-
     private static EmbedBuilder eb = new EmbedBuilder();
     private static String urlstring;
 
@@ -30,7 +29,7 @@ public class WolframCommand implements ICommand {
         }
 
         eb.setTitle("Wolfram|Alpha");
-        eb.setDescription("");
+        eb.setDescription(event.getMessage().getGuild().toString());
         eb.setTimestamp(Instant.now());
         eb.setAuthor(event.getAuthor().getName());
         String temp = "";
@@ -59,7 +58,7 @@ public class WolframCommand implements ICommand {
         }
 
         eb.setTitle("Wolfram|Alpha");
-        eb.setDescription("");
+        eb.setDescription("Private");
         eb.setTimestamp(Instant.now());
         String temp = "";
         for(String welp: toDo){
@@ -75,5 +74,10 @@ public class WolframCommand implements ICommand {
         eb.setImage(urlstring);
         message.setEmbed(eb.build());
         event.getChannel().sendMessage(message.build()).queue();
+    }
+
+    @Override
+    public String getHelpString() {
+        return "Usage: !wolfram <anytext>";
     }
 }
