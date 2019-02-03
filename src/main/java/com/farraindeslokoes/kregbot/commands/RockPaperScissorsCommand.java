@@ -14,21 +14,21 @@ public class RockPaperScissorsCommand implements ICommand {
             } else {//evething is okay
                 byte kregPlay = choosePlay();
                 event.getChannel().sendMessage(toDo[1].charAt(0) == 'r' ? (//player plays rock
-                        kregPlay == 0 ? ("Kreg plays Rock!/n" + "Result: DRAW!") : (
-                                kregPlay == 1 ? ("Kreg plays Paper!/n" + "Result: KREG WINS!") : (
-                                        "Kreg plays Scissors!/n" + "Result: " + event.getAuthor().getName().toUpperCase() + "WINS!"
+                        kregPlay == 0 ? ("Kreg plays Rock!\n" + "Result: DRAW!") : (
+                                kregPlay == 1 ? ("Kreg plays Paper!\n" + "Result: KREG WINS!") : (
+                                        "Kreg plays Scissors!\n" + "Result: " + event.getAuthor().getName().toUpperCase() + " WINS!"
                                 )
                         )
                 ) : (toDo[1].charAt(0) == 'p' ? (//player plays paper
-                        kregPlay == 0 ? ("Kreg plays Scissors!/n" + "Result: " + event.getAuthor().getName().toUpperCase() + "WINS!") : (
-                                kregPlay == 1 ? ("Kreg plays Rock!/n" + "Result: DRAW!") : (
-                                        "Kreg plays Paper!/n" + "Result: KREG WINS!"
+                        kregPlay == 0 ? ("Kreg plays Rock!\n" + "Result: " + event.getAuthor().getName().toUpperCase() + " WINS!") : (
+                                kregPlay == 1 ? ("Kreg plays Paper!\n" + "Result: DRAW!") : (
+                                        "Kreg plays Scissors!\n" + "Result: KREG WINS!"
                                 )
                         )
                 ) : (toDo[1].charAt(0) == 's' ? (//player plays scissors
-                        kregPlay == 0 ? ("Kreg plays Paper!/n" + "Result: KREG WINS!") : (
-                                kregPlay == 1 ? ("Kreg plays Scissors!/n" + "Result: " + event.getAuthor().getName().toUpperCase() + "WINS!") : (
-                                        "Kreg plays Rock!/n" + "Result: DRAW!"
+                        kregPlay == 0 ? ("Kreg plays Rock!\n" + "Result: KREG WINS!") : (
+                                kregPlay == 1 ? ("Kreg plays Paper!\n" + "Result: " + event.getAuthor().getName().toUpperCase() + " WINS!") : (
+                                        "Kreg plays Scissor!\n" + "Result: DRAW!"
                                 )
                         )
                 ): ("Shit happens")))).queue();
