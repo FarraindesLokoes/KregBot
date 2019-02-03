@@ -39,6 +39,7 @@ public class Commands extends ListenerAdapter {
         /*Comandos do SpicyFerret */
         commands.put("insult", new InsultCommand());
         commands.put("insultadd", new InsultCommand());
+        commands.put("rps", new RockPaperScissorsCommand());
     }
 
     //Aqui os espacos sao separados. Talvez seja melhor adicionar um boolean para se a pessoa quiser?
