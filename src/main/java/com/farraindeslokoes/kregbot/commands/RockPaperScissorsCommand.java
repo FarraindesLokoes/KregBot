@@ -7,9 +7,9 @@ import java.util.Random;
 
 public class RockPaperScissorsCommand implements ICommand {
 
-    Random random;
+    private Random random;
 
-    public RockPaperScissorsCommand() {
+    RockPaperScissorsCommand() {
         random = new Random();
     }
 
