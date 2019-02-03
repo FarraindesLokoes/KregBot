@@ -3,7 +3,15 @@ package com.farraindeslokoes.kregbot.commands;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.priv.PrivateMessageReceivedEvent;
 
+import java.util.Random;
+
 public class RockPaperScissorsCommand implements ICommand {
+
+    Random random;
+
+    public RockPaperScissorsCommand() {
+        random = new Random();
+    }
 
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] toDo) {
@@ -78,7 +86,7 @@ public class RockPaperScissorsCommand implements ICommand {
     }
 
     private byte choosePlay() {
-        return (byte) (Math.random() * 3);
+        return (byte) (random.nextInt(3));
     }
 
 }
