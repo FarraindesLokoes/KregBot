@@ -21,10 +21,16 @@ public class HelpCommand implements ICommand {
         return "Use !help <command>";
     }
 
+
+    public HelpCommand() {
+        //this.helpStringCommands = generateHelpString();
+    }
+
     public void execute(GuildMessageReceivedEvent event, String[] toDo) {
         if(toDo.length == 1) {
-            event.getChannel().sendMessage("KregBot: The Return \n!help <command> : shows more info\n!roll: Rolls a dice\n" +
-                    "!wolfram: Tries to infer WolframAlpha API\n!insult: Insults...\n !insultadd: adds insult").queue();
+            /*Temos aqui  */
+            //Lambda :D
+            event.getAuthor().openPrivateChannel().queue(channel -> channel.sendMessage(generateHelpString()).queue());
 
         }else if(toDo.length > 1) {
 
@@ -41,8 +47,7 @@ public class HelpCommand implements ICommand {
 
     public void executePrivate(PrivateMessageReceivedEvent event, String[] toDo){
         if(toDo.length == 1) {
-            event.getChannel().sendMessage("KregBot: The Reckoning \n!help <command> : shows more info\n!roll: Rolls a dice\n" +
-                    "!wolfram: Tries to infer WolframAlpha API\n!insult: Insults...\n !insultadd: adds insult").queue();
+            event.getChannel().sendMessage(generateHelpString()).queue();
 
         }else {
 
@@ -67,4 +72,17 @@ public class HelpCommand implements ICommand {
         }
         return null;
     }
+
+    private String generateHelpString() {
+        String welp = "KregBot: The Bot";
+        Map<String, ICommand> map = KregBot.getCommands().getHashMap();
+        for (Map.Entry<String, ICommand> entry : map.entrySet()) {
+            String key = entry.getKey();
+            ICommand value = entry.getValue();
+            welp += "\n" + key + " = " + value.getHelpString();
+        }
+
+        return welp;
+    }
+
 }
