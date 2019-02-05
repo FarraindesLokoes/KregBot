@@ -46,7 +46,7 @@ public class HelloEvent extends ListenerAdapter {
             int incr = matcher.group(2).equals("++") ? 1 : -1;
             DatabaseUtils.createTableIfNotExists("increments", "( message varchar(45) NOT NULL, number integer NOT NULL DEFAULT '0' );");
             ResultSet set = DatabaseUtils.getResultSet("increments", "number", "message", key );
-
+            if (set == null) return;
             try {
                 if (set.isBeforeFirst()  ) {
                     set.next();
