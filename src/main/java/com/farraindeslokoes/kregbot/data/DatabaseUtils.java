@@ -37,10 +37,10 @@ public class DatabaseUtils {
 
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT " + Collumn1name + " FROM " + tableName + " WHERE " + Collumn2name + " = '" + Collumn2 + "';");
+            ResultSet rs = stmt.executeQuery("SELECT " + Collumn1name + ", " + Collumn2name + " FROM " + tableName + " WHERE " + Collumn2name + " = '" + Collumn2 + "';");
             return rs;
         } catch (SQLException e) {
-            System.out.println("Failed to connect/ connection doesnt exist / database error");
+            System.out.println("Failed to connect/ connection doesnt exist / database error when getting result");
             e.printStackTrace();
         }
         return null;
@@ -53,7 +53,7 @@ public class DatabaseUtils {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("INSERT INTO " + table + "(" + Column1 + ", " + Column2 +  ") VALUES " + row);
         } catch (SQLException e) {
-            System.out.println("Failed to connect/ connection doesnt exist / database error");
+            System.out.println("Failed to connect/ connection doesnt exist / database error when inserting");
             e.printStackTrace();
         }
     }
@@ -65,7 +65,7 @@ public class DatabaseUtils {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("UPDATE " + table + " SET " + updateCollumn + " = " + update + " WHERE " + whereCollumn + " = '" + where + "';");
         } catch (SQLException e) {
-            System.out.println("Failed to connect/ connection doesnt exist / database error");
+            System.out.println("Failed to connect/ connection doesnt exist / database error when updating");
             e.printStackTrace();
         }
     }
