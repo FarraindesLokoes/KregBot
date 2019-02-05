@@ -11,4 +11,5 @@ public class Constants {
 
     /*Util para o comando !wolfram. */
     public static final String wolframAPIKey = System.getenv("WOLFRAM_KEY");
+
 }

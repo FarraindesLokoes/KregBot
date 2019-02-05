@@ -9,20 +9,6 @@ public class HelloEvent extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
 
         String[] received = event.getMessage().getContentRaw().toLowerCase().split("\\s+"); //consertei esta parte.(com tolowercase!)
-        //if (received[0] != null && !event.getMember().getUser().isBot()) {  //TODO: FIX SECOND MEMBER OF NULL
-
-
-            /*
-             *          Switch napo e a resposta para tudo!!!!! -bignelli
-             */
-            //BIGNELI SHIT
-                /*if (received[0].equalsIgnoreCase("viado")) {        //I THINK IF NOT BOT IT IS SHIT
-                    event.getChannel().sendMessage("viado e voce, porra").queue();
-                } else if (received[0].equalsIgnoreCase("fdp")) {
-                    event.getChannel().sendMessage("fim da putaria, pessoal").queue();
-                } else if (received[0].equalsIgnoreCase("bolsonaro")) {
-                    event.getChannel().sendMessage("O MITO").queue();
-                }*/
 
             switch (received[0]) {
                 case "viado":
@@ -44,7 +30,7 @@ public class HelloEvent extends ListenerAdapter {
                     event.getChannel().sendMessage("Fascista").queue();
                     break;
             }
-        //}
+
 
     }
 }
