@@ -1,9 +1,17 @@
 package com.farraindeslokoes.kregbot.events;
 
+import com.farraindeslokoes.kregbot.data.DatabaseUtils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class HelloEvent extends ListenerAdapter {
+
+    private static final Pattern INCREMENT_DECREMENT = Pattern.compile("^(\\S+)(\\+\\+|--)$");
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
@@ -18,18 +26,43 @@ public class HelloEvent extends ListenerAdapter {
                     event.getChannel().sendMessage("fim da putaria, pessoal").queue();
                     break;
                 case "bolsonaro":
-                    event.getChannel().sendMessage("O MITO").queue();
+                    event.getChannel().sendMessage("O MITO presidente").queue();
                     break;
                 case "lula":
                     event.getChannel().sendMessage("O Lula ta preso, babaca!").queue();
                     break;
                 case "andrade":
-                    event.getChannel().sendMessage("Fascista").queue();
-                    break;
                 case "haddad":
                     event.getChannel().sendMessage("Fascista").queue();
                     break;
             }
+        if (!event.getChannelType().isGuild()) return;
+
+        //WARNING: EXPERIMENTAL CODE
+        //TODO: SANITIZE USER INPUT
+        Matcher matcher = INCREMENT_DECREMENT.matcher(received[0]);
+        if (matcher.matches()) {
+            String key = matcher.group(1);
+            int incr = matcher.group(2).equals("++") ? 1 : -1;
+            DatabaseUtils.createTableIfNotExists("increments", "( message varchar(45) NOT NULL, number integer NOT NULL DEFAULT '0' );");
+            ResultSet set = DatabaseUtils.getResultSet("increments", "number", "message", key );
+
+            try {
+                if (set.first() ) {
+
+                int number = set.getInt("number") + incr;
+                DatabaseUtils.updateRowInTable("increments", "message", key, "number", Integer.toString(number) );
+                event.getChannel().sendMessage(key +  " == " + number).queue();
+
+                }else {
+                    DatabaseUtils.insertRowIntoTable("increments", "('" + key + "', " + incr + ");");
+                    event.getChannel().sendMessage(key + " == " + incr).queue();
+                }
+            } catch (SQLException e) {
+                    event.getChannel().sendMessage("SQL problem...").queue();
+                    e.printStackTrace();
+            }
+        }
 
 
     }

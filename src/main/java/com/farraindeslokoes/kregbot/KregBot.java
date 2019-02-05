@@ -31,6 +31,7 @@ public class KregBot {
 
     private static JDA bot;
     private static Commands commands;
+    private static Connection connection;
 
 
 
@@ -49,8 +50,9 @@ public class KregBot {
             bot.addEventListener(commands);
             try {
 
-                Connection connection = DatabaseUtils.getConnection();
+                connection = DatabaseUtils.getConnection();
                 System.out.println("connected");
+
 
             }catch (URISyntaxException e) {
 
@@ -77,6 +79,10 @@ public class KregBot {
 
     public static Commands getCommands(){
         return commands;
+    }
+
+    public static Connection getSQLConnection() {
+        return connection;
     }
 
 }
