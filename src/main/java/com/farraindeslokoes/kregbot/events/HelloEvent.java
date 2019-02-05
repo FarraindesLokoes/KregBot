@@ -55,7 +55,7 @@ public class HelloEvent extends ListenerAdapter {
                     event.getChannel().sendMessage(key +  " == " + number).queue();
                     System.out.println("tried to update table");
                 }else {
-                    DatabaseUtils.insertRowIntoTable("increments", "('" + key + "', " + incr + ");");
+                    DatabaseUtils.insertRowIntoTable("increments", "(" + key + ", " + incr + ");");
                     event.getChannel().sendMessage(key + " == " + incr).queue();
                     System.out.println("created new row");
                 }
