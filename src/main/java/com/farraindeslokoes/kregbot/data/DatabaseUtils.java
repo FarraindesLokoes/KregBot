@@ -37,7 +37,7 @@ public class DatabaseUtils {
 
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT " + Collumn1name + " FROM " + tableName + " WHERE " + Collumn2name + " = '" + Collumn2 + "';");
+            ResultSet rs = stmt.executeQuery("SELECT " + Collumn1name + " FROM " + tableName + " WHERE " + Collumn2name + " = " + Collumn2 + ";");
             return rs;
         } catch (SQLException e) {
             System.out.println("Failed to connect/ connection doesnt exist / database error");
