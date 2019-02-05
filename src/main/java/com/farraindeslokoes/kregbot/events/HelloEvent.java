@@ -49,14 +49,15 @@ public class HelloEvent extends ListenerAdapter {
 
             try {
                 if (set.isBeforeFirst()  ) {
-                //set.next();
-                int number = set.getInt("number") + incr;
-                DatabaseUtils.updateRowInTable("increments", "message", key, "number", Integer.toString(number) );
-                event.getChannel().sendMessage(key +  " == " + number).queue();
-
+                    set.next();
+                    int number = set.getInt("number") + incr;
+                    DatabaseUtils.updateRowInTable("increments", "message", key, "number", Integer.toString(number) );
+                    event.getChannel().sendMessage(key +  " == " + number).queue();
+                    System.out.println("tried to update table");
                 }else {
                     DatabaseUtils.insertRowIntoTable("increments", "('" + key + "', " + incr + ");");
                     event.getChannel().sendMessage(key + " == " + incr).queue();
+                    System.out.println("created new row");
                 }
             } catch (SQLException e) {
                     event.getChannel().sendMessage("SQL problem...").queue();
