@@ -46,12 +46,12 @@ public class DatabaseUtils {
         return null;
     }
 
-    public static void insertRowIntoTable(String table, String row) {
+    public static void insertRowIntoTable(String table, String row, String Column1, String Column2) {
         Connection connection = KregBot.getSQLConnection();
 
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("INSERT INTO " + table + " VALUES " + row);
+            stmt.executeUpdate("INSERT INTO " + table + "(" + Column1 + ", " + Column2 +  ") VALUES " + row);
         } catch (SQLException e) {
             System.out.println("Failed to connect/ connection doesnt exist / database error");
             e.printStackTrace();
