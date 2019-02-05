@@ -48,7 +48,7 @@ public class HelloEvent extends ListenerAdapter {
             ResultSet set = DatabaseUtils.getResultSet("increments", "number", "message", key );
 
             try {
-                if (set.next() ) {
+                if (!set.isBeforeFirst()  ) {
 
                 int number = set.getInt("number") + incr;
                 DatabaseUtils.updateRowInTable("increments", "message", key, "number", Integer.toString(number) );
