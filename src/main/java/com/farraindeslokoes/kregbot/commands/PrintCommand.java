@@ -30,7 +30,7 @@ public class PrintCommand implements ICommand {
     private String makePrintString() {
 
         String SQL = "SELECT message, number FROM increments";
-        String returnString = "Messages\tvalue";
+        String returnString = "Messages\tvalue\n";
         try {
             Connection conn = KregBot.getSQLConnection();
 
