@@ -49,8 +49,9 @@ public class HelloEvent extends ListenerAdapter {
             //getIncrements();
             String SQL = "SELECT message, number " + "FROM increments " + "WHERE message = ?";
 
-            try (Connection conn = KregBot.getSQLConnection();
-                 PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+            try {
+                Connection conn = KregBot.getSQLConnection();
+                PreparedStatement pstmt = conn.prepareStatement(SQL);
 
                 pstmt.setString(1, key);
                 ResultSet rs = pstmt.executeQuery();
@@ -81,14 +82,15 @@ public class HelloEvent extends ListenerAdapter {
 
         String SQL = "SELECT message, number FROM increments";
 
-        try (Connection conn = KregBot.getSQLConnection();
+        try {
+            Connection conn = KregBot.getSQLConnection();
+
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(SQL)) {
+             ResultSet rs = stmt.executeQuery(SQL);
             // display increment information
             displayIncrement(rs);
-
-        } catch (SQLException ex) {
-           ex.printStackTrace();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
         }
     }
 
