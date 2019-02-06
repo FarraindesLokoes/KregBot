@@ -58,11 +58,14 @@ public class HelloEvent extends ListenerAdapter {
                 while (rs.next()) {
 
                     if (rs.getString("message").equals(key)) {
-                        int newNumber = rs.getInt("number") + incr;
-                        updateDabase(key, newNumber);
+                        incr = rs.getInt("number") + incr;
+
+                        updateDabase(key, incr);
                     }
                 }
                 insertToDatabase(key, incr);
+                event.getChannel().sendMessage(key + " == " + incr ).queue();
+
                 getIncrements();
             } catch (SQLException ex) {
                 System.out.println("failed to query");
@@ -92,7 +95,7 @@ public class HelloEvent extends ListenerAdapter {
     private void displayIncrement(ResultSet rs) throws SQLException {
         while (rs.next()) {
             System.out.println(rs.getString("message") + "\t"
-                    + rs.getInt("first_name"));
+                    + rs.getInt("number"));
 
         }
     }
