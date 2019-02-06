@@ -48,9 +48,9 @@ public class HelloEvent extends ListenerAdapter {
             ResultSet set = DatabaseUtils.getResultSet("increments", "number", "message", key );
             if (set == null) return;
             try {
-                if (set.isBeforeFirst()  ) {
-                    set.next();
-                    int number = set.getInt("number") + incr;
+                if ( set.next() ) {
+                    
+                    int number = set.getInt(1) + incr;
                     DatabaseUtils.updateRowInTable("increments", "message", key, "number", Integer.toString(number) );
                     event.getChannel().sendMessage(key +  " == " + number).queue();
                     System.out.println("tried to update table");
