@@ -101,7 +101,7 @@ public class HelloEvent extends ListenerAdapter {
         String SQL = "INSERT INTO increments(message, number) " + "VALUES(?,?) ON CONFLICT DO NOTHING";
 
         Connection conn = KregBot.getSQLConnection();
-        PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pstmt = conn.prepareStatement(SQL);
 
         pstmt.setString(1, message);
         pstmt.setInt(2, number);
