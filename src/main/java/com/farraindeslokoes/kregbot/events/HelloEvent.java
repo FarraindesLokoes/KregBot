@@ -1,7 +1,7 @@
 package com.farraindeslokoes.kregbot.events;
 
 import com.farraindeslokoes.kregbot.KregBot;
-import com.farraindeslokoes.kregbot.data.DatabaseUtils;
+import com.farraindeslokoes.kregbot.util.DatabaseUtils;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 

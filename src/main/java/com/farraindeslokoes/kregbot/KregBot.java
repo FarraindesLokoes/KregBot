@@ -2,7 +2,7 @@ package com.farraindeslokoes.kregbot;
 
 import com.farraindeslokoes.kregbot.commands.Commands;
 import com.farraindeslokoes.kregbot.constants.Constants;
-import com.farraindeslokoes.kregbot.data.DatabaseUtils;
+import com.farraindeslokoes.kregbot.util.DatabaseUtils;
 import com.farraindeslokoes.kregbot.events.HelloEvent;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
