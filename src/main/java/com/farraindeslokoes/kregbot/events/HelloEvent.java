@@ -15,7 +15,7 @@ public class HelloEvent extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-
+        if (event.getAuthor().isBot()) return;
         String[] received = event.getMessage().getContentRaw().toLowerCase().split("\\s+"); //consertei esta parte.(com tolowercase!)
 
             switch (received[0]) {
