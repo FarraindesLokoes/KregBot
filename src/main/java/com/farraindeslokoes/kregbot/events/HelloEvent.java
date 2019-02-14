@@ -2,10 +2,13 @@ package com.farraindeslokoes.kregbot.events;
 
 import com.farraindeslokoes.kregbot.KregBot;
 import com.farraindeslokoes.kregbot.util.DatabaseUtils;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.sql.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,8 +77,34 @@ public class HelloEvent extends ListenerAdapter {
             }
 
         }
+        if (event.getChannelType() == ChannelType.TEXT) {
+
+            List<Permission> perms = event.getMember().getPermissions();
+
+            if (perms.contains(Permission.ADMINISTRATOR)) {
+                if (received.length > 2 && received[1].equals("==")) {
+
+                    if (isNumeric(received[2])) {
+                        //now we set the number in the database.
+                        try {
+                            insertToDatabase(received[0], Integer.parseInt(received[2]));
+                            updateDabase(received[0], Integer.parseInt(received[2]));
+                            event.getChannel().sendMessage(received[0] + " == " + received[2]).queue();
+                        } catch (SQLException e) {
+                            event.getChannel().sendMessage("SQL error ocurred").queue();
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+        }
 
 
+    }
+
+    private static boolean isNumeric(String str) {
+        return str.chars().allMatch( Character::isDigit );
     }
 
     public void getIncrements() {
