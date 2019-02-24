@@ -78,7 +78,7 @@ public class HelloEvent extends ListenerAdapter {
             }
 
         } else if (received.length > 1) {
-            Matcher matcher2 = INCREMENT_DECREMENT.matcher(received[0] + " " +received[1]);
+            Matcher matcher2 = INCREMENT_DECREMENT.matcher(received[0] + received[1]);
             if (matcher2.matches()) {
                 String key = matcher2.group(1);
                 int incr = matcher2.group(2).equals("++") ? 1 : -1;
