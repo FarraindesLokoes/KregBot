@@ -45,6 +45,7 @@ public class HelloEvent extends ListenerAdapter {
         //TODO: SANITIZE USER INPUT
         Matcher matcher = INCREMENT_DECREMENT.matcher(received[0]);
 
+
         if (matcher.matches()) {
             String key = matcher.group(1);
             int incr = matcher.group(2).equals("++") ? 1 : -1;
@@ -76,6 +77,39 @@ public class HelloEvent extends ListenerAdapter {
                 ex.printStackTrace();
             }
 
+        } else if (received.length > 1) {
+            Matcher matcher2 = INCREMENT_DECREMENT.matcher(received[0] + " " +received[1]);
+            if (matcher2.matches()) {
+                String key = matcher2.group(1);
+                int incr = matcher2.group(2).equals("++") ? 1 : -1;
+                DatabaseUtils.createTableIfNotExists("increments", "( message varchar(45) NOT NULL UNIQUE, number integer NOT NULL DEFAULT '0' );");
+                //getIncrements();
+                String SQL = "SELECT message, number " + "FROM increments " + "WHERE message = ?";
+
+                try {
+                    Connection conn = KregBot.getSQLConnection();
+                    PreparedStatement pstmt = conn.prepareStatement(SQL);
+
+                    pstmt.setString(1, key);
+                    ResultSet rs = pstmt.executeQuery();
+
+                    while (rs.next()) {
+
+                        if (rs.getString("message").equals(key)) {
+                            incr = rs.getInt("number") + incr;
+
+                            updateDabase(key, incr);
+                        }
+                    }
+                    insertToDatabase(key, incr);
+                    event.getChannel().sendMessage(key + " == " + incr ).queue();
+
+                    getIncrements();
+                } catch (SQLException ex) {
+                    System.out.println("failed to query");
+                    ex.printStackTrace();
+                }
+            }
         }
         if (event.getChannelType() == ChannelType.TEXT) {
 
