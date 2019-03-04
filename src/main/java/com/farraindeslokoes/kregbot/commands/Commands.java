@@ -37,6 +37,7 @@ public class Commands extends ListenerAdapter {
         commands.put("lmgtfy", new LMGTFYCommand());
         commands.put("printtable", new PrintCommand());
         commands.put("delete", new DeleteCommand());
+        commands.put("track", new TrackerChannelCommand());
 
         /*Comandos do SpicyFerret */
         commands.put("insult", new InsultCommand());
