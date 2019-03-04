@@ -35,7 +35,7 @@ public class GuildEvent extends ListenerAdapter {
             TextChannel textChannel = optionalChannel.get();
             eb = new EmbedBuilder();
             eb.setTitle("User joined:");
-            eb.setAuthor(event.getMember().getNickname());
+            eb.setAuthor(event.getMember().getUser().getName());
             eb.setTimestamp(Instant.now());
             eb.setDescription(event.getMember().getEffectiveName() + " has joined the server.");
 
@@ -57,7 +57,7 @@ public class GuildEvent extends ListenerAdapter {
             TextChannel textChannel = optionalChannel.get();
             eb = new EmbedBuilder();
             eb.setTitle("User left:");
-            eb.setAuthor(event.getMember().getNickname());
+            eb.setAuthor(event.getMember().getUser().getName());
             eb.setTimestamp(Instant.now());
             eb.setDescription(event.getMember().getEffectiveName() + " has left the server.");
 
@@ -80,7 +80,7 @@ public class GuildEvent extends ListenerAdapter {
             eb.setTitle("User changed nick");
             eb.setAuthor(event.getMember().getEffectiveName());
             eb.setTimestamp(Instant.now());
-            eb.setDescription(event.getMember().getEffectiveName() + " has changed his/her nickname : \n" + event.getPrevNick() +
+            eb.setDescription(event.getMember().getUser().getName() + " has changed his/her nickname : \n" + event.getPrevNick() +
                     "---> " + event.getNewNick());
 
             MessageBuilder message = new MessageBuilder();
