@@ -1,0 +1,38 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
+    id 'java'
+}
+
+group 'nukeologist'
+version '0.1'
+
+sourceCompatibility = 1.11
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+
+    compile('net.dv8tion:JDA:4.ALPHA.0_92') {
+        exclude module: 'opus-java'
+    }
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'io.github.classgraph:classgraph:4.8.41'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    // This doesn't work with JDA 4 at the time of writing
+//    compile ('com.sedmelluq:jda-nas:1.0.6') {
+//        exclude group: 'net.dv8tion'
+//    }
+    
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'nukeologist.kregbot.Main'
+        )
+    }
+}
