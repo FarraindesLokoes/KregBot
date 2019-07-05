@@ -1,4 +1,4 @@
-package nukeologist.kregbot;
+package nukeologist.kregbot.util;
 
 /**
  * Utility class for messages.

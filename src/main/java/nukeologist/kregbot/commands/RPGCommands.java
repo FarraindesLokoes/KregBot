@@ -1,7 +1,10 @@
 package nukeologist.kregbot.commands;
 
-import nukeologist.kregbot.Patterns;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import nukeologist.kregbot.util.Patterns;
 import nukeologist.kregbot.api.Command;
+import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
 
 import java.util.Random;
@@ -52,6 +55,15 @@ public class RPGCommands {
                 ctx.reply("I do not understand...");
             }
         }
+    }
+
+    @CommandHelp("roll")
+    public static void helpRoll(Context ctx) {
+        EmbedBuilder embed = new EmbedBuilder();
+        MessageBuilder msg = new MessageBuilder();
+        embed.setColor((int) (Math.random() * 100000));
+        embed.setDescription("Rolls dice for you! Here's a little help:\nUsage: [!roll ndm] where n is the number of dice and m the number of sides\nYou can chain call these with spaces in between too.");
+        ctx.send(msg.setEmbed(embed.build()).build());
     }
 
     @Command("character")

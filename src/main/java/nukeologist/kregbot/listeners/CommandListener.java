@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import nukeologist.kregbot.BotManager;
-import nukeologist.kregbot.MessageHelper;
+import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.api.CommandContainer;
 import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.api.ContextType;

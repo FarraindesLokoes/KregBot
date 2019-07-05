@@ -1,4 +1,4 @@
-package nukeologist.kregbot;
+package nukeologist.kregbot.util;
 
 import com.google.gson.Gson;
 
