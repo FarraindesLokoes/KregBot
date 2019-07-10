@@ -35,7 +35,7 @@ public class SaveHelper<T> {
             Gson gson = new GsonBuilder().create();
             obj = gson.fromJson(reader, type);
         }catch(IOException e) {
-            KregBot.LOG.info("failed to save json with filename {}.json", fileName);
+            KregBot.LOG.info("failed to retrieve json with filename {}.json", fileName);
             e.printStackTrace();
             return null;
         }
