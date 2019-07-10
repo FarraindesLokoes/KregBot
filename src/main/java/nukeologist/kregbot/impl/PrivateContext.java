@@ -1,5 +1,6 @@
 package nukeologist.kregbot.impl;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -34,6 +35,11 @@ public class PrivateContext implements Context {
     @Override
     public User getAuthor() {
         return event.getAuthor();
+    }
+
+    @Override
+    public Member getMember() {
+        return null;
     }
 
     @Override

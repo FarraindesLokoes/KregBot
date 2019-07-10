@@ -1,5 +1,6 @@
 package nukeologist.kregbot.api;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -33,6 +34,12 @@ public interface Context {
      * @return the author that called the command.
      */
     User getAuthor();
+
+    /**
+     * The guild member that called the command.
+     * @return the author or null if not in guild context.
+     */
+    Member getMember();
 
     /**
      * Gets the raw message, including the command itself.
