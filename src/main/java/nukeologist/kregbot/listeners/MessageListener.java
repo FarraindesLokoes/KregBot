@@ -29,9 +29,8 @@ public class MessageListener implements EventListener {
             onGuildMessage((GuildMessageReceivedEvent) event);
     }
 
-    // called by onEvents
     private void onMessage(MessageReceivedEvent event) {
-        LOG.info("#{} #{} < {} >", event.getChannel(), event.getAuthor(), event.getMessage());
+        LOG.info("#{} #{} < {} >", event.getChannel(), event.getAuthor(), event.getMessage().getContentRaw());
     }
 
     private void onGuildMessage(GuildMessageReceivedEvent event) {
