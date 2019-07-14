@@ -1,5 +1,6 @@
 package nukeologist.kregbot.listeners;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -10,6 +11,8 @@ import nukeologist.kregbot.util.SaveHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 
 /**
@@ -47,5 +50,30 @@ public class MessageListener implements EventListener {
             SAVER.saveJson(VALUES, "increments");
             event.getChannel().sendMessage(key + " == " + VALUES.getMapOfGuild(guild).get(key)).queue();
         }
+        //If an admin wants to set a number in increments
+        if (event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+            String[] words = msg.split("\\s+");
+            if (words.length > 2 && words[1].equals("==")) {
+                if (isNumeric(words[2])) {
+                    int num = Integer.parseInt(words[2]);
+                    Map<String, Integer> guildMap = VALUES.getMapOfGuild(guild);
+                    if (guildMap == null) {
+                        VALUES.getMap().put(guild, new HashMap<>());
+                        guildMap = VALUES.getMapOfGuild(guild);
+                    }
+                    if (guildMap.containsKey(words[0])) {
+                        guildMap.replace(words[0], num);
+                    } else {
+                        guildMap.put(words[0], num);
+                    }
+                    SAVER.saveJson(VALUES, "increments");
+                    event.getChannel().sendMessage(words[0] + " == " + words[2]).queue();
+                }
+            }
+        }
+    }
+
+    private static boolean isNumeric(String str) {
+        return str.chars().allMatch(Character::isDigit);
     }
 }
