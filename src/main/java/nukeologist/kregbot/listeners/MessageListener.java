@@ -38,12 +38,19 @@ public class MessageListener implements EventListener {
 
     private void onGuildMessage(GuildMessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
-        if (VALUES == null)
-            VALUES = new MessageValues();
+        if (VALUES == null) VALUES = new MessageValues();
         String msg = event.getMessage().getContentRaw();
         Matcher matcher = Patterns.INCREMENT_DECREMENT.matcher(msg);
+        boolean matches = matcher.matches();
+        if (!matches) {
+            String[] words = msg.split("\\s+");
+            if (words.length > 1) {
+                matcher = Patterns.INCREMENT_DECREMENT.matcher(words[0] + words[1]);
+                if (matcher.matches()) matches = true;
+            }
+        }
         long guild = event.getGuild().getIdLong();
-        if (matcher.matches()) {
+        if (matches) {
             String key = matcher.group(1);
             int incr = matcher.group(2).equals("++") ? 1 : -1;
             VALUES.add(guild, key, incr);

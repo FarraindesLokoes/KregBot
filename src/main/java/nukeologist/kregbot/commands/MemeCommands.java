@@ -13,8 +13,14 @@ public class MemeCommands {
         ctx.send("viadao da porra");
     }
 
+    @Command("lewin")
+    public static void fdp(Context ctx) {
+        ctx.send("Aquele jogador de WoW? Viado.");
+    }
+
     @Command("60")
     public static void senta(Context ctx) {
         ctx.send("Pare com essa viadagem.");
     }
+
 }
