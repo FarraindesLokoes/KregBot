@@ -98,4 +98,28 @@ public class MessageHelper {
         return "\"" + text + "\"";
     }
 
+    /**
+     * Collapse a String array into a single String
+     *
+     * @param stringArr String Array to collapse.
+     * @param start starting index -- 0
+     * @param end ending index -- array.length
+     * @return Entire array into a single String
+     * */
+    public static String collapse(String[] stringArr, int start, int end){
+        StringBuilder str = new StringBuilder();
+        for (; start < end; start++) {
+            str.append(stringArr[start]);
+        }
+        return str.toString();
+    }
+    public static String collapse(String[] stringArr, int start) {
+        return collapse(stringArr, start, stringArr.length);
+    }
+    public static String collapse(String[] stringArr) {
+        return collapse(stringArr, 0, stringArr.length);
+    }
+
+
+
 }
