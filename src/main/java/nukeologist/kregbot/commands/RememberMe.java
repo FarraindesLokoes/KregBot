@@ -76,7 +76,7 @@ class Clock implements Runnable {
 
     Clock(String alarm, long timer, MessageChannel channel, User user){
         this.alarm = alarm;
-        this.timer = timer * 1000;
+        this.timer = timer;
         this.channel = channel;
         this.setTime = System.currentTimeMillis();
         this.user = user;
@@ -94,9 +94,10 @@ class Clock implements Runnable {
     @Override
     public void run() {
         try {
+            timer *= 1000;
             Thread.sleep(timer);
             fire();
-        } catch (InterruptedException e) {
+        } catch (Exception ignored) {
             channel.sendMessage(user.getAsMention() + "\n" +"```Alarm" + alarm + "failed! \n" +
                     (System.currentTimeMillis() - setTime) / 1000 + "seconds elapsed \n" +
                     (timer - (System.currentTimeMillis() - setTime)) / 1000 + "seconds remaining!```").queue();
