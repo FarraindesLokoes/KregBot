@@ -80,8 +80,8 @@ public class AdminCommands {
             Map<String, Integer> map = VALUES.getMapOfGuild(guild);
             if (map != null) {
                 for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                    label.append(entry.getKey()).append("\n");
-                    numbers.append(entry.getValue()).append("\n");
+                    label.append(entry.getKey()).append("\n\n");
+                    numbers.append(entry.getValue()).append("\n\n");
                     if (label.length() > 950) { //Messages over 1024 characters get rekt by discord
                         eb.addField("Message", label.toString(), true);
                         eb.addField("Value", numbers.toString(), true);
