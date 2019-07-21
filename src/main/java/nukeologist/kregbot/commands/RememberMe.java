@@ -33,7 +33,7 @@ public class RememberMe {
                 context.reply("Syntax error: first argument is not numeric!");
                 return;
             }
-            addClock(new Clock(MessageHelper.collapse(words, 2), Integer.getInteger(words[1]), context.getChannel(), context.getAuthor()));
+            addClock(new Clock(MessageHelper.collapse(words, 2), Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
         }
 
     }
