@@ -61,7 +61,7 @@ public class RPGCommands {
     public static void helpRoll(Context ctx) {
         EmbedBuilder embed = new EmbedBuilder();
         MessageBuilder msg = new MessageBuilder();
-        embed.setColor((int) (Math.random() * 100000));
+        embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
         embed.setDescription("Rolls dice for you! Here's a little help:\nUsage: [!roll ndm] where n is the number of dice and m the number of sides\nYou can chain call these with spaces in between too.");
         ctx.send(msg.setEmbed(embed.build()).build());
     }

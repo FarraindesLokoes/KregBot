@@ -28,7 +28,7 @@ public class HelpCommands {
 
     @Command("about")
     public static void about(Context ctx) {
-        ctx.send(MessageHelper.makeBold("KregBot | Reborn") + "\nWritten by: Nukeologist\nVersion: " + KregBot.INSTANCE.getVersion());
+        ctx.send(MessageHelper.makeBold("KregBot | Reborn") + "\nWritten by: Nukeologist and SpicyFerret\nVersion: " + KregBot.INSTANCE.getVersion());
     }
 
     @Command("help")
