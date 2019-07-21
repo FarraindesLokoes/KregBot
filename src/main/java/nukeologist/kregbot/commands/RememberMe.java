@@ -27,12 +27,14 @@ public class RememberMe {
                 context.reply("Syntax error: first argument is not numeric!");
                 return;
             }
+            context.reply("Okay, I`ll remember you!");
             addClock(new Clock("", Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
         } else if (words.length > 2) {
             if (!words[1].chars().allMatch(Character::isDigit)) {
                 context.reply("Syntax error: first argument is not numeric!");
                 return;
             }
+            context.reply("Okay, I`ll remember you!");
             addClock(new Clock(MessageHelper.collapse(words, 2), Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
         }
 
@@ -71,9 +73,9 @@ class Clock implements Runnable {
 
     private void fire(){
         if (!alarm.equals("")) {
-            channel.sendMessage(user + ", it`s time to: \n" + alarm).queue();
+            channel.sendMessage(user.getAsMention() + ", it`s time to: \n" + alarm).queue();
         } else {
-            channel.sendMessage(user + ", it`s time!").queue();
+            channel.sendMessage(user.getAsMention() + ", it`s time!").queue();
         }
     }
 
@@ -83,7 +85,7 @@ class Clock implements Runnable {
             Thread.sleep(timer);
             fire();
         } catch (InterruptedException e) {
-            channel.sendMessage(user + "\n" +"```Alarm" + alarm + "failed! \n" +
+            channel.sendMessage(user.getAsMention() + "\n" +"```Alarm" + alarm + "failed! \n" +
                     (System.currentTimeMillis() - setTime) / 1000 + "seconds elapsed \n" +
                     (timer - (System.currentTimeMillis() - setTime)) / 1000 + "seconds remaining!```").queue();
         }

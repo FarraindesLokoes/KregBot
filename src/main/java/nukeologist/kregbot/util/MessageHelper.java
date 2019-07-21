@@ -109,7 +109,7 @@ public class MessageHelper {
     public static String collapse(String[] stringArr, int start, int end){
         StringBuilder str = new StringBuilder();
         for (; start < end; start++) {
-            str.append(stringArr[start]);
+            str.append(stringArr[start]).append(" ");
         }
         return str.toString();
     }
