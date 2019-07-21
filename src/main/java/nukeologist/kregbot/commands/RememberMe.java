@@ -48,7 +48,7 @@ public class RememberMe {
         EmbedBuilder embed = new EmbedBuilder();
         MessageBuilder msg = new MessageBuilder();
         embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
-        embed.setDescription("My huge brain can remember stuff for you! Here's a little help:\nUsage: !remember <Time in seconds> <Optional message>\n If you thrust in me and my memory, you should ask me to remember stuff for you!");
+        embed.setDescription("My huge brain can remember stuff for you! Here's a little help:\nUsage: !rememberMe <Time in seconds> <Optional message>\n If you thrust in me and my AWESOOOOME cleric memory, you should ask me to remember stuff for you!");
         context.send(msg.setEmbed(embed.build()).build());
     }
 
