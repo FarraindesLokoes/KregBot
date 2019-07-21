@@ -29,6 +29,10 @@ public class RememberMe {
             }
             addClock(new Clock("", Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
         } else if (words.length > 2) {
+            if (!words[1].chars().allMatch(Character::isDigit)) {
+                context.reply("Syntax error: first argument is not numeric!");
+                return;
+            }
             addClock(new Clock(MessageHelper.collapse(words, 2), Integer.getInteger(words[1]), context.getChannel(), context.getAuthor()));
         }
 
