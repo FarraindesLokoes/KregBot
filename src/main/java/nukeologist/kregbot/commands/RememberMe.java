@@ -23,7 +23,7 @@ public class RememberMe {
         if (words.length == 1) {
             context.reply("Syntax error: timer and message(optional) not specified!");
         } else if (words.length == 2) {
-            if (words[1].chars().allMatch(Character::isDigit)) {
+            if (!words[1].chars().allMatch(Character::isDigit)) {
                 context.reply("Syntax error: first argument is not numeric!");
                 return;
             }

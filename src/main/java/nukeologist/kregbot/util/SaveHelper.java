@@ -32,6 +32,7 @@ public class SaveHelper<T> {
     public T fromJson(String fileName) {
         T obj;
         try (Reader reader = new FileReader(fileName + ".json")) {
+            KregBot.LOG.info("Attempting to retrieve json with path {}", System.getProperty("user.home"));
             Gson gson = new GsonBuilder().create();
             obj = gson.fromJson(reader, type);
         }catch(IOException e) {
