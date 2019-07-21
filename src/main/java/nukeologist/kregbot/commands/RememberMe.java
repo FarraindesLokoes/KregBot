@@ -1,8 +1,11 @@
 package nukeologist.kregbot.commands;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import nukeologist.kregbot.api.Command;
+import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.util.MessageHelper;
 
@@ -38,6 +41,15 @@ public class RememberMe {
             addClock(new Clock(MessageHelper.collapse(words, 2), Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
         }
 
+    }
+
+    @CommandHelp("rememberMe")
+    public static void helpRemeberMe(Context context) {
+        EmbedBuilder embed = new EmbedBuilder();
+        MessageBuilder msg = new MessageBuilder();
+        embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
+        embed.setDescription("My huge brain can remember stuff for you! Here's a little help:\nUsage: !remember <Time in seconds> <Optional message>\n If you thrust in me and my memory, you should ask me to remember stuff for you!");
+        context.send(msg.setEmbed(embed.build()).build());
     }
 
     private static void addClock(Clock clock) {
