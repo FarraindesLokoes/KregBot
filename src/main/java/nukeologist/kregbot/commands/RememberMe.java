@@ -23,7 +23,7 @@ public class RememberMe {
         if (words.length == 1) {
             context.reply("Syntax error: timer and message(optional) not specified");
         } else if (words.length == 2) {
-            addClock(new Clock("", Integer.getInteger(words[1]), context.getChannel(), context.getAuthor()));
+            addClock(new Clock("", Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
         } else if (words.length > 2) {
             addClock(new Clock(MessageHelper.collapse(words, 2), Integer.getInteger(words[1]), context.getChannel(), context.getAuthor()));
         }
