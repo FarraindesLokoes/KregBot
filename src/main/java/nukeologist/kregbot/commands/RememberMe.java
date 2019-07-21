@@ -38,7 +38,7 @@ public class RememberMe {
                 return;
             }
             context.reply("Okay, I`ll remember you!");
-            addClock(new Clock(MessageHelper.collapse(words, 2), Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
+            addClock(new Clock(MessageHelper.sanitizeEveryone(MessageHelper.collapse(words, 2)), Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
         }
 
     }
