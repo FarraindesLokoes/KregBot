@@ -28,7 +28,7 @@ public class MemeCommands {
     @Command("planting")
     public static void plantingBomb(Context context) {
         if (bomb != null) {
-            context.reply("Bomb already planted.");
+            context.reply("Bomb has been already planted.");
             return;
         }
         context.send("planting...");
@@ -43,7 +43,7 @@ public class MemeCommands {
                 count++;
                 context.send( ".".repeat(Math.max(1, count)));
             }
-            context.send("@here\nThe bomb has bean planted!");
+            context.send("@here\nThe bomb has been planted!");
 
             if (context.getWords().length == 1) {
                 try {
