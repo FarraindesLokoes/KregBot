@@ -26,19 +26,21 @@ public class RememberMe {
         if (words.length == 1) {
             context.reply("Syntax error: timer and message(optional) not specified!");
         } else if (words.length == 2) {
-            if (!words[1].chars().allMatch(Character::isDigit)) {
+            long time = getTimeSeconds(words[1]);
+            if (time < 0) {
                 context.reply("Syntax error: first argument is not numeric!");
                 return;
             }
-            context.reply("Okay, I`ll remember you!");
-            addClock(new Clock("", Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
+            context.reply("Okay, I`ll remember you in " + getTime(time) + "!");
+            addClock(new Clock("", time, context.getChannel(), context.getAuthor()));
         } else if (words.length > 2) {
-            if (!words[1].chars().allMatch(Character::isDigit)) {
+            long time = getTimeSeconds(words[1]);
+            if (time < 0) {
                 context.reply("Syntax error: first argument is not numeric!");
                 return;
             }
-            context.reply("Okay, I`ll remember you!");
-            addClock(new Clock(MessageHelper.sanitizeEveryone(MessageHelper.collapse(words, 2)), Integer.parseInt(words[1]), context.getChannel(), context.getAuthor()));
+            context.reply("Okay, I`ll remember you in " + getTime(time) + "!");
+            addClock(new Clock(MessageHelper.sanitizeEveryone(MessageHelper.collapse(words, 2)), time, context.getChannel(), context.getAuthor()));
         }
 
     }
@@ -52,15 +54,111 @@ public class RememberMe {
         context.send(msg.setEmbed(embed.build()).build());
     }
 
+    // Make and run a new thread with a clock
     private static void addClock(Clock clock) {
         Thread thread = new Thread(clock);
         thread.start();
         clocks.add(thread);
     }
 
+    // Remove a clock from clocks array list
     static void clearClock(Clock clock) {
         clocks.remove(clock);
     }
+
+    //converts a String with time prefix into a long in seconds
+    private static long getTimeSeconds(String time) {
+        if (!time.chars().allMatch(Character::isDigit)) {
+            short days = 0, hours = 0, minutes = 0, seconds = 0;
+
+            String[] sArr = time.split("");
+            if (!sArr[0].chars().allMatch(Character::isDigit)) {
+                return -1;
+            }
+            short num = 0;
+
+            for (int i = 0; i < sArr.length; i++) {
+                String s = sArr[i];
+
+                if (s.chars().allMatch(Character::isDigit)) {
+                    num *= 10;
+                    num += Short.parseShort(s);
+                } else {
+
+                    StringBuilder type = new StringBuilder();
+                    boolean exit = false;
+
+                    do {
+                        s = sArr[i];
+                        type.append(s);
+
+                        if ((i + 1 < sArr.length && sArr[i + 1].chars().allMatch(Character::isDigit)) || i + 1 == sArr.length) {
+                            switch (type.toString()) {
+                                case "d":
+                                case "day":
+                                case "days":
+                                    days = num;
+                                    num = 0;
+                                    exit = true;
+                                    break;
+                                case "h":
+                                case "hour":
+                                case "hours":
+                                    hours = num;
+                                    num = 0;
+                                    exit = true;
+                                    break;
+                                case "m":
+                                case "min":
+                                case "minute":
+                                case "minutes":
+                                    minutes = num;
+                                    num = 0;
+                                    exit = true;
+                                    break;
+                                case "s":
+                                case "second":
+                                case "seconds":
+                                    seconds = num;
+                                    num = 0;
+                                    exit = true;
+                                    break;
+                            }
+                        }
+
+                        if (!exit) i++;
+                    } while (i < sArr.length && !exit);
+                }
+            }
+            System.out.println(days +"d"+hours+ "h"+ minutes+"min"+seconds+"s"+"="+(seconds + (minutes * 60) + (hours * 3600) + (days * 86400)));
+            return (long) (seconds + (minutes * 60) + (hours * 3600) + (days * 86400));
+        } else {
+            return Integer.parseInt(time);
+        }
+    }
+
+    //converts a long in seconds to a String in dd hh mm ss
+    private static String getTime(long seconds) {
+        int
+                d = (int) (seconds / 86400),
+                h = (int) ((seconds % 86400) / 3600),
+                min = (int) (((seconds % 86400) % 3600) / 60),
+                s = (int) (((seconds % 86400) % 3600) % 60);
+
+        StringBuilder time = new StringBuilder((d != 0 ? d + "days " : "") + (h != 0 ? h + "hours " : "") + (min != 0 ? min + "minutes " : "") + (s != 0 ? s + "seconds " : ""));
+        String[] timeSpited = time.toString().split(" ");
+        if (timeSpited.length > 1) {
+            timeSpited[timeSpited.length -2] += " and";
+        }
+        time = new StringBuilder();
+        for (String str : timeSpited) {
+            str += " ";
+            time.append(str);
+        }
+        time.deleteCharAt(time.lastIndexOf(" "));
+        return time.toString();
+    }
+
 }
 /**
  * @author SpicyFerret
