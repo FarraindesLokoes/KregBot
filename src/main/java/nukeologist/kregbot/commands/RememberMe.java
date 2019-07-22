@@ -12,7 +12,7 @@ import nukeologist.kregbot.util.MessageHelper;
 import java.util.ArrayList;
 
 /**
- * @autor SpicyFerret
+ * @author SpicyFerret
  *
  * class that will make an alarm to trigger on specified time
  * */
@@ -63,7 +63,7 @@ public class RememberMe {
     }
 }
 /**
- * @autor SpicyFerret
+ * @author SpicyFerret
  *
  * helper class
  * */

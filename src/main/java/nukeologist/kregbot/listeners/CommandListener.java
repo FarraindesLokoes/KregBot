@@ -50,7 +50,7 @@ public class CommandListener extends ListenerAdapter {
                 if ((type == ContextType.GUILD && ctx.isGuild()) || (type == ContextType.EITHER) || (type == ContextType.PRIVATE && !ctx.isGuild())) {
                     if (possible.canBeCalledByBot() || (!possible.canBeCalledByBot() && !ctx.getAuthor().isBot())) {
                         boolean correct = executeCommand(possible, ctx);
-                        if (!correct) ctx.send("A problem occurred when executing command. Contact the dev");
+                        if (!correct) ctx.send("Contact the dev with this stacktrace.");
                     }
                 }
             });
@@ -63,6 +63,7 @@ public class CommandListener extends ListenerAdapter {
             method.invoke(null, ctx);
         } catch (Exception e) {
             System.out.println("Failed to invoke command: " + command.getLabel());
+            ctx.send(e.toString());
             e.printStackTrace();
             return false;
         }

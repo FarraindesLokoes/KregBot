@@ -31,7 +31,7 @@ public class WolframCommand {
 
         StringBuilder builder = new StringBuilder(ctx.getMessage().getContentRaw());
         builder.delete(0, 8);
-        urlstring += URLEncoder.encode(builder.toString(), StandardCharsets.US_ASCII);
+        urlstring += URLEncoder.encode(builder.toString().replace('+', '*'), StandardCharsets.US_ASCII); //for the memes
         MessageBuilder message = new MessageBuilder();
 
         eb.setImage(urlstring);

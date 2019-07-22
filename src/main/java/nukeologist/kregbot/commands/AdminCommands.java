@@ -70,22 +70,36 @@ public class AdminCommands {
     public static void print(Context ctx) {
         if (VALUES == null) VALUES = INCREMENTSSAVER.fromJson("increments");
         Member member = ctx.getMember();
-        if (member.hasPermission(Permission.ADMINISTRATOR) && VALUES != null) {
+        if (member.hasPermission(Permission.ADMINISTRATOR) && VALUES != null) { //TODO: add optional permission for admins to give to non admins
             EmbedBuilder eb = new EmbedBuilder();
             StringBuilder label = new StringBuilder();
             StringBuilder numbers = new StringBuilder();
             eb.setTitle("Table of Increments");
+            int part = 1;
             long guild = ctx.getMember().getGuild().getIdLong();
             Map<String, Integer> map = VALUES.getMapOfGuild(guild);
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                label.append(entry.getKey()).append("\n");
-                numbers.append(entry.getValue()).append("\n");
+            if (map != null) {
+                for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                    label.append(entry.getKey()).append("\n\n");
+                    numbers.append(entry.getValue()).append("\n\n");
+                    if (label.length() > 950) { //Messages over 1024 characters get rekt by discord
+                        eb.addField("Message", label.toString(), true);
+                        eb.addField("Value", numbers.toString(), true);
+                        MessageBuilder msg = new MessageBuilder();
+                        msg.setEmbed(eb.build());
+                        ctx.send(msg.build());
+                        label = new StringBuilder();
+                        numbers = new StringBuilder();
+                        eb = new EmbedBuilder();
+                        eb.setTitle("Table of Increments Part " + ++part);
+                    }
+                }
+                eb.addField("Message", label.toString(), true);
+                eb.addField("Value", numbers.toString(), true);
+                MessageBuilder msg = new MessageBuilder();
+                msg.setEmbed(eb.build());
+                ctx.send(msg.build());
             }
-            eb.addField("Message", label.toString(), true);
-            eb.addField("Value", numbers.toString(), true);
-            MessageBuilder msg = new MessageBuilder();
-            msg.setEmbed(eb.build());
-            ctx.send(msg.build());
         }
     }
 

@@ -31,7 +31,7 @@ public enum KregBot {
         new JDABuilder(AccountType.BOT)
                 .setToken(System.getenv("BOT_TOKEN"))
                 .addEventListeners(new ReadyListener(), new MessageListener(), new CommandListener(), new GuildListener())
-                .setActivity(Activity.playing("with your mother"))
+                .setActivity(Activity.playing("com a sua mãe"))
                 .build();
     }
 
