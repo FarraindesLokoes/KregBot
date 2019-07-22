@@ -23,4 +23,11 @@ public class MemeCommands {
         ctx.send("Pare com essa viadagem.");
     }
 
+    @Command("planting")
+    public static void plantingBomb(Context context) {
+        context.send("planting...");
+        Thread t = new Thread(() -> {
+
+        });
+    }
 }
