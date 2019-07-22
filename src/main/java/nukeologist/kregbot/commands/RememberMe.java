@@ -140,7 +140,7 @@ public class RememberMe {
             System.out.println(days +"d"+hours+ "h"+ minutes+"min"+seconds+"s"+"="+(seconds + (minutes * 60) + (hours * 3600) + (days * 86400)));
             return (long) (seconds + (minutes * 60) + (hours * 3600) + (days * 86400));
         } else {
-            return Integer.parseInt(time);
+            return Long.parseLong(time);
         }
     }
 
@@ -174,31 +174,30 @@ public class RememberMe {
  * */
 class Clock implements Runnable {
     private long timer;
-    private String alarm;
-    private MessageChannel channel;
-    private long setTime;
-    private User user;
+            private String alarm;
+            private MessageChannel channel;
+            private long setTime;
+            private User user;
 
-    Clock(String alarm, long timer, MessageChannel channel, User user){
-        this.alarm = alarm;
-        this.timer = timer;
-        this.channel = channel;
-        this.setTime = System.currentTimeMillis();
-        this.user = user;
-        System.out.println("Alarm created!");
-    }
+            Clock(String alarm, long timer, MessageChannel channel, User user){
+                this.alarm = alarm;
+                this.timer = timer;
+                this.channel = channel;
+                this.setTime = System.currentTimeMillis();
+                this.user = user;
+            }
 
-    private void fire(){
-        if (!alarm.equals("")) {
-            channel.sendMessage(user.getAsMention() + ", it`s time to: \n" + alarm).queue();
-        } else {
-            channel.sendMessage(user.getAsMention() + ", it`s time!").queue();
-        }
-    }
+            private void fire(){
+                if (!alarm.equals("")) {
+                    channel.sendMessage(user.getAsMention() + ", it`s time to: \n" + alarm).queue();
+                } else {
+                    channel.sendMessage(user.getAsMention() + ", it`s time!").queue();
+                }
+            }
 
-    @Override
-    public void run() {
-        try {
+            @Override
+            public void run() {
+                try {
             timer *= 1000;
             Thread.sleep(timer);
             fire();
