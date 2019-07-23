@@ -3,6 +3,8 @@ package nukeologist.kregbot.commands;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.Context;
 
+import java.util.Random;
+
 /**
  * @author Nukeologist
  */
@@ -25,6 +27,7 @@ public class MemeCommands {
     }
 
     private static Runnable bomb = null;
+    private static String bombPassword;
     @Command("planting")
     public static void plantingBomb(Context context) {
         if (bomb != null) {
@@ -74,4 +77,9 @@ public class MemeCommands {
         };
         new Thread(bomb).start();
     }
+    @Command("defuse")
+    public static void defuseBomb(Context context) {
+
+    }
+
 }

@@ -11,6 +11,7 @@ import nukeologist.kregbot.util.MessageHelper;
 
 import java.util.ArrayList;
 
+
 /**
  * @author SpicyFerret
  * <p>
@@ -152,10 +153,10 @@ public class RememberMe {
                 min = (int) (((seconds % 86400) % 3600) / 60),
                 s = (int) (((seconds % 86400) % 3600) % 60);
 
-        StringBuilder time = new StringBuilder((d != 0 ? d + " days " : "") + (h != 0 ? h + " hours " : "") + (min != 0 ? min + " minutes " : "") + (s != 0 || (s == min && s == h && s == d && s == 0) ? s + " seconds " : ""));
+        StringBuilder time = new StringBuilder((d != 0 ? d + " days " : "") + (h != 0 ? h + " hours " : "") + (min != 0 ? min + " minutes " : "") + (s != 0 || (s == min && s == h && s == d) ? s + " seconds " : ""));
         String[] timeSpited = time.toString().split(" ");
-        if (timeSpited.length > 1) {
-            timeSpited[timeSpited.length - 2] += " and";
+        if (timeSpited.length > 2) {
+            timeSpited[timeSpited.length - 3] += " and";
         }
         time = new StringBuilder();
         for (String str : timeSpited) {
