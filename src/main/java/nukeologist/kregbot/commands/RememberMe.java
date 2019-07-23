@@ -13,15 +13,15 @@ import java.util.ArrayList;
 
 /**
  * @author SpicyFerret
- *
+ * <p>
  * class that will make an alarm to trigger on specified time
- * */
+ */
 
 public class RememberMe {
     private static ArrayList<Thread> clocks = new ArrayList<>();
 
     @Command("rememberMe")
-    public static void setAlarm(Context context){
+    public static void setAlarm(Context context) {
         String[] words = context.getWords();
         if (words.length == 1) {
             context.reply("Syntax error: timer and message(optional) not specified!");
@@ -137,7 +137,7 @@ public class RememberMe {
                     } while (i < sArr.length && !exit);
                 }
             }
-            System.out.println(days +"d"+hours+ "h"+ minutes+"min"+seconds+"s"+"="+(seconds + (minutes * 60) + (hours * 3600) + (days * 86400)));
+            System.out.println(days + "d" + hours + "h" + minutes + "min" + seconds + "s" + "=" + (seconds + (minutes * 60) + (hours * 3600) + (days * 86400)));
             return (long) (seconds + (minutes * 60) + (hours * 3600) + (days * 86400));
         } else {
             return Long.parseLong(time);
@@ -152,10 +152,10 @@ public class RememberMe {
                 min = (int) (((seconds % 86400) % 3600) / 60),
                 s = (int) (((seconds % 86400) % 3600) % 60);
 
-        StringBuilder time = new StringBuilder((d != 0 ? d + "days " : "") + (h != 0 ? h + "hours " : "") + (min != 0 ? min + "minutes " : "") + (s != 0 || (s == min && s == h && s == d && s == 0) ? s + "seconds " : ""));
+        StringBuilder time = new StringBuilder((d != 0 ? d + " days " : "") + (h != 0 ? h + " hours " : "") + (min != 0 ? min + " minutes " : "") + (s != 0 || (s == min && s == h && s == d && s == 0) ? s + " seconds " : ""));
         String[] timeSpited = time.toString().split(" ");
         if (timeSpited.length > 1) {
-            timeSpited[timeSpited.length -2] += " and";
+            timeSpited[timeSpited.length - 2] += " and";
         }
         time = new StringBuilder();
         for (String str : timeSpited) {
@@ -167,42 +167,43 @@ public class RememberMe {
     }
 
 }
+
 /**
  * @author SpicyFerret
- *
+ * <p>
  * helper class
- * */
+ */
 class Clock implements Runnable {
     private long timer;
-            private String alarm;
-            private MessageChannel channel;
-            private long setTime;
-            private User user;
+    private String alarm;
+    private MessageChannel channel;
+    private long setTime;
+    private User user;
 
-            Clock(String alarm, long timer, MessageChannel channel, User user){
-                this.alarm = alarm;
-                this.timer = timer;
-                this.channel = channel;
-                this.setTime = System.currentTimeMillis();
-                this.user = user;
-            }
+    Clock(String alarm, long timer, MessageChannel channel, User user) {
+        this.alarm = alarm;
+        this.timer = timer;
+        this.channel = channel;
+        this.setTime = System.currentTimeMillis();
+        this.user = user;
+    }
 
-            private void fire(){
-                if (!alarm.equals("")) {
-                    channel.sendMessage(user.getAsMention() + ", it`s time to: \n" + alarm).queue();
-                } else {
-                    channel.sendMessage(user.getAsMention() + ", it`s time!").queue();
-                }
-            }
+    private void fire() {
+        if (!alarm.equals("")) {
+            channel.sendMessage(user.getAsMention() + ", it`s time to: \n" + alarm).queue();
+        } else {
+            channel.sendMessage(user.getAsMention() + ", it`s time!").queue();
+        }
+    }
 
-            @Override
-            public void run() {
-                try {
+    @Override
+    public void run() {
+        try {
             timer *= 1000;
             Thread.sleep(timer);
             fire();
         } catch (Exception ignored) {
-            channel.sendMessage(user.getAsMention() + "\n" +"```Alarm" + alarm + "failed! \n" +
+            channel.sendMessage(user.getAsMention() + "\n" + "```Alarm" + alarm + "failed! \n" +
                     (System.currentTimeMillis() - setTime) / 1000 + "seconds elapsed \n" +
                     (timer - (System.currentTimeMillis() - setTime)) / 1000 + "seconds remaining!```").queue();
         }
