@@ -70,7 +70,8 @@ public class AdminCommands {
     public static void print(Context ctx) {
         if (VALUES == null) VALUES = INCREMENTSSAVER.fromJson("increments");
         Member member = ctx.getMember();
-        if (member.hasPermission(Permission.ADMINISTRATOR) && VALUES != null) { //TODO: add optional permission for admins to give to non admins
+        //if (member.hasPermission(Permission.ADMINISTRATOR) && VALUES != null) { //TODO: add optional permission for admins to give to non admins
+        if (VALUES != null) {
             EmbedBuilder eb = new EmbedBuilder();
             StringBuilder label = new StringBuilder();
             StringBuilder numbers = new StringBuilder();
@@ -101,6 +102,7 @@ public class AdminCommands {
                 ctx.send(msg.build());
             }
         }
+
     }
 
     @CommandHelp("printtable")
