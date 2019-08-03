@@ -1,7 +1,6 @@
 package nukeologist.kregbot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -11,9 +10,11 @@ import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.api.ContextType;
 import nukeologist.kregbot.data.MessageValues;
 import nukeologist.kregbot.listeners.GuildListener;
+import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.SaveHelper;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Nukeologist
@@ -68,41 +69,29 @@ public class AdminCommands {
 
     @Command(value = "printtable", type = ContextType.GUILD)
     public static void print(Context ctx) {
-        if (VALUES == null) VALUES = INCREMENTSSAVER.fromJson("increments");
+        VALUES = INCREMENTSSAVER.fromJson("increments");
         Member member = ctx.getMember();
         //if (member.hasPermission(Permission.ADMINISTRATOR) && VALUES != null) { //TODO: add optional permission for admins to give to non admins
         if (VALUES != null) {
-            EmbedBuilder eb = new EmbedBuilder();
-            StringBuilder label = new StringBuilder();
-            StringBuilder numbers = new StringBuilder();
-            eb.setTitle("Table of Increments");
+            StringBuilder label = new StringBuilder("Table of Increments\nMessage : Value\n");
             int part = 1;
             long guild = ctx.getMember().getGuild().getIdLong();
             Map<String, Integer> map = VALUES.getMapOfGuild(guild);
+            int longest = MessageHelper.getLongestString(map.keySet()).length();
             if (map != null) {
                 for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                    label.append(entry.getKey()).append("\n\n");
-                    numbers.append(entry.getValue()).append("\n\n");
+                    String key = entry.getKey();
+                    label.append(key).append(" ".repeat(longest + 1 - key.length())).append(entry.getValue()).append("\n");
                     if (label.length() > 950) { //Messages over 1024 characters get rekt by discord
-                        eb.addField("Message", label.toString(), true);
-                        eb.addField("Value", numbers.toString(), true);
-                        MessageBuilder msg = new MessageBuilder();
-                        msg.setEmbed(eb.build());
-                        ctx.send(msg.build());
-                        label = new StringBuilder();
-                        numbers = new StringBuilder();
-                        eb = new EmbedBuilder();
-                        eb.setTitle("Table of Increments Part " + ++part);
+                        //we need to codeblock or Discord formats the message itself.
+                        ctx.send(MessageHelper.makeCodeBlock(label.toString()));
+                        part++;
+                        label = new StringBuilder("Part " + part);
                     }
                 }
-                eb.addField("Message", label.toString(), true);
-                eb.addField("Value", numbers.toString(), true);
-                MessageBuilder msg = new MessageBuilder();
-                msg.setEmbed(eb.build());
-                ctx.send(msg.build());
+                ctx.send(MessageHelper.makeCodeBlock(label.toString()));
             }
         }
-
     }
 
     @CommandHelp("printtable")

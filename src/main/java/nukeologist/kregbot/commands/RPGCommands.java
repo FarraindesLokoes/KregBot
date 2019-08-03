@@ -68,7 +68,7 @@ public class RPGCommands {
 
     @Command("character")
     public static void character(Context ctx) {
-        ctx.send("Coming **Soon™**");
+
     }
 
     private static String roll(int diceAmount, int faceAmount) {

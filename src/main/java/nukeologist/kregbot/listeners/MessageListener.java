@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 
 /**
@@ -22,7 +23,19 @@ public class MessageListener implements EventListener {
 
     private static final Logger LOG = LoggerFactory.getLogger("Chat");
     private static final SaveHelper<MessageValues> SAVER = new SaveHelper<>(MessageValues.class);
+    private static final Random RANDOM = new Random();
     private static MessageValues VALUES = SAVER.fromJson("increments");
+
+    private static final String[] MEMES = {
+            "Foda-se",
+            "Seu nazista",
+            "Cala a boca",
+            "fucking shitstain",
+            "filha da puta",
+            "faggot",
+            "60?",
+            "70?"
+    };
 
     @Override
     public void onEvent(GenericEvent event) {
@@ -34,6 +47,7 @@ public class MessageListener implements EventListener {
 
     private void onMessage(MessageReceivedEvent event) {
         LOG.info("#{} #{} < {} >", event.getChannel(), event.getAuthor(), event.getMessage().getContentRaw());
+        if (RANDOM.nextInt(1000) == 69) event.getChannel().sendMessage(getRandomResponse()).queue();
     }
 
     private void onGuildMessage(GuildMessageReceivedEvent event) {
@@ -78,6 +92,10 @@ public class MessageListener implements EventListener {
                 }
             }
         }
+    }
+
+    private static String getRandomResponse() {
+        return MEMES[RANDOM.nextInt(MEMES.length)];
     }
 
     private static boolean isNumeric(String str) {

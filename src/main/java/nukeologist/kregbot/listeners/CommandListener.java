@@ -63,7 +63,7 @@ public class CommandListener extends ListenerAdapter {
             method.invoke(null, ctx);
         } catch (Exception e) {
             System.out.println("Failed to invoke command: " + command.getLabel());
-            ctx.send(e.toString());
+            ctx.send(e.getCause().toString());
             e.printStackTrace();
             return false;
         }

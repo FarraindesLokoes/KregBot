@@ -1,7 +1,9 @@
 package nukeologist.kregbot.util;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Utility class for messages.
@@ -140,6 +142,13 @@ public class MessageHelper {
         return collapse(stringArr, 0, stringArr.length);
     }
 
-
+    /**
+     * Gets the longest String in the set
+     * @param set the set of strings
+     * @return longest string
+     */
+    public static String getLongestString(Set<String> set) {
+        return set.stream().max(Comparator.comparingInt(String::length)).get();
+    }
 
 }
