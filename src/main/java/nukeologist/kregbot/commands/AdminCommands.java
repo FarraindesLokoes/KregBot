@@ -82,14 +82,14 @@ public class AdminCommands {
                 for (Map.Entry<String, Integer> entry : map.entrySet()) {
                     String key = entry.getKey();
                     label.append(key).append(" ".repeat(longest + 1 - key.length())).append(entry.getValue()).append("\n");
-                    if (label.length() > 950) { //Messages over 1024 characters get rekt by discord
-                        //we need to codeblock or Discord formats the message itself.
-                        ctx.send(MessageHelper.makeCodeBlock(label.toString()));
+                    if (label.length() > 1600) { //Embeds over 1024 characters get rekt by discord, and messages > 2000
+                        //Message shall format itself, but code blocks actually look worse, f u discord!
+                        ctx.send(label.toString());
                         part++;
-                        label = new StringBuilder("Part " + part);
+                        label = new StringBuilder("Part " + part + "\n");
                     }
                 }
-                ctx.send(MessageHelper.makeCodeBlock(label.toString()));
+                ctx.send(label.toString());
             }
         }
     }
