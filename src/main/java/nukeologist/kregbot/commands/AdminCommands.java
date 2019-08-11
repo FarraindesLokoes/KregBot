@@ -67,6 +67,27 @@ public class AdminCommands {
         ctx.send("Exclusive to guild admins, this makes a channel track changes in the server.");
     }
 
+    @Command(value = "delete", type = ContextType.GUILD)
+    public static void deleteIncrement(Context ctx) {
+        if (ctx.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+            String[] words = ctx.getWords();
+            if (words.length == 1) {
+                ctx.send("Need one more parameter.");
+            } else {
+                VALUES.getMapOfGuild(ctx.getMember().getGuild().getIdLong()).remove(words[1]);
+                INCREMENTSSAVER.saveJson(VALUES, "increments");
+                ctx.send("Deleted from table.");
+            }
+        } else {
+            ctx.send("Only admins can use this command");
+        }
+    }
+
+    @CommandHelp("delete")
+    public static void helpDelete(Context ctx) {
+        ctx.send("Admin only, deletes something from the increments table.");
+    }
+
     @Command(value = "printtable", type = ContextType.GUILD)
     public static void print(Context ctx) {
         VALUES = INCREMENTSSAVER.fromJson("increments");
