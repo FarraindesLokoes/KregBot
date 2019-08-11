@@ -10,6 +10,7 @@ import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.api.ContextType;
 import nukeologist.kregbot.data.MessageValues;
 import nukeologist.kregbot.listeners.GuildListener;
+import nukeologist.kregbot.listeners.MessageListener;
 import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.SaveHelper;
 
@@ -76,6 +77,7 @@ public class AdminCommands {
             } else {
                 VALUES.getMapOfGuild(ctx.getMember().getGuild().getIdLong()).remove(words[1]);
                 INCREMENTSSAVER.saveJson(VALUES, "increments");
+                MessageListener.VALUES.getMapOfGuild(ctx.getMember().getGuild().getIdLong()).remove(words[1]);
                 ctx.send("Deleted from table.");
             }
         } else {

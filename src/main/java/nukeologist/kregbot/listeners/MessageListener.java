@@ -24,7 +24,7 @@ public class MessageListener implements EventListener {
     private static final Logger LOG = LoggerFactory.getLogger("Chat");
     private static final SaveHelper<MessageValues> SAVER = new SaveHelper<>(MessageValues.class);
     private static final Random RANDOM = new Random();
-    private static MessageValues VALUES = SAVER.fromJson("increments");
+    public static MessageValues VALUES = SAVER.fromJson("increments");
 
     private static final String[] MEMES = {
             "Foda-se",
