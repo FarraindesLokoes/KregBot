@@ -2,14 +2,16 @@ package nukeologist.kregbot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.util.MessageHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -19,35 +21,34 @@ import java.util.ArrayList;
  */
 
 public class RememberMe {
-    private static ArrayList<Thread> clocks = new ArrayList<>();
 
-    @Command("rememberMe")
+    @Command("rememberMe") //Command to set the alarm
     public static void setAlarm(Context context) {
-        String[] words = context.getWords();
-        if (words.length == 1) {
-            context.reply("Syntax error: timer and message(optional) not specified!");
-        } else if (words.length == 2) {
-            long time = getTimeSeconds(words[1]);
-            if (time < 0) {
-                context.reply("Syntax error: first argument is not numeric!");
+        String[] messages = context.getWords();
+
+        if (messages.length == 1){
+            context.reply(", Syntax Error: time missing. \n" +
+                    "Use '!help rememberMe' for more info.");
+        } else {
+            Alarm alarm = Alarm.instantiate(context);
+            if (alarm == null) {
+                context.reply("Syntax error!");
                 return;
             }
-            context.reply("Okay, I`ll remember you in " + getTime(time) + "!");
-            addClock(new Clock("", time, context.getChannel(), context.getAuthor()));
-        } else if (words.length > 2) {
-            long time = getTimeSeconds(words[1]);
-            if (time < 0) {
-                context.reply("Syntax error: first argument is not numeric!");
-                return;
+            boolean confirmed = Schedule.addSchedule(context.getAuthor(), alarm);
+            if (confirmed) {
+                context.reply(", Okay! I'll notify you at " + alarm.time.hour + "h " + alarm.time.minute + "min, " + alarm.time.day + ".");
+            } else {
+                context.reply(", max alarms per person exceed: " + Schedule.maxAlarms + ".");
             }
-            context.reply("Okay, I`ll remember you in " + getTime(time) + "!");
-            addClock(new Clock(MessageHelper.sanitizeEveryone(MessageHelper.collapse(words, 2)), time, context.getChannel(), context.getAuthor()));
         }
 
+        // In case alarm checker is not running, make it stat running
+        if (!running) { alarmCheck.start(); }
     }
 
     @CommandHelp("rememberMe")
-    public static void helpRemeberMe(Context context) {
+    public static void helpRememberMe(Context context) {
         EmbedBuilder embed = new EmbedBuilder();
         MessageBuilder msg = new MessageBuilder();
         embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
@@ -57,158 +58,232 @@ public class RememberMe {
                 "  Day: <d> <day> <days>\n" +
                 "  Hour: <h> <hour> <hours>\n" +
                 "  Minute: <m> <min> <minute> <minutes>\n" +
-                "  Second: <s> <second> <seconds>\n " +
                 "If you thrust me and my AWESOOOOME toad memory, you should ask me to remember stuff for you!");
         context.send(msg.setEmbed(embed.build()).build());
     }
 
-    // Make and run a new thread with a clock
-    private static void addClock(Clock clock) {
-        Thread thread = new Thread(clock);
-        thread.start();
-        clocks.add(thread);
-    }
 
-    // Remove a clock from clocks array list
-    static void clearClock(Clock clock) {
-        clocks.remove(clock);
-    }
+    private static boolean running = false;
+    private static Date date = new Date();
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd:HH:mm");
 
-    //converts a String with time prefix into a long in seconds
-    private static long getTimeSeconds(String time) {
-        if (!time.chars().allMatch(Character::isDigit)) {
-            short days = 0, hours = 0, minutes = 0, seconds = 0;
+    private static Thread alarmCheck = new Thread(() -> {
+        running = true;
+        Time time = new Time(0, 0, 0);
+        int lastDay = 0;
 
-            String[] sArr = time.split("");
-            if (!sArr[0].chars().allMatch(Character::isDigit)) {
-                return -1;
-            }
-            short num = 0;
 
-            for (int i = 0; i < sArr.length; i++) {
-                String s = sArr[i];
-
-                if (s.chars().allMatch(Character::isDigit)) {
-                    num *= 10;
-                    num += Short.parseShort(s);
-                } else {
-
-                    StringBuilder type = new StringBuilder();
-                    boolean exit = false;
-
-                    do {
-                        s = sArr[i];
-                        type.append(s);
-
-                        if ((i + 1 < sArr.length && sArr[i + 1].chars().allMatch(Character::isDigit)) || i + 1 == sArr.length) {
-                            switch (type.toString()) {
-                                case "d":
-                                case "day":
-                                case "days":
-                                    days = num;
-                                    num = 0;
-                                    exit = true;
-                                    break;
-                                case "h":
-                                case "hour":
-                                case "hours":
-                                    hours = num;
-                                    num = 0;
-                                    exit = true;
-                                    break;
-                                case "m":
-                                case "min":
-                                case "minute":
-                                case "minutes":
-                                    minutes = num;
-                                    num = 0;
-                                    exit = true;
-                                    break;
-                                case "s":
-                                case "second":
-                                case "seconds":
-                                    seconds = num;
-                                    num = 0;
-                                    exit = true;
-                                    break;
-                            }
+        //region Run this code while there`s an alarm to trigger
+        while (Schedule.getSchedules().size() > 0) {
+            date.setTime(System.currentTimeMillis());
+            time.update(date, sdf);
+            //case a month has passed, shit dont happen
+            if (time.day == 1 && lastDay != time.day) {
+                for (Schedule schedule : Schedule.schedules) {
+                    for (Alarm alarm : schedule.getAlarms()) {
+                        alarm.time.nextMonth(lastDay);
+                    }
+                }
+            } lastDay = time.day;
+            //Check if is time to trigger an alarm
+            for (Schedule schedule : Schedule.getSchedules()) {
+                for (Alarm alarm : schedule.getAlarms()) {
+                    if (alarm.onTime(time)) {
+                        String message = MessageHelper.collapse(alarm.context.getWords(), 2);
+                        if (!message.equals("")) {
+                            alarm.context.reply(", is time to:\n" +
+                                    message);
+                        } else {
+                            alarm.context.reply(", Ding Dong!");
                         }
+                        Schedule.removeSchedule(schedule.user, alarm);
+                    }
 
-                        if (!exit) i++;
-                    } while (i < sArr.length && !exit);
                 }
             }
-            System.out.println(days + "d" + hours + "h" + minutes + "min" + seconds + "s" + "=" + (seconds + (minutes * 60) + (hours * 3600) + (days * 86400)));
-            return (long) (seconds + (minutes * 60) + (hours * 3600) + (days * 86400));
-        } else {
-            return Long.parseLong(time);
+            //sleep
+            try {
+                Thread.sleep(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        //endregion
+
+
+        running = false;
+    });
+
+
+    private static class Schedule {
+        private static int maxAlarms = 3;
+
+        private static ArrayList<Schedule> schedules = new ArrayList<>();
+
+        static List<Schedule> getSchedules() {
+            return schedules;
+        }
+
+        static boolean addSchedule(User user, Alarm alarm){
+            for (Schedule schedule: schedules) {
+                if (schedule.user.getId().equals(user.getId())) {
+                    if (schedule.alarms.size() >= maxAlarms) {
+                        return false;
+                    }
+                    schedule.alarms.add(alarm);
+                    return true;
+                }
+            }
+            schedules.add(new Schedule(user));
+            return addSchedule(user, alarm);
+        }
+
+        static void removeSchedule(User user, Alarm alarm) {
+            for (Schedule schedule: schedules) {
+                if (schedule.user.getId().equals(user.getId())) {
+                    schedule.alarms.remove(alarm);
+                    if (schedule.alarms.size() == 0) schedules.remove(schedule);
+                    return;
+                }
+            }
+        }
+
+        private User user;
+        private List<Alarm> alarms;
+
+        private Schedule(User user){
+            this.user = user;
+            alarms = new ArrayList<>();
+        }
+        List<Alarm> getAlarms(){
+            return alarms;
+        }
+
+    }
+
+    private static class Alarm {
+
+        private Time time;
+        private Context context;
+
+        private Alarm(Time time, Context context){
+            this.time = time;
+            this.context = context;
+        }
+
+        static Alarm instantiate(Context context){
+            Time curTime = new Time(); curTime.update(date, sdf);
+            Time time = Time.getTimeFromString(context.getWords()[1]);
+            if (time == null) return null;
+            return new Alarm(time.addTime(curTime), context);
+        }
+        private boolean onTime(Time alarm){
+            return time.day * 1440 + time.hour * 60 + time.minute <= alarm.day * 1440 + alarm.hour * 60 + alarm.minute;
         }
     }
 
-    //converts a long in seconds to a String in dd hh mm ss
-    private static String getTime(long seconds) {
-        int
-                d = (int) (seconds / 86400),
-                h = (int) ((seconds % 86400) / 3600),
-                min = (int) (((seconds % 86400) % 3600) / 60),
-                s = (int) (((seconds % 86400) % 3600) % 60);
+    private static class Time {
+        int day, hour, minute;
 
-        StringBuilder time = new StringBuilder((d != 0 ? d + " days " : "") + (h != 0 ? h + " hours " : "") + (min != 0 ? min + " minutes " : "") + (s != 0 || (s == min && s == h && s == d) ? s + " seconds " : ""));
-        String[] timeSpited = time.toString().split(" ");
-        if (timeSpited.length > 2) {
-            timeSpited[timeSpited.length - 3] += " and";
+        Time(){
+            day = 0;
+            hour = 0;
+            minute = 0;
         }
-        time = new StringBuilder();
-        for (String str : timeSpited) {
-            str += " ";
-            time.append(str);
+        Time(int day, int hour, int minute) {
+            update(day, hour, minute);
         }
-        time.deleteCharAt(time.lastIndexOf(" "));
-        return time.toString();
-    }
+        void update(int day, int hour, int minute){
+            int plusH = minute / 60;
+            this.minute = minute % 60;
 
-}
+            hour += plusH;
+            int plusD = hour / 24;
+            this.hour = hour % 24;
 
-/**
- * @author SpicyFerret
- * <p>
- * helper class
- */
-class Clock implements Runnable {
-    private long timer;
-    private String alarm;
-    private MessageChannel channel;
-    private long setTime;
-    private User user;
-
-    Clock(String alarm, long timer, MessageChannel channel, User user) {
-        this.alarm = alarm;
-        this.timer = timer;
-        this.channel = channel;
-        this.setTime = System.currentTimeMillis();
-        this.user = user;
-    }
-
-    private void fire() {
-        if (!alarm.equals("")) {
-            channel.sendMessage(user.getAsMention() + ", it`s time to: \n" + alarm).queue();
-        } else {
-            channel.sendMessage(user.getAsMention() + ", it`s time!").queue();
+            this.day = day + plusD;
         }
-    }
+        void update(Date date, SimpleDateFormat sdf){
+            String[] strings = sdf.format(date).split(":");
 
-    @Override
-    public void run() {
-        try {
-            timer *= 1000;
-            Thread.sleep(timer);
-            fire();
-        } catch (Exception ignored) {
-            channel.sendMessage(user.getAsMention() + "\n" + "```Alarm" + alarm + "failed! \n" +
-                    (System.currentTimeMillis() - setTime) / 1000 + "seconds elapsed \n" +
-                    (timer - (System.currentTimeMillis() - setTime)) / 1000 + "seconds remaining!```").queue();
+            this.day = Integer.parseInt(strings[0]);
+            this.hour = Integer.parseInt(strings[1]);
+            this.minute = Integer.parseInt(strings[2]);
         }
-        RememberMe.clearClock(this);
+        void nextMonth(int daysToSubtract) {
+            if (day - daysToSubtract > 0)
+                day -= daysToSubtract;
+        }
+
+        Time addTime(Time time) {
+            this.day += time.day;
+            this.hour += time.hour;
+            this.minute += time.minute;
+            update(this.day, this.hour, this.minute);
+            return this;
+        }
+        //converts a String with time prefix into a Time object
+        private static Time getTimeFromString(String time) {
+            if (!time.chars().allMatch(Character::isDigit)) {
+                short days = 0, hours = 0, minutes = 0;
+
+                String[] sArr = time.split("");
+                if (!sArr[0].chars().allMatch(Character::isDigit)) {
+                    return null;
+                }
+                short num = 0;
+
+                for (int i = 0; i < sArr.length; i++) {
+                    String s = sArr[i];
+
+                    if (s.chars().allMatch(Character::isDigit)) {
+                        num *= 10;
+                        num += Short.parseShort(s);
+                    } else {
+
+                        StringBuilder type = new StringBuilder();
+                        boolean exit = false;
+
+                        do {
+                            s = sArr[i];
+                            type.append(s);
+
+                            if ((i + 1 < sArr.length && sArr[i + 1].chars().allMatch(Character::isDigit)) || i + 1 == sArr.length) {
+                                switch (type.toString()) {
+                                    case "d":
+                                    case "day":
+                                    case "days":
+                                        days = num;
+                                        num = 0;
+                                        exit = true;
+                                        break;
+                                    case "h":
+                                    case "hour":
+                                    case "hours":
+                                        hours = num;
+                                        num = 0;
+                                        exit = true;
+                                        break;
+                                    case "m":
+                                    case "min":
+                                    case "minute":
+                                    case "minutes":
+                                        minutes = num;
+                                        num = 0;
+                                        exit = true;
+                                        break;
+                                }
+                            }
+
+                            if (!exit) i++;
+                        } while (i < sArr.length && !exit);
+                    }
+                }
+                return new Time(days, hours, minutes);
+            } else {
+                return new Time(0, 0, Integer.parseInt(time));
+            }
+        }
     }
 
 }

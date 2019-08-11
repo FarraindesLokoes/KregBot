@@ -9,6 +9,7 @@ import java.util.Set;
  * Utility class for messages.
  *
  * @author Nukeologist
+ * @author SpicyFerret
  */
 public class MessageHelper {
 
@@ -128,6 +129,7 @@ public class MessageHelper {
      * @param end ending index -- array.length
      * @return Entire array into a single String
      * */
+    @SuppressWarnings("WeakerAccess")
     public static String collapse(String[] stringArr, int start, int end){
         StringBuilder str = new StringBuilder();
         for (; start < end; start++) {
