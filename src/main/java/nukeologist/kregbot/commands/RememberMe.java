@@ -58,7 +58,7 @@ public class RememberMe {
                 "  Day: <d> <day> <days>\n" +
                 "  Hour: <h> <hour> <hours>\n" +
                 "  Minute: <m> <min> <minute> <minutes>\n" +
-                "If you thrust in me and my AWESOOOOME toad memory, you should ask me to remember stuff for you!");
+                "If you trust in me and my AWESOOOOME toad memory, you should ask me to remember stuff for you!");
         context.send(msg.setEmbed(embed.build()).build());
     }
 
