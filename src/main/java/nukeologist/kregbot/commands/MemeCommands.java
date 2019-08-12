@@ -1,5 +1,7 @@
 package nukeologist.kregbot.commands;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.Context;
 
@@ -26,7 +28,7 @@ public class MemeCommands {
         ctx.send("Pare com essa viadagem.");
     }
 
-    private static Runnable bomb = null;
+    private static Thread bomb = null;
     private static String bombPassword;
     @Command("planting")
     public static void plantingBomb(Context context) {
@@ -35,7 +37,7 @@ public class MemeCommands {
             return;
         }
         context.send("planting...");
-        bomb = () -> {
+        bomb = new Thread(() -> {
             int count = 0;
             while (count < 5) {
                 try {
@@ -74,12 +76,20 @@ public class MemeCommands {
                 context.send("The bom was defective...");
             }
             bomb = null;
-        };
-        new Thread(bomb).start();
+        });
+        bomb.start();
     }
     @Command("defuse")
     public static void defuseBomb(Context context) {
+        bomb.interrupt();
+        bomb = null;
 
+        EmbedBuilder embed = new EmbedBuilder();
+        MessageBuilder msg = new MessageBuilder();
+        embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
+        embed.setDescription("The bomb has been defused!\n" +
+                "COUNTER TERRORIST WINS!");
+        context.send(msg.setEmbed(embed.build()).build());
     }
 
 }
