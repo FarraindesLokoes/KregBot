@@ -119,6 +119,6 @@ public class AdminCommands {
 
     @CommandHelp("printtable")
     public static void helpPrint(Context ctx) {
-        ctx.send("Command that prints the table of message values.\nWorks only with admins and on servers.");
+        ctx.send("Command that prints the table of message values.\nWorks only on servers.");
     }
 }
