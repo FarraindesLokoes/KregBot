@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utility class for messages.
@@ -19,7 +21,17 @@ public class MessageHelper {
      * @param message the string
      */
     public static String sanitizeEveryone(String message) {
-        return message.replaceAll("@here", "everyone").replaceAll("@everyone", "everyone");
+        Matcher matcher1 = Patterns.EVERYONE.matcher(message);
+        Matcher matcher2 = Patterns.HERE.matcher(message);
+        while (matcher1.find()) {
+            message = matcher1.replaceAll("everyone");
+            matcher1 = Patterns.EVERYONE.matcher(message);
+        }
+        while (matcher2.find()) {
+            message = matcher2.replaceAll("here");
+            matcher2 = Patterns.HERE.matcher(message);
+        }
+        return message;
     }
 
     /**
@@ -125,27 +137,30 @@ public class MessageHelper {
      * Collapse a String array into a single String
      *
      * @param stringArr String Array to collapse.
-     * @param start starting index -- 0
-     * @param end ending index -- array.length
+     * @param start     starting index -- 0
+     * @param end       ending index -- array.length
      * @return Entire array into a single String
-     * */
+     */
     @SuppressWarnings("WeakerAccess")
-    public static String collapse(String[] stringArr, int start, int end){
+    public static String collapse(String[] stringArr, int start, int end) {
         StringBuilder str = new StringBuilder();
         for (; start < end; start++) {
             str.append(stringArr[start]).append(" ");
         }
         return str.toString();
     }
+
     public static String collapse(String[] stringArr, int start) {
         return collapse(stringArr, start, stringArr.length);
     }
+
     public static String collapse(String[] stringArr) {
         return collapse(stringArr, 0, stringArr.length);
     }
 
     /**
      * Gets the longest String in the set
+     *
      * @param set the set of strings
      * @return longest string
      */
