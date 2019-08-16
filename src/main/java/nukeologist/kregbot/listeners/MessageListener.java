@@ -49,7 +49,8 @@ public class MessageListener implements EventListener {
     private void onMessage(MessageReceivedEvent event) {
         LOG.info("#{} #{} < {} >", event.getChannel(), event.getAuthor(), event.getMessage().getContentRaw());
         if (RANDOM.nextInt(1000) == 69) event.getChannel().sendMessage(getRandomResponse()).queue();
-        if (event.getMessage().getContentRaw().startsWith("60?")) event.getChannel().sendMessage("Pare com essa viadagem.").queue();
+        if (event.getMessage().getContentRaw().startsWith("60?"))
+            event.getChannel().sendMessage("Pare com essa viadagem.").queue();
     }
 
     private void onGuildMessage(GuildMessageReceivedEvent event) {
@@ -62,7 +63,7 @@ public class MessageListener implements EventListener {
         if (!matches) {
             String[] words = msg.split("\\s+");
             if (words.length > 1) {
-                matcher = Patterns.INCREMENT_DECREMENT.matcher(words[0] + words[1]);
+                matcher = Patterns.INCREMENT_DECREMENT.matcher(MessageHelper.sanitizeEveryone(words[0] + words[1]));
                 if (matcher.matches()) matches = true;
             }
         }
