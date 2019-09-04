@@ -27,12 +27,17 @@ public enum KregBot {
 
     private static JDA JDA;
 
-    public void init() throws LoginException {
+    public void init(String[] args) throws LoginException {
 
         CommandListener.init();
         LOG.info("Finished initializing commands.");
+        String token = System.getenv("BOT_TOKEN");
+        if (token == null) {
+            LOG.info("Didnt find the token in system env, trying inital args.");
+            token = args[0];
+        }
         JDA = new JDABuilder(AccountType.BOT)
-                .setToken(System.getenv("BOT_TOKEN"))
+                .setToken(token)
                 .addEventListeners(new ReadyListener(), new MessageListener(), new CommandListener(), new GuildListener())
                 .setActivity(Activity.playing("comunistas do helicóptero"))
                 .build();

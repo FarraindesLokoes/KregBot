@@ -8,7 +8,7 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) throws LoginException, IOException {
-        KregBot.INSTANCE.init();
+        KregBot.INSTANCE.init(args);
     }
 
 }

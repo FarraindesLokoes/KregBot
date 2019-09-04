@@ -23,5 +23,6 @@ eclipse
 run
 guildtracker.json
 increments.json
+echoMessages.json
 
 demoApplication.log
