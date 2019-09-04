@@ -175,6 +175,7 @@ public class EchoCommand {
         }
         final EchoMessage msg = echo.get();
         msg.setLabel(words[3]);
+        SAVER.saveJson(echoStorage, ECHOMESSAGES);
         ctx.send("Updated " + words[2] + " to use " + words[3] + " instead.");
     }
 
