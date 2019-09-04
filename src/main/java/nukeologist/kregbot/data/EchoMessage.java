@@ -8,7 +8,7 @@ import java.util.Objects;
 public class EchoMessage {
 
     private final long OWNER;
-    private final String LABEL;
+    private String LABEL;
     private String messageContent;
 
     public EchoMessage(final long OWNER, final String LABEL) {
@@ -27,6 +27,10 @@ public class EchoMessage {
 
     public final String getLabel() {
         return LABEL;
+    }
+
+    public final void setLabel(String label) {
+        this.LABEL = label;
     }
 
     public final Member getOwner(Context ctx) {

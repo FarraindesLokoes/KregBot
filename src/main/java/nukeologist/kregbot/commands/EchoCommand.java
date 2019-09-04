@@ -46,6 +46,9 @@ public class EchoCommand {
             case "u":
                 handleUpdate(ctx);
                 break;
+            case "label":
+                handleLabelUpdate(ctx);
+                break;
             default:
                 handleDefault(ctx);
 
@@ -56,7 +59,8 @@ public class EchoCommand {
     public static void helpEcho(Context ctx) {
         ctx.send("Make Kreg remember messages, quotes, whatever you want. Usage: \n" +
                 "!echo ADD NAME MESSAGE to save message with label NAME or\n !echo RAND for a random quote or\n" +
-                "!echo UPDATE NAME to update the message with label NAME or\n !echo NAME to see the message with label NAME");
+                "!echo UPDATE NAME to update the message with label NAME or\n !echo NAME to see the message with label NAME\n" +
+                "!echo label OLD NEW to update message with label OLD to label NEW");
     }
 
     private static void handleRandom(final Context ctx) {
@@ -150,6 +154,28 @@ public class EchoCommand {
             return;
         }
         ctx.send(echo.get().getMessageContent());
+    }
+
+    private static void handleLabelUpdate(Context ctx) {
+        final String[] words = ctx.getWords();
+        if (words.length < 4) {
+            ctx.send("What do you want to update the name with? Not enough params.");
+            return;
+        }
+        final long guild = ctx.getMember().getGuild().getIdLong();
+        final List<EchoMessage> messages = echoStorage.ECHOS.get(guild);
+        if (messages == null) {
+            ctx.send("No messages in this guild bruh");
+            return;
+        }
+        final Optional<EchoMessage> echo = messages.stream().filter(e -> e.getLabel().equals(words[2])).findAny();
+        if (echo.isEmpty()) {
+            ctx.send("Message with given label [" + words[2] + "] was not found.");
+            return;
+        }
+        final EchoMessage msg = echo.get();
+        msg.setLabel(words[3]);
+        ctx.send("Updated " + words[2] + " to use " + words[3] + " instead.");
     }
 
     private static class EchoStorage {
