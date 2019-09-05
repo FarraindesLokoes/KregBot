@@ -33,6 +33,7 @@ public interface CommandContainer {
 
     /**
      * Gets if the command can be called by a bot.
+     *
      * @return true if can be called by a bot user.
      */
     boolean canBeCalledByBot();

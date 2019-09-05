@@ -1,6 +1,5 @@
 package nukeologist.kregbot.commands;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -15,7 +14,6 @@ import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.SaveHelper;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Nukeologist

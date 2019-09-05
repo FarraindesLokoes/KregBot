@@ -174,6 +174,13 @@ public class EchoCommand {
             return;
         }
         final EchoMessage msg = echo.get();
+        if (msg.getOwner(ctx).getIdLong() != ctx.getMember().getIdLong()) {
+            if (!ctx.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+                ctx.send("You are not the owner of this echo, so you can't update it.");
+                return;
+            }
+            ctx.send("You are not the owner of this echo, but you have adm perms.");
+        }
         msg.setLabel(words[3]);
         SAVER.saveJson(echoStorage, ECHOMESSAGES);
         ctx.send("Updated " + words[2] + " to use " + words[3] + " instead.");

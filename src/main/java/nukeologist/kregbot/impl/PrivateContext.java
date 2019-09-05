@@ -54,12 +54,12 @@ public class PrivateContext implements Context {
 
     @Override
     public void reply(String replyString) {
-        event.getChannel().sendMessage(replyUser(event.getAuthor())+ " " + replyString).queue();
+        event.getChannel().sendMessage(replyUser(event.getAuthor()) + " " + replyString).queue();
     }
 
     @Override
     public void reply(Message message) {
-        event.getChannel().sendMessage(replyUser(event.getAuthor())+ " " + message).queue();
+        event.getChannel().sendMessage(replyUser(event.getAuthor()) + " " + message).queue();
     }
 
     @Override

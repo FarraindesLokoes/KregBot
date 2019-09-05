@@ -12,6 +12,7 @@ import java.util.Optional;
 /**
  * Class that handles command registry, and
  * scanning of all classes.
+ *
  * @author Nukeologist
  */
 public class BotManager {
@@ -25,9 +26,9 @@ public class BotManager {
             .scan();
 
 
-
     /**
      * Gets the scan of all classes.
+     *
      * @return the scanresult
      */
     public static ScanResult getResult() {
@@ -36,6 +37,7 @@ public class BotManager {
 
     /**
      * Gets a list of all commands this bot has.
+     *
      * @return list containing commands.
      */
     public static List<CommandContainer> getCommands() {
@@ -62,6 +64,7 @@ public class BotManager {
 
     /**
      * Gets the command associated with given label.
+     *
      * @param label the command caller.
      * @return an optional which may have the command.
      */

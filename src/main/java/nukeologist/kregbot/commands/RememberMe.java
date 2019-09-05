@@ -26,7 +26,7 @@ public class RememberMe {
     public static void setAlarm(Context context) {
         String[] messages = context.getWords();
 
-        if (messages.length == 1){
+        if (messages.length == 1) {
             context.reply(", Syntax Error: time missing. \n" +
                     "Use '!help rememberMe' for more info.");
         } else {
@@ -44,7 +44,9 @@ public class RememberMe {
         }
 
         // In case alarm checker is not running, make it stat running
-        if (!running) { alarmCheck.start(); }
+        if (!running) {
+            alarmCheck.start();
+        }
     }
 
     @CommandHelp("rememberMe")
@@ -84,7 +86,8 @@ public class RememberMe {
                         alarm.time.nextMonth(lastDay);
                     }
                 }
-            } lastDay = time.day;
+            }
+            lastDay = time.day;
             //Check if is time to trigger an alarm
             for (Schedule schedule : Schedule.getSchedules()) {
                 for (Alarm alarm : schedule.getAlarms()) {
@@ -124,8 +127,8 @@ public class RememberMe {
             return schedules;
         }
 
-        static boolean addSchedule(User user, Alarm alarm){
-            for (Schedule schedule: schedules) {
+        static boolean addSchedule(User user, Alarm alarm) {
+            for (Schedule schedule : schedules) {
                 if (schedule.user.getId().equals(user.getId())) {
                     if (schedule.alarms.size() >= maxAlarms) {
                         return false;
@@ -139,7 +142,7 @@ public class RememberMe {
         }
 
         static void removeSchedule(User user, Alarm alarm) {
-            for (Schedule schedule: schedules) {
+            for (Schedule schedule : schedules) {
                 if (schedule.user.getId().equals(user.getId())) {
                     schedule.alarms.remove(alarm);
                     if (schedule.alarms.size() == 0) schedules.remove(schedule);
@@ -151,11 +154,12 @@ public class RememberMe {
         private User user;
         private List<Alarm> alarms;
 
-        private Schedule(User user){
+        private Schedule(User user) {
             this.user = user;
             alarms = new ArrayList<>();
         }
-        List<Alarm> getAlarms(){
+
+        List<Alarm> getAlarms() {
             return alarms;
         }
 
@@ -166,18 +170,20 @@ public class RememberMe {
         private Time time;
         private Context context;
 
-        private Alarm(Time time, Context context){
+        private Alarm(Time time, Context context) {
             this.time = time;
             this.context = context;
         }
 
-        static Alarm instantiate(Context context){
-            Time curTime = new Time(); curTime.update(date, sdf);
+        static Alarm instantiate(Context context) {
+            Time curTime = new Time();
+            curTime.update(date, sdf);
             Time time = Time.getTimeFromString(context.getWords()[1]);
             if (time == null) return null;
             return new Alarm(time.addTime(curTime), context);
         }
-        private boolean onTime(Time alarm){
+
+        private boolean onTime(Time alarm) {
             return time.day * 1440 + time.hour * 60 + time.minute <= alarm.day * 1440 + alarm.hour * 60 + alarm.minute;
         }
     }
@@ -185,15 +191,17 @@ public class RememberMe {
     private static class Time {
         int day, hour, minute;
 
-        Time(){
+        Time() {
             day = 0;
             hour = 0;
             minute = 0;
         }
+
         Time(int day, int hour, int minute) {
             update(day, hour, minute);
         }
-        void update(int day, int hour, int minute){
+
+        void update(int day, int hour, int minute) {
             int plusH = minute / 60;
             this.minute = minute % 60;
 
@@ -203,13 +211,15 @@ public class RememberMe {
 
             this.day = day + plusD;
         }
-        void update(Date date, SimpleDateFormat sdf){
+
+        void update(Date date, SimpleDateFormat sdf) {
             String[] strings = sdf.format(date).split(":");
 
             this.day = Integer.parseInt(strings[0]);
             this.hour = Integer.parseInt(strings[1]);
             this.minute = Integer.parseInt(strings[2]);
         }
+
         void nextMonth(int daysToSubtract) {
             if (day - daysToSubtract > 0)
                 day -= daysToSubtract;
@@ -222,6 +232,7 @@ public class RememberMe {
             update(this.day, this.hour, this.minute);
             return this;
         }
+
         //converts a String with time prefix into a Time object
         private static Time getTimeFromString(String time) {
             if (!time.chars().allMatch(Character::isDigit)) {

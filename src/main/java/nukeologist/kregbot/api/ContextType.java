@@ -2,6 +2,7 @@ package nukeologist.kregbot.api;
 
 /**
  * Context for {@link Command} method listeners.
+ *
  * @author Nukeologist
  */
 public enum ContextType {
