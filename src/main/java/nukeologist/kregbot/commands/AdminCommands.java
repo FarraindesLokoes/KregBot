@@ -1,6 +1,5 @@
 package nukeologist.kregbot.commands;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -15,7 +14,6 @@ import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.SaveHelper;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Nukeologist
@@ -100,11 +98,11 @@ public class AdminCommands {
             int part = 1;
             long guild = ctx.getMember().getGuild().getIdLong();
             Map<String, Integer> map = VALUES.getMapOfGuild(guild);
-            int longest = MessageHelper.getLongestString(map.keySet()).length();
+            //int longest = MessageHelper.getLongestString(map.keySet()).length();
             if (map != null) {
                 for (Map.Entry<String, Integer> entry : map.entrySet()) {
                     String key = entry.getKey();
-                    label.append(key).append(" ".repeat(longest + 1 - key.length())).append(entry.getValue()).append("\n");
+                    label.append(key).append("\t").append(entry.getValue()).append("\n");
                     if (label.length() > 1600) { //Embeds over 1024 characters get rekt by discord, and messages > 2000
                         //Message shall format itself, but code blocks actually look worse, f u discord!
                         ctx.send(label.toString());
@@ -119,6 +117,6 @@ public class AdminCommands {
 
     @CommandHelp("printtable")
     public static void helpPrint(Context ctx) {
-        ctx.send("Command that prints the table of message values.\nWorks only with admins and on servers.");
+        ctx.send("Command that prints the table of message values.\nWorks only on servers.");
     }
 }

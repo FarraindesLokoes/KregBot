@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import nukeologist.kregbot.data.MessageValues;
+import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.Patterns;
 import nukeologist.kregbot.util.SaveHelper;
 import org.slf4j.Logger;
@@ -48,18 +49,21 @@ public class MessageListener implements EventListener {
     private void onMessage(MessageReceivedEvent event) {
         LOG.info("#{} #{} < {} >", event.getChannel(), event.getAuthor(), event.getMessage().getContentRaw());
         if (RANDOM.nextInt(1000) == 69) event.getChannel().sendMessage(getRandomResponse()).queue();
+        if (event.getMessage().getContentRaw().startsWith("60?"))
+            event.getChannel().sendMessage("Pare com essa viadagem.").queue();
     }
 
     private void onGuildMessage(GuildMessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
         if (VALUES == null) VALUES = new MessageValues();
         String msg = event.getMessage().getContentRaw();
+        msg = MessageHelper.sanitizeEveryone(msg); //fuck @everyone lmao
         Matcher matcher = Patterns.INCREMENT_DECREMENT.matcher(msg);
         boolean matches = matcher.matches();
         if (!matches) {
             String[] words = msg.split("\\s+");
             if (words.length > 1) {
-                matcher = Patterns.INCREMENT_DECREMENT.matcher(words[0] + words[1]);
+                matcher = Patterns.INCREMENT_DECREMENT.matcher(MessageHelper.sanitizeEveryone(words[0] + words[1]));
                 if (matcher.matches()) matches = true;
             }
         }

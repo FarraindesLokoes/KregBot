@@ -37,6 +37,7 @@ public interface Context {
 
     /**
      * The guild member that called the command.
+     *
      * @return the author or null if not in guild context.
      */
     Member getMember();

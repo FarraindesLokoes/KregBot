@@ -30,6 +30,7 @@ public class MemeCommands {
 
     private static Thread bomb = null;
     private static String bombPassword;
+
     @Command("planting")
     public static void plantingBomb(Context context) {
         if (bomb != null) {
@@ -46,7 +47,7 @@ public class MemeCommands {
                     e.printStackTrace();
                 }
                 count++;
-                context.send( ".".repeat(Math.max(1, count)));
+                context.send(".".repeat(Math.max(1, count)));
             }
             context.send("@here\nThe bomb has been planted!");
 
@@ -79,6 +80,7 @@ public class MemeCommands {
         });
         bomb.start();
     }
+
     @Command("defuse")
     public static void defuseBomb(Context context) {
         bomb.interrupt();
