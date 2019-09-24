@@ -61,6 +61,7 @@ public class ReplaceWordCommand {
     public static void replaceClear(Context context) {
         if (context.getMember().hasPermission(Permission.ADMINISTRATOR)) {
             ReplacerListener.VALUES.getMap().clear();
+            ReplacerListener.SAVER.saveJson(ReplacerListener.VALUES, "replacers");
             context.reply(", you nazi!");
             return;
         }
