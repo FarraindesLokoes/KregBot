@@ -64,7 +64,7 @@ public class ReplaceWordCommand {
             context.reply(", you nazi!");
             return;
         }
-        context.reply(", you does not have permission to do that, fucking cunt.");
+        context.reply(", you do not have permission to do that, fucking cunt.");
     }
 
     @Command(value = "replaceTable", type = ContextType.GUILD)
