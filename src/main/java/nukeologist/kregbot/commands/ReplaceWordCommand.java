@@ -77,6 +77,10 @@ public class ReplaceWordCommand {
 
             for (Map.Entry<String, String> entry: possible.entrySet()) {
                 stringBuilder.append("\n").append(entry.getKey()).append(" → ").append(entry.getValue());
+                if (stringBuilder.length() > 1800) {
+                    context.getChannel().sendMessage(MessageHelper.makeMultiCodeBlock(stringBuilder.toString())).queue();
+                    stringBuilder = new StringBuilder();
+                }
             }
 
             context.getChannel().sendMessage(MessageHelper.makeMultiCodeBlock(stringBuilder.toString())).queue();
