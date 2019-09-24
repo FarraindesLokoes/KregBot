@@ -18,7 +18,7 @@ import java.util.Random;
  * */
 public class ReplacerListener implements EventListener {
     private static final Logger LOG = LoggerFactory.getLogger("Chat");
-    private static final SaveHelper<MessageReplacer> SAVER = new SaveHelper<>(MessageReplacer.class);
+    public static final SaveHelper<MessageReplacer> SAVER = new SaveHelper<>(MessageReplacer.class);
     private static final Random RANDOM = new Random();
     public static MessageReplacer VALUES = SAVER.fromJson("replacers");
 

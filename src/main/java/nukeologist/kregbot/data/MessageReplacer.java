@@ -1,5 +1,8 @@
 package nukeologist.kregbot.data;
 
+import nukeologist.kregbot.listeners.ReplacerListener;
+import nukeologist.kregbot.util.SaveHelper;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +26,7 @@ public class MessageReplacer {
                 possible.put(original, replacer);
             }
         }
+        ReplacerListener.SAVER.saveJson(this, "replacers");
     }
 
     public Map<Long, Map<String, String>> getMap() {
