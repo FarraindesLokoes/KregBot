@@ -29,19 +29,22 @@ public class ReplacerListener implements EventListener {
             onGuildMessage((GuildMessageReceivedEvent) event);
     }
 
-
-
     private void onGuildMessage(GuildMessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) return;
+        if (event.getAuthor().isBot() || event.getMessage().getContentRaw().charAt(0) == '!') return;
         if (VALUES == null) VALUES = new MessageReplacer();
         String[] msg = event.getMessage().getContentRaw().split(" ");
         Map<String, String> map = VALUES.getMapOfGuild(event.getGuild().getIdLong());
-        for (String str: msg) {
+        boolean replaced = false;
+        for (int i = 0; i < msg.length; i++) {
+            String str = msg[i];
             if (map.containsKey(str)) {
-                str = map.get(str);
+                replaced = true;
+                msg[i] = map.get(str);
             }
         }
-        event.getMessage().editMessage(MessageHelper.collapse(msg)).queue();
+        if (!replaced) return;
+        event.getMessage().delete().queue();
+        event.getChannel().sendMessage(event.getAuthor().getAsTag() + " says: " + MessageHelper.collapse(msg)).queue();
     }
 
 }

@@ -4,10 +4,7 @@ import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import nukeologist.kregbot.listeners.CommandListener;
-import nukeologist.kregbot.listeners.GuildListener;
-import nukeologist.kregbot.listeners.MessageListener;
-import nukeologist.kregbot.listeners.ReadyListener;
+import nukeologist.kregbot.listeners.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +18,7 @@ public enum KregBot {
 
     INSTANCE;
 
-    private static final String version = "0.1";
+    private static final String version = "1.0.1";
 
     public static final Logger LOG = LoggerFactory.getLogger("[KregBot|Reborn]");
 
@@ -33,7 +30,7 @@ public enum KregBot {
         LOG.info("Finished initializing commands.");
         JDA = new JDABuilder(AccountType.BOT)
                 .setToken(System.getenv("BOT_TOKEN"))
-                .addEventListeners(new ReadyListener(), new MessageListener(), new CommandListener(), new GuildListener())
+                .addEventListeners(new ReadyListener(), new MessageListener(), new CommandListener(), new GuildListener(), new ReplacerListener())
                 .setActivity(Activity.playing("comunistas do helicóptero"))
                 .build();
     }
