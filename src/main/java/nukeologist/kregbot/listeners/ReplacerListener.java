@@ -44,7 +44,7 @@ public class ReplacerListener implements EventListener {
         }
         if (!replaced) return;
         event.getMessage().delete().queue();
-        event.getChannel().sendMessage(event.getAuthor().getAsTag() + " says: " + MessageHelper.collapse(msg)).queue();
+        event.getChannel().sendMessage(event.getAuthor().getAsTag() + " says: " + MessageHelper.sanitizeEveryone(MessageHelper.collapse(msg))).queue();
     }
 
 }
