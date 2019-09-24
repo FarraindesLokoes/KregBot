@@ -38,7 +38,9 @@ public class ReplaceWordCommand {
         embed.setDescription("Use !replace <word A> <word or sentence B>\n" +
                 "  Messages containing A will be replaced by B instead of the original word A.\n" +
                 "Use !replaceRemove <word A>\n" +
-                "  Messages containing A will no longer be replaced.");
+                "  Messages containing A will no longer be replaced.\n" +
+                "Use !replaceTable\n" +
+                "  All messages and replacers will be listed.");
         context.send(msg.setEmbed(embed.build()).build());
     }
 
