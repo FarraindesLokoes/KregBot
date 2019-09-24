@@ -27,7 +27,7 @@ public class ReplaceWordCommand {
         } else {
             String str = MessageHelper.sanitizeEveryone(MessageHelper.collapse(words, 2));
             ReplacerListener.VALUES.add(context.getMember().getGuild().getIdLong(), words[1], str);
-            context.reply(", okay, " + words[1] + " will now be replaced by " + str);
+            context.reply(", okay, " + MessageHelper.sanitizeEveryone(words[1]) + " will now be replaced by " + str);
         }
     }
 
