@@ -10,6 +10,8 @@ import nukeologist.kregbot.listeners.ReplacerListener;
 import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.Constants;
 
+import java.util.Map;
+
 /**
  * @author SpicyFerret
  * */
@@ -54,6 +56,19 @@ public class ReplaceWordCommand {
 
     @Command(value = "replaceTable", type = ContextType.GUILD)
     public static void replaceTable(Context context){
+        Map<String, String> possible = ReplacerListener.VALUES.getMapOfGuild(context.getMember().getGuild().getIdLong());
 
+        if (possible != null && possible.size() > 0) {
+            StringBuilder stringBuilder = new StringBuilder("Replace table:");
+
+
+            for (Map.Entry<String, String> entry: possible.entrySet()) {
+                stringBuilder.append("\n").append(entry.getKey()).append(" → ").append(entry.getValue());
+            }
+
+            context.getChannel().sendMessage(MessageHelper.makeMultiCodeBlock(stringBuilder.toString())).queue();
+            return;
+        }
+        context.reply("Missing table or not crated yet.");
     }
 }
