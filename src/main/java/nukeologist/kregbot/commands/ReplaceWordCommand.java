@@ -69,6 +69,6 @@ public class ReplaceWordCommand {
             context.getChannel().sendMessage(MessageHelper.makeMultiCodeBlock(stringBuilder.toString())).queue();
             return;
         }
-        context.reply("Missing table or not crated yet.");
+        context.reply("Missing table or not created yet.");
     }
 }
