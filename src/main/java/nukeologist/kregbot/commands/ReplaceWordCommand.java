@@ -21,8 +21,9 @@ public class ReplaceWordCommand {
         if (words.length < 3) {
             context.reply(", Syntax error: !replace <original> <replacer>");
         } else {
-            ReplacerListener.VALUES.add(context.getMember().getGuild().getIdLong(), words[1], MessageHelper.collapse(words, 2));
-            context.reply(", okay, " + words[1] + " will now be replaced by " + MessageHelper.collapse(words, 2));
+            String str = MessageHelper.sanitizeEveryone(MessageHelper.collapse(words, 2));
+            ReplacerListener.VALUES.add(context.getMember().getGuild().getIdLong(), words[1], str);
+            context.reply(", okay, " + words[1] + " will now be replaced by " + str);
         }
     }
 
