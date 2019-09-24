@@ -2,7 +2,7 @@ package nukeologist.kregbot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
-import nukeologist.kregbot.util.Patterns;
+import nukeologist.kregbot.util.Constants;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
@@ -28,10 +28,10 @@ public class RPGCommands {
             boolean atLeastOne = false;
             for (String word : words) {
                 if (word.equalsIgnoreCase("roll")) continue;
-                Matcher oneRoll = Patterns.ONEROLL.matcher(word);
-                Matcher anyRoll = Patterns.ANYROLL.matcher(word);
+                Matcher oneRoll = Constants.ONEROLL.matcher(word);
+                Matcher anyRoll = Constants.ANYROLL.matcher(word);
                 if (oneRoll.matches()) { // d20, d6, etc
-                    int diceNumber = Integer.parseInt(word.replaceAll(Patterns.GETINTEGER.toString(), "$1"));
+                    int diceNumber = Integer.parseInt(word.replaceAll(Constants.GETINTEGER.toString(), "$1"));
                     String roll = roll(1, diceNumber);
                     sum += getSumFromString(roll);
                     builder.append(roll);
@@ -39,7 +39,7 @@ public class RPGCommands {
                     atLeastOne = true;
                 } else if (anyRoll.matches()) { //matches <N>d<M> where N and M are ints
                     atLeastOne = true;
-                    int dice = Integer.parseInt(word.replaceAll(Patterns.GETINTEGER.toString(), "$1")); //parses int before d
+                    int dice = Integer.parseInt(word.replaceAll(Constants.GETINTEGER.toString(), "$1")); //parses int before d
                     int diceNumber = Integer.parseInt(word.replaceFirst("\\d+d", ""));
                     String roll = roll(dice, diceNumber);
                     sum += getSumFromString(roll);

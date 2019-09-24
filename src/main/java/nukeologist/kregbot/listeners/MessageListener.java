@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import nukeologist.kregbot.data.MessageValues;
 import nukeologist.kregbot.util.MessageHelper;
-import nukeologist.kregbot.util.Patterns;
+import nukeologist.kregbot.util.Constants;
 import nukeologist.kregbot.util.SaveHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,12 +58,12 @@ public class MessageListener implements EventListener {
         if (VALUES == null) VALUES = new MessageValues();
         String msg = event.getMessage().getContentRaw();
         msg = MessageHelper.sanitizeEveryone(msg); //fuck @everyone lmao
-        Matcher matcher = Patterns.INCREMENT_DECREMENT.matcher(msg);
+        Matcher matcher = Constants.INCREMENT_DECREMENT.matcher(msg);
         boolean matches = matcher.matches();
         if (!matches) {
             String[] words = msg.split("\\s+");
             if (words.length > 1) {
-                matcher = Patterns.INCREMENT_DECREMENT.matcher(MessageHelper.sanitizeEveryone(words[0] + words[1]));
+                matcher = Constants.INCREMENT_DECREMENT.matcher(MessageHelper.sanitizeEveryone(words[0] + words[1]));
                 if (matcher.matches()) matches = true;
             }
         }

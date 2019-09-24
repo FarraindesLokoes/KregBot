@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Utility class for messages.
@@ -21,15 +20,15 @@ public class MessageHelper {
      * @param message the string
      */
     public static String sanitizeEveryone(String message) {
-        Matcher matcher1 = Patterns.EVERYONE.matcher(message);
-        Matcher matcher2 = Patterns.HERE.matcher(message);
+        Matcher matcher1 = Constants.EVERYONE.matcher(message);
+        Matcher matcher2 = Constants.HERE.matcher(message);
         while (matcher1.find()) {
             message = matcher1.replaceAll("everyone");
-            matcher1 = Patterns.EVERYONE.matcher(message);
+            matcher1 = Constants.EVERYONE.matcher(message);
         }
         while (matcher2.find()) {
             message = matcher2.replaceAll("here");
-            matcher2 = Patterns.HERE.matcher(message);
+            matcher2 = Constants.HERE.matcher(message);
         }
         return message;
     }

@@ -8,6 +8,7 @@ import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.api.ContextType;
 import nukeologist.kregbot.listeners.ReplacerListener;
 import nukeologist.kregbot.util.MessageHelper;
+import nukeologist.kregbot.util.Constants;
 
 /**
  * @author SpicyFerret
@@ -32,8 +33,27 @@ public class ReplaceWordCommand {
         EmbedBuilder embed = new EmbedBuilder();
         MessageBuilder msg = new MessageBuilder();
         embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
-        embed.setDescription("Use !replace <word> <word or sentence>\n" +
-                "messages containing the first parameter will be replaced by a new one containing the second parameter instead of the original word.");
+        embed.setDescription("Use !replace <word A> <word or sentence B>\n" +
+                "  Messages containing A will be replaced by B instead of the original word A.\n" +
+                "Use !replaceRemove <word A>\n" +
+                "  Messages containing A will no longer be replaced.");
         context.send(msg.setEmbed(embed.build()).build());
+    }
+
+    @Command(value = "replaceRemove", type = ContextType.GUILD)
+    public static void replaceRemove(Context context){
+        String[] words = context.getWords();
+
+        if (words.length < 2) {
+            context.reply(", Syntax error: !replace <original>");
+        } else {
+           ReplacerListener.VALUES.remove(context.getMember().getGuild().getIdLong(), words[1]);
+           context.getMessage().addReaction(Constants.Emotes.ItsApproved).queue();
+        }
+    }
+
+    @Command(value = "replaceTable", type = ContextType.GUILD)
+    public static void replaceTable(Context context){
+
     }
 }

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  *
  * @author Nukeologist
  */
-public class Patterns {
+public class Constants {
 
     public static final Pattern INCREMENT_DECREMENT = Pattern.compile("^(\\S+)(\\+\\+|--)$");
 
@@ -17,4 +17,8 @@ public class Patterns {
 
     public static final Pattern HERE = Pattern.compile("@here");
     public static final Pattern EVERYONE = Pattern.compile("@everyone");
+
+    public static class Emotes{
+        public static final String ItsApproved = "ItsApproved:233361278372937728";
+    }
 }

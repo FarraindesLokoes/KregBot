@@ -29,6 +29,22 @@ public class MessageReplacer {
         ReplacerListener.SAVER.saveJson(this, "replacers");
     }
 
+    public boolean remove(long guild, String original) {
+        Map<String, String> possible = VALUES.get(guild);
+
+        if (possible != null) {
+            if (possible.containsKey(original)) {
+                possible.remove(original);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Map<String, String> getFromGuild(long guild){
+        return VALUES.get(guild);
+    }
+
     public Map<Long, Map<String, String>> getMap() {
         return VALUES;
     }
