@@ -24,7 +24,7 @@ public enum KregBot {
 
     private static JDA JDA;
 
-    public void init() throws LoginException {
+    public void init(String[] args) throws LoginException {
 
         CommandListener.init();
         LOG.info("Finished initializing commands.");
