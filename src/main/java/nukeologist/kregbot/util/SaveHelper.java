@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import nukeologist.kregbot.KregBot;
 
 import java.io.*;
+import java.lang.reflect.Constructor;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -30,17 +31,20 @@ public class SaveHelper<T> {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     public T fromJson(String fileName) {
         T obj;
         try (Reader reader = new FileReader(fileName + ".json", StandardCharsets.UTF_8)) {
-            KregBot.LOG.info("Attempting to retrieve json with path {}", System.getProperty("user.home"));
+            KregBot.LOG.info("Attempting to retrieve json {} with path {}", fileName, System.getProperty("user.home"));
             Gson gson = new GsonBuilder().create();
             obj = gson.fromJson(reader, type);
         } catch (IOException e) {
             KregBot.LOG.info("failed to retrieve json with filename {}.json", fileName);
             try {
                 KregBot.LOG.info("Trying to return the new instance without json data.");
-                return (T) type.getConstructors()[0].newInstance();
+                final Constructor<?> ctr = type.getConstructor();
+                ctr.setAccessible(true);
+                return (T) ctr.newInstance();
             } catch (Exception ex) {
                 e.printStackTrace();
                 return null;

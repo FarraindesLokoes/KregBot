@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
-import java.io.IOException;
 
 /**
  * @author Nukeologist
@@ -18,7 +17,7 @@ public enum KregBot {
 
     INSTANCE;
 
-    private static final String version = "1.0.1";
+    private static final String VERSION = "1.0.1";
 
     public static final Logger LOG = LoggerFactory.getLogger("[KregBot|Reborn]");
 
@@ -36,7 +35,7 @@ public enum KregBot {
     }
 
     public String getVersion() {
-        return version;
+        return VERSION;
     }
 
     public JDA getJDA() {
