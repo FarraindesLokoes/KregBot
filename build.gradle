@@ -1,10 +1,15 @@
+import java.util.regex.Pattern
 plugins {
     id 'com.github.johnrengelman.shadow' version '5.0.0'
     id 'java'
 }
 
+ext {
+    MY_VERSION = pullVersion()
+}
+
 group 'nukeologist'
-version '0.1'
+version "${MY_VERSION}"
 
 sourceCompatibility = 1.11
 
@@ -31,8 +36,29 @@ dependencies {
 
 jar {
     manifest {
-        attributes(
-                'Main-Class': 'nukeologist.kregbot.Main'
-        )
+        attributes([
+                'Main-Class': 'nukeologist.kregbot.Main',
+                "Specification-Title": "KregBot",
+                "Specification-Vendor": "Nukeologist",
+                "Specification-Version": MY_VERSION, // We are version 1 of ourselves
+                "Implementation-Title": project.name,
+                "Implementation-Version": version,
+                "Implementation-Vendor" :"Nukeologist",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
+}
+
+def pullVersion() {
+    def file = file("src/main/java/nukeologist/kregbot/KregBot.java")
+    def version = ""
+    def pattern = Pattern.compile("^\tprivate static final String VERSION = \"([\\d\\.]*)\";\$")
+    file.eachLine { String s ->
+        def matcher = pattern.matcher(s)
+        if (matcher.matches()) {
+            version = matcher.group(1)
+            return version
+        }
+    }
+    return version
 }
