@@ -18,6 +18,8 @@ public class Constants {
     public static final Pattern HERE = Pattern.compile("@here");
     public static final Pattern EVERYONE = Pattern.compile("@everyone");
 
+    public static final Pattern PONTUATION = Pattern.compile("[!,.*]");
+
     public static class Emotes{
         public static final String ItsApproved = "ItsApproved:233361278372937728";
     }

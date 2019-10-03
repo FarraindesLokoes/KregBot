@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import nukeologist.kregbot.data.MessageReplacer;
+import nukeologist.kregbot.util.Constants;
 import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.SaveHelper;
 import org.jetbrains.annotations.NotNull;
@@ -36,15 +37,25 @@ public class ReplacerListener implements EventListener {
         Map<String, String> map = VALUES.getMapOfGuild(event.getGuild().getIdLong());
         boolean replaced = false;
         for (int i = 0; i < msg.length; i++) {
+
             String str = msg[i];
+            String c = String.valueOf(str.charAt(str.length() - 1));
+            str = str.replaceAll("[!,.*]", "");
             if (map.containsKey(str)) {
                 replaced = true;
-                msg[i] = map.get(str);
+                String fstr;
+                if (map.get(str).toCharArray()[map.get(str).toCharArray().length -1] == ' ') {
+                    fstr = new StringBuilder(map.get(str)).deleteCharAt(map.get(str).length() -1).toString();
+                } else {
+                    fstr = map.get(str);
+                }
+                msg[i] = fstr + (Constants.PONTUATION.matcher(c).matches() ? c : "");
             }
         }
         if (!replaced) return;
         event.getMessage().delete().queue();
-        event.getChannel().sendMessage(event.getAuthor().getAsTag() + " says: " + MessageHelper.sanitizeEveryone(MessageHelper.collapse(msg))).queue();
+        event.getChannel().sendMessage(event.getAuthor().getAsTag() + " says: " + MessageHelper.collapse(msg)).queue();
     }
+
 
 }
