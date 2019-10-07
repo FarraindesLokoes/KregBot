@@ -20,7 +20,19 @@ public class Constants {
 
     public static final Pattern PUNCTUATION = Pattern.compile("[!,.*]");
 
-    public static class Emotes{
+
+    public static class Emotes {
         public static final String ItsApproved = "ItsApproved:233361278372937728";
+    }
+
+    public static class Symbols {
+        public static final char DOUBLE_VERTICAL_BAR = 186;
+        public static final char DOUBLE_HORIZONTAL_BAR = 205;
+
+
+        public static final char DOUBLE_TOP_LEFT_CORNER = 201;
+        public static final char DOUBLE_TOP_RIGHT_CORNER = 187;
+        public static final char DOUBLE_BOTTOM_LEFT_CORNER = 200;
+        public static final char DOUBLE_BOTTOM_RIGHT_CORNER = 188;
     }
 }
