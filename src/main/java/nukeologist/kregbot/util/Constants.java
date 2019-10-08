@@ -18,9 +18,21 @@ public class Constants {
     public static final Pattern HERE = Pattern.compile("@here");
     public static final Pattern EVERYONE = Pattern.compile("@everyone");
 
-    public static final Pattern PONTUATION = Pattern.compile("[!,.*]");
+    public static final Pattern PUNCTUATION = Pattern.compile("[!,.*]");
 
-    public static class Emotes{
+
+    public static class Emotes {
         public static final String ItsApproved = "ItsApproved:233361278372937728";
+    }
+
+    public static class Symbols {
+        public static final char DOUBLE_VERTICAL_BAR = '║';
+        public static final char DOUBLE_HORIZONTAL_BAR = '═';
+
+
+        public static final char DOUBLE_TOP_LEFT_CORNER = '╔';
+        public static final char DOUBLE_TOP_RIGHT_CORNER = '╗';
+        public static final char DOUBLE_BOTTOM_LEFT_CORNER = '╚';
+        public static final char DOUBLE_BOTTOM_RIGHT_CORNER = '╝';
     }
 }

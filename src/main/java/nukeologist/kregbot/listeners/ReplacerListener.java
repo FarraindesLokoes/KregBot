@@ -49,7 +49,7 @@ public class ReplacerListener implements EventListener {
                 } else {
                     fstr = map.get(str);
                 }
-                msg[i] = fstr + (Constants.PONTUATION.matcher(c).matches() ? c : "");
+                msg[i] = fstr + (Constants.PUNCTUATION.matcher(c).matches() ? c : "");
             }
         }
         if (!replaced) return;
