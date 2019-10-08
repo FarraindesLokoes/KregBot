@@ -52,8 +52,14 @@ public class ReplaceWordCommand {
         if (words.length < 2) {
             context.reply(", Syntax error: !replace <original>");
         } else {
-           ReplacerListener.VALUES.remove(context.getMember().getGuild().getIdLong(), words[1]);
-           context.getMessage().addReaction(Constants.Emotes.ItsApproved).queue();
+           boolean confirmed = ReplacerListener.VALUES.remove(context.getMember().getGuild().getIdLong(), words[1]);
+           if (confirmed) {
+               context.getMessage().addReaction(Constants.Emotes.FarraindesLokoes.ItsApproved).queue();
+               if (context.getMessage().getReactions().size() == 0) context.getMessage().addReaction(Constants.Emotes.Normal.ThumbsUp).queue();
+           } else {
+               context.getMessage().addReaction(Constants.Emotes.FarraindesLokoes.Jebaited).queue();
+               if (context.getMessage().getReactions().size() == 0) context.getMessage().addReaction(Constants.Emotes.Normal.ThumbsDown).queue();
+           }
         }
     }
 
