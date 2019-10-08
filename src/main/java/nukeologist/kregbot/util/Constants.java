@@ -26,13 +26,13 @@ public class Constants {
     }
 
     public static class Symbols {
-        public static final char DOUBLE_VERTICAL_BAR = 186;
-        public static final char DOUBLE_HORIZONTAL_BAR = 205;
+        public static final char DOUBLE_VERTICAL_BAR = '║';
+        public static final char DOUBLE_HORIZONTAL_BAR = '═';
 
 
-        public static final char DOUBLE_TOP_LEFT_CORNER = 201;
-        public static final char DOUBLE_TOP_RIGHT_CORNER = 187;
-        public static final char DOUBLE_BOTTOM_LEFT_CORNER = 200;
-        public static final char DOUBLE_BOTTOM_RIGHT_CORNER = 188;
+        public static final char DOUBLE_TOP_LEFT_CORNER = '╔';
+        public static final char DOUBLE_TOP_RIGHT_CORNER = '╗';
+        public static final char DOUBLE_BOTTOM_LEFT_CORNER = '╚';
+        public static final char DOUBLE_BOTTOM_RIGHT_CORNER = '╝';
     }
 }
