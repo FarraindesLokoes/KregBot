@@ -22,7 +22,15 @@ public class Constants {
 
 
     public static class Emotes {
-        public static final String ItsApproved = "ItsApproved:233361278372937728";
+        public static class FarraindesLokoes {
+            public static final String ItsApproved = "ItsApproved:233361278372937728";
+            public static final String TopKek = "TopKek:370670500600479744";
+            public static final String Jebaited = "Jebaited:395648740222042112";
+        }
+        public static class Normal {
+            public static final String ThumbsUp = "U+1F44D";
+            public static final String ThumbsDown = "U+1F44E";
+        }
     }
 
     public static class Symbols {

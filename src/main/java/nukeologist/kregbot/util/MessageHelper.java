@@ -167,4 +167,7 @@ public class MessageHelper {
         return set.stream().max(Comparator.comparingInt(String::length)).get();
     }
 
+    public static String makeSpoiler(String message) {
+        return "||" + message + "||";
+    }
 }
