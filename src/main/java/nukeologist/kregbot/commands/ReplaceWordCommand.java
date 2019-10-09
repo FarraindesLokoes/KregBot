@@ -8,6 +8,7 @@ import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.api.ContextType;
 import nukeologist.kregbot.listeners.ReplacerListener;
+import nukeologist.kregbot.util.CommonMessagesReplays;
 import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.Constants;
 
@@ -23,7 +24,7 @@ public class ReplaceWordCommand {
         String[] words = context.getWords();
 
         if (words.length < 3) {
-            context.reply(", Syntax error: !replace <original> <replacer>");
+            CommonMessagesReplays.syntaxError(context, () -> helpReplace(context));
         } else {
             String str = MessageHelper.sanitizeEveryone(MessageHelper.collapse(words, 2));
             ReplacerListener.VALUES.add(context.getMember().getGuild().getIdLong(), words[1], str);
@@ -33,16 +34,12 @@ public class ReplaceWordCommand {
 
     @CommandHelp("replace")
     public static void helpReplace(Context context) {
-        EmbedBuilder embed = new EmbedBuilder();
-        MessageBuilder msg = new MessageBuilder();
-        embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
-        embed.setDescription("Use !replace <word A> <word or sentence B>\n" +
+        CommonMessagesReplays.embedMessage(context,"Use !replace <word A> <word or sentence B>\n" +
                 "  Messages containing A will be replaced by B instead of the original word A.\n" +
                 "Use !replaceRemove <word A>\n" +
                 "  Messages containing A will no longer be replaced.\n" +
                 "Use !replaceTable\n" +
                 "  All messages and replacers will be listed.");
-        context.send(msg.setEmbed(embed.build()).build());
     }
 
     @Command(value = "replaceRemove", type = ContextType.GUILD)
@@ -50,7 +47,7 @@ public class ReplaceWordCommand {
         String[] words = context.getWords();
 
         if (words.length < 2) {
-            context.reply(", Syntax error: !replace <original>");
+            CommonMessagesReplays.syntaxError(context, "missing original word");
         } else {
            boolean confirmed = ReplacerListener.VALUES.remove(context.getMember().getGuild().getIdLong(), words[1]);
            if (confirmed) {

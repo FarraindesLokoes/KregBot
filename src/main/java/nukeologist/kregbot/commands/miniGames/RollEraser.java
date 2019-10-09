@@ -5,10 +5,11 @@ import net.dv8tion.jda.api.MessageBuilder;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
+import nukeologist.kregbot.util.CommonMessagesReplays;
 import nukeologist.kregbot.util.Constants;
 import nukeologist.kregbot.util.MessageHelper;
 
-public class rollEraser {
+public class RollEraser {
 
     @Command("rollEraser")
     public static void rollEraser(Context context) {
@@ -38,10 +39,6 @@ public class rollEraser {
 
     @CommandHelp("rollEraser")
     public static void rollEraserHelp(Context context){
-        EmbedBuilder embed = new EmbedBuilder();
-        MessageBuilder msg = new MessageBuilder();
-        embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
-        embed.setDescription("Use !rollEraser to roll a YES or NO eraser.");
-        context.send(msg.setEmbed(embed.build()).build());
+        CommonMessagesReplays.embedMessage(context, "Use !rollEraser to roll a YES or NO eraser.");
     }
 }
