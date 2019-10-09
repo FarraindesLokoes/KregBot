@@ -16,7 +16,8 @@ public class Tuple<A, B> {
         if (obj == this) return true;
         if (obj == null) return false;
         if (obj.getClass() != Tuple.class) return false;
-        return Objects.equals(a, b);
+        final Tuple o = (Tuple) obj;
+        return Objects.equals(a, o.a) && Objects.equals(b, o.b);
     }
 
     @Override
