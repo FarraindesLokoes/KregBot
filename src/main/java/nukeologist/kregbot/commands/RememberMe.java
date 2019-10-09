@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.User;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
+import nukeologist.kregbot.util.CommonMessagesReplays;
 import nukeologist.kregbot.util.MessageHelper;
 
 import java.text.SimpleDateFormat;
@@ -27,12 +28,11 @@ public class RememberMe {
         String[] messages = context.getWords();
 
         if (messages.length == 1) {
-            context.reply(", Syntax Error: time missing. \n" +
-                    "Use '!help rememberMe' for more info.");
+            CommonMessagesReplays.syntaxError(context, "time not specified");
         } else {
             Alarm alarm = Alarm.instantiate(context);
             if (alarm == null) {
-                context.reply("Syntax error!");
+                CommonMessagesReplays.syntaxError(context, "time not specified or time format not recognized", () -> helpRememberMe(context));
                 return;
             }
             boolean confirmed = Schedule.addSchedule(context.getAuthor(), alarm);
@@ -51,17 +51,13 @@ public class RememberMe {
 
     @CommandHelp("rememberMe")
     public static void helpRememberMe(Context context) {
-        EmbedBuilder embed = new EmbedBuilder();
-        MessageBuilder msg = new MessageBuilder();
-        embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
-        embed.setDescription("My huge brain can remember stuff for you! Here's a little help:\n" +
+        CommonMessagesReplays.embedMessage(context, "My huge brain can remember stuff for you! Here's a little help:\n" +
                 "Usage: !rememberMe <Time (with no spaces)> <Message (Optional)>\n" +
                 "Here is some prefixes:\n" +
                 "  Day: <d> <day> <days>\n" +
                 "  Hour: <h> <hour> <hours>\n" +
                 "  Minute: <m> <min> <minute> <minutes>\n" +
                 "If you trust me and my AWESOOOOME toad memory, you should ask me to remember stuff for you!");
-        context.send(msg.setEmbed(embed.build()).build());
     }
 
 

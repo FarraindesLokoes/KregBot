@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.MessageBuilder;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
+import nukeologist.kregbot.util.CommonMessagesReplays;
 import nukeologist.kregbot.util.MessageHelper;
 
 import java.util.Random;
@@ -18,8 +19,7 @@ public class RockPaperScissor {
         String[] words = context.getWords();
 
         if (words.length < 2) {
-            context.reply("Something went wrong!");
-            rockPaperScissorHelp(context);
+            CommonMessagesReplays.syntaxError(context, "you must specify a play", () -> rockPaperScissorHelp(context));
         } else {
             int playerPlay;
             switch (words[1].charAt(0)) {
@@ -33,8 +33,7 @@ public class RockPaperScissor {
                     playerPlay = 3;
                     break;
                 default:
-                    context.reply("Something went wrong!");
-                    rockPaperScissorHelp(context);
+                    CommonMessagesReplays.syntaxError(context, "i cannot identify that play", () -> rockPaperScissorHelp(context));
                     return;
             }
             int kregPlay = RANDOM.nextInt(3) + 1;
@@ -91,7 +90,7 @@ public class RockPaperScissor {
     private static void tieEvent(Context context) {
         context.reply("Looks like its a tie.");
         if (Math.random() < 0.2) {
-            context.getMessage().getChannel().sendMessage("gay...");
+            context.send("gay...");
         }
     }
 
@@ -101,16 +100,12 @@ public class RockPaperScissor {
 
     @CommandHelp("rps")
     public static void rockPaperScissorHelp(Context context){
-        EmbedBuilder embed = new EmbedBuilder();
-        MessageBuilder msg = new MessageBuilder();
-        embed.setColor((int) (Math.random() * 16777215)); // now can be red and white, thanks to SpicyFerret
-        embed.setDescription("You know, I'm awesome at Rock Paper Scissor and I can play with you\n" +
+        CommonMessagesReplays.embedMessage(context, "You know, I'm awesome at Rock Paper Scissor and I can play with you\n" +
                 "Use !rpc <your choice>\n" +
                 "Rock: `rock` or `r`\n" +
                 "Paper: `paper` or `p`\n" +
                 "Scissor: `scissor` or `s`\n" +
                 (Math.random() < 0.2 ? MessageHelper.makeSpoiler("I'll read only the first letter anyway...") : ""));
-        context.send(msg.setEmbed(embed.build()).build());
     }
 
 
