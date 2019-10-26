@@ -197,7 +197,7 @@ public class ImageEditorCommand {
     }
 
     private static final String CREATE_HELP = "!Image Create [DIEMSIONS(maximum of 2.073.600 pixels)]\n" +
-            "\tCreates a black image\n" +
+            "\tCreates a blank image\n" +
             "\texample: [!Image Create 1920x1080]";
 
     private static final String CLEAR_HELP = "!Image Clear\n" +
@@ -213,5 +213,5 @@ public class ImageEditorCommand {
             "\t\tRectangle(or Rect) [TOPLEFT_COORDINATES] [WIDTHxHEIGHT]\n" +
             "\t\tEllipse [TOPLEFT_COORDINATES] [WIDTHxHEIGHT]\n" +
             "\tColor: [Hexadecimal]\n" +
-            "\texample: !Image Draw Circle 100x500 150 200x50x175";
+            "\texample: !Image Draw Ellipse 100x500 150x150 200x50x175";
 }

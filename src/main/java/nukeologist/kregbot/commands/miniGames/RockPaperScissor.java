@@ -79,7 +79,7 @@ public class RockPaperScissor {
                 break;
             case 1:
                 context.getMessage().getChannel().sendMessage("REMATCH NOW!\n" +
-                        "You filth " + (context.getMember().getRoles().size() > 0 ? context.getMember().getRoles().get(RANDOM.nextInt(context.getMember().getRoles().size())).getName() : "normie") + "!").queue();
+                        "You filthy " + (context.getMember().getRoles().size() > 0 ? context.getMember().getRoles().get(RANDOM.nextInt(context.getMember().getRoles().size())).getName() : "normie") + "!").queue();
                 break;
             case 2:
                 context.reply(", are you gay?");
