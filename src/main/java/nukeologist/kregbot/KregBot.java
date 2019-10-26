@@ -30,7 +30,7 @@ public enum KregBot {
         JDA = new JDABuilder(AccountType.BOT)
                 .setToken(System.getenv("BOT_TOKEN"))
                 .addEventListeners(new ReadyListener(), new MessageListener(), new CommandListener(), new GuildListener(), new ReplacerListener())
-                .setActivity(Activity.playing("comunistas do helicóptero"))
+                .setActivity(Activity.playing("with fire"))
                 .build();
     }
 
