@@ -1,17 +1,39 @@
 import java.util.regex.Pattern
+buildscript {
+    repositories {
+        maven {
+            name 'Shadow'
+            url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins'
+        }
+        mavenCentral()
+        mavenLocal()
+    }
+
+    /*dependencies {
+        classpath 'org.ajoberstar:gradle-git:0.8.0'
+    }*/
+}
+
 plugins {
     id 'com.github.johnrengelman.shadow' version '5.0.0'
     id 'java'
 }
 
+apply plugin: 'idea'
+
 ext {
     MY_VERSION = pullVersion()
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
 group 'nukeologist'
 version "${MY_VERSION}"
 
-sourceCompatibility = 1.11
+sourceCompatibility = targetCompatibility = 1.11
 
 repositories {
     jcenter()
@@ -20,7 +42,7 @@ repositories {
 
 dependencies {
 
-    compile("net.dv8tion:JDA:4.0.0_39") {
+    compile("net.dv8tion:JDA:4.1.1_101") {
         exclude module: 'opus-java'
     }
     compile 'ch.qos.logback:logback-classic:1.2.3'

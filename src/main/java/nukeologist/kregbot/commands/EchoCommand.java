@@ -87,6 +87,13 @@ public class EchoCommand {
         final long owner = ctx.getMember().getIdLong();
         final List<EchoMessage> messages = echoStorage.ECHOS.get(guild);
         final String label = msg[2];
+        if ("add".equalsIgnoreCase(label)) {
+            ctx.reply("Haha, very funny dud. NOT!");
+            return;
+        } else if (label == null) {
+            ctx.send("Nothing to add? are you serious? ...");
+            return;
+        }
         final String save = MessageHelper.sanitizeEveryone(MessageHelper.collapse(msg, 3, msg.length));
         if (messages == null) {
             final ArrayList<EchoMessage> echo = new ArrayList<>();

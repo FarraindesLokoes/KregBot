@@ -17,93 +17,83 @@ public abstract class Generic5ECharacter {
     private int RAWWISDOM;
     private int RAWCHARISMA;
 
-    /*Getters and Setters of RawStats */
-    public int getRawStrength() {
-        return RAWSTRENGTH;
+    public final void setAbility(final CharacterAbility ability, final int value) {
+        //java 11 doesn't have switch expressions yet (it's on 12)
+        switch (ability) {
+            case STRENGTH:
+                this.RAWSTRENGTH = value;
+                break;
+            case DEXTERITY:
+                this.RAWDEXTERITY = value;
+                break;
+            case CONSTITUTION:
+                this.RAWCONSTITUTION = value;
+                break;
+            case INTELLIGENCE:
+                this.RAWINTELLIGENCE = value;
+                break;
+            case WISDOM:
+                this.RAWWISDOM = value;
+                break;
+            case CHARISMA:
+                this.RAWCHARISMA = value;
+                break;
+            default:
+                throw new RuntimeException("UNKNOWN or null ability!");
+        }
     }
 
-    public void setRawStrength(int RAWSTRENGTH) {
-        this.RAWSTRENGTH = RAWSTRENGTH;
+    public final int getAbilityScore(final CharacterAbility ability) {
+        switch (ability) {
+            case STRENGTH:
+                return this.RAWSTRENGTH;
+            case DEXTERITY:
+                return this.RAWDEXTERITY;
+            case CONSTITUTION:
+                return this.RAWCONSTITUTION;
+            case INTELLIGENCE:
+                return this.RAWINTELLIGENCE;
+            case WISDOM:
+                return this.RAWWISDOM;
+            case CHARISMA:
+                return this.RAWCHARISMA;
+            default:
+                throw new RuntimeException("UNKNOWN or null ability!");
+        }
     }
 
-    public int getRawDexterity() {
-        return RAWDEXTERITY;
-    }
-
-    public void setRawDexterity(int RAWDEXTERITY) {
-        this.RAWDEXTERITY = RAWDEXTERITY;
-    }
-
-    public int getRawConstitution() {
-        return RAWCONSTITUTION;
-    }
-
-    public void setRawConstitution(int RAWCONSTITUTION) {
-        this.RAWCONSTITUTION = RAWCONSTITUTION;
-    }
-
-    public int getRawIntelligence() {
-        return RAWINTELLIGENCE;
-    }
-
-    public void setRawIntelligence(int RAWINTELLIGENCE) {
-        this.RAWINTELLIGENCE = RAWINTELLIGENCE;
-    }
-
-    public int getRawWisdom() {
-        return RAWWISDOM;
-    }
-
-    public void setRawWisdom(int RAWWISDOM) {
-        this.RAWWISDOM = RAWWISDOM;
-    }
-
-    public int getRawCharisma() {
-        return RAWCHARISMA;
-    }
-
-    public void setRawCharisma(int RAWCHARISMA) {
-        this.RAWCHARISMA = RAWCHARISMA;
-    }
-    /*End of rawStats Getters and Setters*/
-
-    private int modifierStat(int stat) {
+    private int modifierStat(final int stat) {
         return (stat - 10) / 2;
     }
 
-    public int getStrengthModifier() {
-        return modifierStat(RAWSTRENGTH);
-    }
-
-    public int getDexterityModifier() {
-        return modifierStat(RAWDEXTERITY);
-    }
-
-    public int getConstitutionModifier() {
-        return modifierStat(RAWCONSTITUTION);
-    }
-
-    public int getIntelligenceModifier() {
-        return modifierStat(RAWINTELLIGENCE);
-    }
-
-    public int getWisdomModifier() {
-        return modifierStat(RAWWISDOM);
-    }
-
-    public int getCharismaModifier() {
-        return modifierStat(RAWCHARISMA);
+    public final int getModifier(final CharacterAbility ability) {
+        switch (ability) {
+            case STRENGTH:
+                return modifierStat(this.RAWSTRENGTH);
+            case DEXTERITY:
+                return modifierStat(this.RAWDEXTERITY);
+            case CONSTITUTION:
+                return modifierStat(this.RAWCONSTITUTION);
+            case INTELLIGENCE:
+                return modifierStat(this.RAWINTELLIGENCE);
+            case WISDOM:
+                return modifierStat(this.RAWWISDOM);
+            case CHARISMA:
+                return modifierStat(this.RAWCHARISMA);
+            default:
+                throw new RuntimeException("UNKNOWN or null ability!");
+        }
     }
 
     public String getNAME() {
         return NAME;
     }
 
-    public void setNAME(String NAME) {
+    public void setNAME(final String NAME) {
         this.NAME = NAME;
     }
 
-    public long getOwnerName() {
+    public final long getOwnerName() {
         return OWNERID;
     }
 }
