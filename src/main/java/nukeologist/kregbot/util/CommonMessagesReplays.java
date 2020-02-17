@@ -4,6 +4,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import nukeologist.kregbot.api.Context;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public class CommonMessagesReplays {
 
@@ -13,20 +16,28 @@ public class CommonMessagesReplays {
      * @param observation a observation String to add on the error message
      * @param commandHelp interface with the help command to be run after the message example: ()-> commandHelp(context)
      * */
-    public static void syntaxError(@NotNull Context context, String observation, Runnable commandHelp) {
+    public static void syntaxError(@NotNull Context context, String observation, @Nullable Runnable commandHelp) {
         context.reply("Something went wrong" + (observation != null ? ": " + observation : "") + "!");
         if (commandHelp != null) {
             commandHelp.run();
         }
     }
+
+    public static void syntaxError(@NotNull Context context, String observation, @Nullable Consumer<Context> help) {
+        context.reply("Something went wrong" + (observation != null ? ": " + observation : "") + "!");
+        if (help != null) {
+            help.accept(context);
+        }
+    }
+
     public static void syntaxError(Context context) {
-        syntaxError(context, null, null);
+        context.reply("Something went wrong!");
     }
     public static void syntaxError(Context context, Runnable commandHelp) {
         syntaxError(context, null, commandHelp);
     }
     public static void syntaxError(Context context, String observation) {
-        syntaxError(context, observation, null);
+        context.reply("Something went wrong" + (observation != null ? ": " + observation : "") + "!");
     }
 
 

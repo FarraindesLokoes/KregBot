@@ -1,4 +1,4 @@
-package nukeologist.kregbot.data;
+package nukeologist.kregbot.data.character;
 
 public abstract class Generic5ECharacter {
 

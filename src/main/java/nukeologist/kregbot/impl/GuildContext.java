@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import nukeologist.kregbot.api.Context;
+import nukeologist.kregbot.util.Constants;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class GuildContext implements Context {
 
     @Override
     public String[] getWords() {
-        return getMessage().getContentRaw().split("\\s+");
+        return Constants.SPACES.split(getMessage().getContentRaw()); //.split("\\s+");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package nukeologist.kregbot.data;
+package nukeologist.kregbot.data.character;
 
 import nukeologist.kregbot.util.Tuple;
 
@@ -26,7 +26,7 @@ public enum CharacterClass {
     CharacterClass(String name, int hitDie, CharacterAbility ab1, CharacterAbility ab2) {
         this.name = name;
         this.hitDie = hitDie;
-        this.savingThrowProficiency = new Tuple<>(ab1, ab2);
+        this.savingThrowProficiency = Tuple.of(ab1, ab2);
     }
 
     public int getHitDice() {

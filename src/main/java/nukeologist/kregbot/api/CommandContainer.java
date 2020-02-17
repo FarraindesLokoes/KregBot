@@ -1,6 +1,6 @@
 package nukeologist.kregbot.api;
 
-import java.lang.reflect.Method;
+import java.util.function.Consumer;
 
 /**
  * A command annotated with {@link Command} will get associated with this interface.
@@ -15,7 +15,7 @@ public interface CommandContainer {
      *
      * @return the static method.
      */
-    Method getCommand();
+    Consumer<Context> getCommand();
 
     /**
      * Returns the label of the command.

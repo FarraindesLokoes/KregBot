@@ -10,9 +10,13 @@ import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.api.ContextType;
 import nukeologist.kregbot.impl.GuildContext;
 import nukeologist.kregbot.impl.PrivateContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Method;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.function.Consumer;
 
 /**
  * @author Nukeologist
@@ -20,6 +24,7 @@ import java.lang.reflect.Method;
 public class CommandListener extends ListenerAdapter {
 
     private static final String PREFIX = "!";
+    private static final Logger LOGGER = LoggerFactory.getLogger("Command Listener");
 
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
@@ -50,7 +55,7 @@ public class CommandListener extends ListenerAdapter {
                 if ((type == ContextType.GUILD && ctx.isGuild()) || (type == ContextType.EITHER) || (type == ContextType.PRIVATE && !ctx.isGuild())) {
                     if (possible.canBeCalledByBot() || (!possible.canBeCalledByBot() && !ctx.getAuthor().isBot())) {
                         boolean correct = executeCommand(possible, ctx);
-                        if (!correct) ctx.send("Contact the dev with this stacktrace.");
+                        if (!correct) ctx.send("Contact the dev with this stacktrace, informing what you did.");
                     }
                 }
             });
@@ -58,13 +63,13 @@ public class CommandListener extends ListenerAdapter {
     }
 
     private boolean executeCommand(CommandContainer command, Context ctx) {
-        Method method = command.getCommand();
+        Consumer<Context> method = command.getCommand();
         try {
-            method.invoke(null, ctx);
-        } catch (Exception e) {
-            System.out.println("Failed to invoke command: " + command.getLabel());
-            ctx.send(e.getCause().toString());
+            method.accept(ctx);
+        } catch (Throwable e) {
+            LOGGER.error("Failed to invoke Command: '{}'", command.getLabel());
             e.printStackTrace();
+            ctx.send(e.getCause() == null ? e.toString() : e.getCause().toString());
             return false;
         }
         return true;

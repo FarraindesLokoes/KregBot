@@ -6,9 +6,17 @@ public class Tuple<A, B> {
     public A a;
     public B b;
 
+    public static <A, B> Tuple<A, B> of(A a, B b) {
+        return new Tuple<>(a, b);
+    }
+
     public Tuple(A a, B b) {
         this.a = a;
         this.b = b;
+    }
+
+    public Tuple<B, A> inverse() {
+        return new Tuple<>(b, a);
     }
 
     @Override

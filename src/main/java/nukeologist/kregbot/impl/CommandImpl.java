@@ -5,9 +5,12 @@ import io.github.classgraph.AnnotationInfo;
 import io.github.classgraph.AnnotationParameterValueList;
 import io.github.classgraph.MethodInfo;
 import nukeologist.kregbot.api.CommandContainer;
+import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.api.ContextType;
 
+import java.lang.invoke.*;
 import java.lang.reflect.Method;
+import java.util.function.Consumer;
 
 /**
  * @author Nukeologist
@@ -17,12 +20,12 @@ public class CommandImpl implements CommandContainer {
     private static final String ROUTE = "nukeologist.kregbot.api.Command";
 
     private final String label;
-    private final Method command;
+    private final Consumer<Context> command;
     private final ContextType type;
     private final boolean canBeCalledByBot;
 
     public CommandImpl(String label, Method command, ContextType type, boolean canBeCalledByBot) {
-        this.command = command;
+        this.command = handleMetaFactory(command);
         this.label = label;
         this.type = type;
         this.canBeCalledByBot = canBeCalledByBot;
@@ -31,7 +34,7 @@ public class CommandImpl implements CommandContainer {
     public CommandImpl(MethodInfo info) {
         AnnotationInfo anno = info.getAnnotationInfo(ROUTE);
         if (anno == null) throw new RuntimeException("Invalid command registered...");
-        this.command = info.loadClassAndGetMethod();
+        this.command = handleMetaFactory(info.loadClassAndGetMethod());
         AnnotationParameterValueList list = anno.getParameterValues();
         this.label = (String) list.get(0).getValue();
         AnnotationEnumValue en = (AnnotationEnumValue) list.get(1).getValue();
@@ -39,8 +42,21 @@ public class CommandImpl implements CommandContainer {
         this.canBeCalledByBot = (boolean) list.get(2).getValue();
     }
 
+    private static Consumer<Context> handleMetaFactory(Method method) {
+        final MethodHandles.Lookup lookup = MethodHandles.lookup();
+        try {
+            final MethodHandle mh = lookup.unreflect(method);
+            final MethodType consumerType = MethodType.methodType(void.class, Object.class);
+            final CallSite site = LambdaMetafactory.metafactory(lookup, "accept", MethodType.methodType(Consumer.class), consumerType, mh, mh.type());
+            return (Consumer<Context>) site.getTarget().invokeExact();
+        } catch (Throwable e) {
+            throw new RuntimeException("Failed to make a lambda out of the command, ", e);
+        }
+
+    }
+
     @Override
-    public Method getCommand() {
+    public Consumer<Context> getCommand() {
         return command;
     }
 

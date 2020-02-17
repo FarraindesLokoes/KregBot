@@ -19,11 +19,12 @@ public class RPGCommands {
 
     @Command("roll")
     public static void rollCommand(Context ctx) {
-        String[] words = ctx.getWords();
+        final String[] words = ctx.getWords();
+
         if (words.length == 1)
             ctx.reply("rolled " + roll(1, 20));
         else if (words.length > 1) {
-            StringBuilder builder = new StringBuilder("rolled ");
+            final StringBuilder builder = new StringBuilder("rolled ");
             int sum = 0;
             boolean atLeastOne = false;
             for (String word : words) {
@@ -31,16 +32,16 @@ public class RPGCommands {
                 Matcher oneRoll = Constants.ONEROLL.matcher(word);
                 Matcher anyRoll = Constants.ANYROLL.matcher(word);
                 if (oneRoll.matches()) { // d20, d6, etc
-                    int diceNumber = Integer.parseInt(word.replaceAll(Constants.GETINTEGER.toString(), "$1"));
-                    String roll = roll(1, diceNumber);
+                    int diceNumber = Integer.parseInt(Constants.GETINTEGER.matcher(word).replaceAll("$1"));
+                    final String roll = roll(1, diceNumber);
                     sum += getSumFromString(roll);
                     builder.append(roll);
                     builder.append(" + ");
                     atLeastOne = true;
                 } else if (anyRoll.matches()) { //matches <N>d<M> where N and M are ints
                     atLeastOne = true;
-                    int dice = Integer.parseInt(word.replaceAll(Constants.GETINTEGER.toString(), "$1")); //parses int before d
-                    int diceNumber = Integer.parseInt(word.replaceFirst("\\d+d", ""));
+                    final int dice = Integer.parseInt(Constants.GETINTEGER.matcher(word).replaceAll("$1")); //parses int before d
+                    final int diceNumber = Integer.parseInt(word.replaceFirst("\\d+d", ""));
                     String roll = roll(dice, diceNumber);
                     sum += getSumFromString(roll);
                     builder.append(roll);
@@ -59,20 +60,20 @@ public class RPGCommands {
 
     @CommandHelp("roll")
     public static void helpRoll(Context ctx) {
-        EmbedBuilder embed = new EmbedBuilder();
-        MessageBuilder msg = new MessageBuilder();
-        embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
+        final EmbedBuilder embed = new EmbedBuilder();
+        final MessageBuilder msg = new MessageBuilder();
+        embed.setColor((int) (Math.random() * 0xFFFFFF)); // now can be red and white, thanks to SpicyFerret
         embed.setDescription("Rolls dice for you! Here's a little help:\nUsage: [!roll ndm] where n is the number of dice and m the number of sides\nYou can chain call these with spaces in between too.");
         ctx.send(msg.setEmbed(embed.build()).build());
     }
 
     @Command("character")
     public static void character(Context ctx) {
-
+        ctx.send("Work in Progress");
     }
 
     private static String roll(int diceAmount, int faceAmount) {
-        StringBuilder builder = new StringBuilder("(");
+        final StringBuilder builder = new StringBuilder("(");
         int sum = 0;
         for (int i = 0; i < diceAmount; i++) {
             int next = RANDOM.nextInt(faceAmount) + 1;
@@ -94,7 +95,7 @@ public class RPGCommands {
 
     /*This is ugly, but we do not need a new object to hold two values...*/
     private static int getSumFromString(String str) {
-        StringBuilder builder = new StringBuilder(str);
+        final StringBuilder builder = new StringBuilder(str);
         builder.delete(0, str.indexOf('=') + 2);
         return Integer.parseInt(builder.toString());
     }

@@ -1,4 +1,4 @@
-package nukeologist.kregbot.data;
+package nukeologist.kregbot.data.character;
 
 import java.util.Locale;
 

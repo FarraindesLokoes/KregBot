@@ -33,12 +33,12 @@ public class HelpCommands {
 
     @Command("help")
     public static void help(Context ctx) {
-        String[] params = ctx.getWords();
+        var params = ctx.getWords();
         if (params.length == 1 || params[1].equals("help")) {
             ctx.send("Get a list of commands with !commands, to get help with a specific one use !help COMMANDHERE");
             return;
         }
-        Map<String, Method> map = getHelpMethods();
+        var map = getHelpMethods();
         for (Map.Entry<String, Method> entry : map.entrySet()) {
             if (params[1].equals(entry.getKey())) {
                 try {

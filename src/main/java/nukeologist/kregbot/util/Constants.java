@@ -3,9 +3,8 @@ package nukeologist.kregbot.util;
 import java.util.regex.Pattern;
 
 /**
- * Shamelessly copied from https://github.com/tterrag1098/K9/blob/master/src/main/java/com/tterrag/k9/util/Patterns.java
- *
  * @author Nukeologist
+ * @author SpicyFerret
  */
 public class Constants {
 
@@ -19,6 +18,7 @@ public class Constants {
     public static final Pattern EVERYONE = Pattern.compile("@everyone");
 
     public static final Pattern PUNCTUATION = Pattern.compile("[!,.*]");
+    public static final Pattern SPACES = Pattern.compile("\\s+");
 
 
     public static class Emotes {
@@ -27,6 +27,7 @@ public class Constants {
             public static final String TopKek = "TopKek:370670500600479744";
             public static final String Jebaited = "Jebaited:395648740222042112";
         }
+
         public static class Normal {
             public static final String ThumbsUp = "U+1F44D";
             public static final String ThumbsDown = "U+1F44E";
