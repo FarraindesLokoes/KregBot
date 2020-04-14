@@ -76,9 +76,18 @@ public class EchoCommand {
     private static void handleList(final Context ctx) {
         final long guild = ctx.getMember().getGuild().getIdLong();
         final List<EchoMessage> messages = echoStorage.ECHOS.get(guild);
+        StringBuilder builder = new StringBuilder("");
         if (messages != null) {
-            messages.forEach(echo -> ctx.send(echo.getLabel() + MessageHelper.makeBold(" has owner " + echo.getOwner(ctx).getEffectiveName()) + "\n"));
+            for (final EchoMessage echo : messages) {
+                builder.append(echo.getLabel()).append(MessageHelper.makeBold(" has owner " + echo.getOwner(ctx).getEffectiveName())).append("\n");
+                if (builder.length() > 1600) {
+                    ctx.send(builder.toString());
+                    builder = new StringBuilder("");
+                }
+            }
+            ctx.send(builder.toString());
         }
+
     }
 
     private static void handleAdding(final Context ctx) {
@@ -87,7 +96,7 @@ public class EchoCommand {
         final long owner = ctx.getMember().getIdLong();
         final List<EchoMessage> messages = echoStorage.ECHOS.get(guild);
         final String label = msg[2];
-        if ("add".equalsIgnoreCase(label)) {
+        if (isBlacklisted(label)) {
             ctx.reply("Haha, very funny dud. NOT!");
             return;
         } else if (label == null) {
@@ -127,6 +136,10 @@ public class EchoCommand {
             return;
         }
         final String label = params[2];
+        if (isBlacklisted(label)) {
+            ctx.reply("Haha, very funny dud. NOT!");
+            return;
+        }
         final Optional<EchoMessage> echo = messages.stream().filter(e -> e.getLabel().equals(label)).findAny();
         if (echo.isEmpty()) {
             ctx.send("No message with given label. Please try again changing the second param.");
@@ -155,6 +168,10 @@ public class EchoCommand {
         }
         final String[] words = ctx.getWords();
         final String label = words[1];
+        if (isBlacklisted(label)) {
+            ctx.reply("Haha, very funny dud. NOT!");
+            return;
+        }
         final Optional<EchoMessage> echo = messages.stream().filter(e -> e.getLabel().equals(label)).findAny();
         if (echo.isEmpty()) {
             ctx.send("No message was found with that second param bruh");
@@ -175,6 +192,10 @@ public class EchoCommand {
             ctx.send("No messages in this guild bruh");
             return;
         }
+        if (isBlacklisted(words[2])) {
+            ctx.reply("Haha, very funny dud. NOT!");
+            return;
+        }
         final Optional<EchoMessage> echo = messages.stream().filter(e -> e.getLabel().equals(words[2])).findAny();
         if (echo.isEmpty()) {
             ctx.send("Message with given label [" + words[2] + "] was not found.");
@@ -191,6 +212,17 @@ public class EchoCommand {
         msg.setLabel(words[3]);
         SAVER.saveJson(echoStorage, ECHOMESSAGES);
         ctx.send("Updated " + words[2] + " to use " + words[3] + " instead.");
+    }
+
+    private static String[] BLACKLIST = {"rand", "r", "random", "list", "l", "add", "a", "update", "u", "label"};
+
+    private static boolean isBlacklisted(final String s) {
+        for (int i = 0; i < BLACKLIST.length; i++) {
+            if (BLACKLIST[i].equals(s)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static class EchoStorage {
