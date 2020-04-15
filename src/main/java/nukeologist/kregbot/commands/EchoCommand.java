@@ -49,6 +49,10 @@ public class EchoCommand {
             case "label":
                 handleLabelUpdate(ctx);
                 break;
+            case "delete":
+            case "d":
+                handleDelete(ctx);
+                break;
             default:
                 handleDefault(ctx);
 
@@ -61,6 +65,36 @@ public class EchoCommand {
                 "!echo ADD NAME MESSAGE to save message with label NAME or\n !echo RAND for a random quote or\n" +
                 "!echo UPDATE NAME to update the message with label NAME or\n !echo NAME to see the message with label NAME\n" +
                 "!echo label OLD NEW to update message with label OLD to label NEW");
+    }
+
+    private static void handleDelete(Context ctx) {
+        final String[] msg = ctx.getWords();
+        if (msg.length < 3) {
+            ctx.send("Missing at least one param.");
+            return;
+        }
+        final long guild = ctx.getMember().getGuild().getIdLong();
+        final List<EchoMessage> messages = echoStorage.ECHOS.get(guild);
+        if (messages == null) {
+            ctx.send("No echos/quotes here bro... Please add one using !echo add NAME MESSAGE.");
+            return;
+        }
+        final long owner = ctx.getMember().getIdLong();
+        final Optional<EchoMessage> echo = messages.stream().filter(e -> e.getLabel().equals(msg[2])).findAny();
+        if (echo.isEmpty()) {
+            ctx.send("Message with given label [" + msg[2] + "] was not found.");
+            return;
+        }
+        final EchoMessage e = echo.get();
+        if (ctx.getMember().hasPermission(Permission.ADMINISTRATOR) && e.getOwner(ctx).getIdLong() != owner) {
+            ctx.send("You are not the owner, but you have perms because admin.");
+        } else if (e.getOwner(ctx).getIdLong() != owner) {
+            ctx.send("You cant delete ones made by other people.");
+            return;
+        }
+        messages.remove(e);
+        SAVER.saveJson(echoStorage, ECHOMESSAGES);
+        ctx.send("Removed.");
     }
 
     private static void handleRandom(final Context ctx) {
@@ -76,13 +110,13 @@ public class EchoCommand {
     private static void handleList(final Context ctx) {
         final long guild = ctx.getMember().getGuild().getIdLong();
         final List<EchoMessage> messages = echoStorage.ECHOS.get(guild);
-        StringBuilder builder = new StringBuilder("");
+        StringBuilder builder = new StringBuilder("Echo: \n");
         if (messages != null) {
             for (final EchoMessage echo : messages) {
                 builder.append(echo.getLabel()).append(MessageHelper.makeBold(" has owner " + echo.getOwner(ctx).getEffectiveName())).append("\n");
                 if (builder.length() > 1600) {
                     ctx.send(builder.toString());
-                    builder = new StringBuilder("");
+                    builder = new StringBuilder("Echo: \n");
                 }
             }
             ctx.send(builder.toString());
@@ -99,7 +133,7 @@ public class EchoCommand {
         if (isBlacklisted(label)) {
             ctx.reply("Haha, very funny dud. NOT!");
             return;
-        } else if (label == null) {
+        } else if (label == null || msg.length < 4) {
             ctx.send("Nothing to add? are you serious? ...");
             return;
         }
@@ -214,11 +248,11 @@ public class EchoCommand {
         ctx.send("Updated " + words[2] + " to use " + words[3] + " instead.");
     }
 
-    private static String[] BLACKLIST = {"rand", "r", "random", "list", "l", "add", "a", "update", "u", "label"};
+    private static String[] BLACKLIST = {"rand", "r", "random", "list", "l", "add", "a", "update", "u", "label", "delete", "d"};
 
     private static boolean isBlacklisted(final String s) {
         for (int i = 0; i < BLACKLIST.length; i++) {
-            if (BLACKLIST[i].equals(s)) {
+            if (BLACKLIST[i].equalsIgnoreCase(s)) {
                 return true;
             }
         }

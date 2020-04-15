@@ -28,6 +28,11 @@ public class MemeCommands {
         ctx.send("Pare com essa viadagem.");
     }
 
+    @Command("lisboa")
+    public static void fodase(Context ctx) {
+        ctx.send("FODA-SE");
+    }
+
     private static Thread bomb = null;
     private static String bombPassword;
 
@@ -88,7 +93,7 @@ public class MemeCommands {
 
         EmbedBuilder embed = new EmbedBuilder();
         MessageBuilder msg = new MessageBuilder();
-        embed.setColor((int) (Math.random() * 16777215)); // now cam be red and white, thanks to SpicyFerret
+        embed.setColor((int) (Math.random() * 16777215)); // now can be red and white, thanks to SpicyFerret
         embed.setDescription("The bomb has been defused!\n" +
                 "COUNTER TERRORIST WINS!");
         context.send(msg.setEmbed(embed.build()).build());
