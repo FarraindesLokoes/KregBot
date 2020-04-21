@@ -35,7 +35,12 @@ public class MessageListener implements EventListener {
             "filha da puta",
             "faggot",
             "60?",
-            "70?"
+            "70?",
+            "Verdade",
+            "Concordo plenamente",
+            "Discordo",
+            "É... mais ou menos",
+            "Certeza?"
     };
 
     @Override
@@ -48,7 +53,7 @@ public class MessageListener implements EventListener {
 
     private void onMessage(MessageReceivedEvent event) {
         LOG.info("#{} #{} < {} >", event.getChannel(), event.getAuthor(), event.getMessage().getContentRaw());
-        if (RANDOM.nextInt(1000) == 69) event.getChannel().sendMessage(getRandomResponse()).queue();
+        if (RANDOM.nextInt(10000) == 69) event.getChannel().sendMessage(getRandomResponse()).queue();
         if (event.getMessage().getContentRaw().startsWith("60?"))
             event.getChannel().sendMessage("Pare com essa viadagem.").queue();
     }
