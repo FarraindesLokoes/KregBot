@@ -29,8 +29,8 @@ public class RPGCommands {
             boolean atLeastOne = false;
             for (String word : words) {
                 if (word.equalsIgnoreCase("roll")) continue;
-                Matcher oneRoll = Constants.ONEROLL.matcher(word);
-                Matcher anyRoll = Constants.ANYROLL.matcher(word);
+                final Matcher oneRoll = Constants.ONEROLL.matcher(word);
+                final Matcher anyRoll = Constants.ANYROLL.matcher(word);
                 if (oneRoll.matches()) { // d20, d6, etc
                     int diceNumber = Integer.parseInt(Constants.GETINTEGER.matcher(word).replaceAll("$1"));
                     final String roll = roll(1, diceNumber);
@@ -46,6 +46,15 @@ public class RPGCommands {
                     sum += getSumFromString(roll);
                     builder.append(roll);
                     builder.append(" + ");
+                } else {
+                    try {
+                        final int numb = Integer.parseInt(word);
+                        sum += numb;
+                        builder.append("( ").append(numb).append(" ) = ").append(sum);
+                        builder.append(" + ");
+                    } catch (final NumberFormatException e) {
+                        //ignored
+                    }
                 }
             }
             if (atLeastOne) {
