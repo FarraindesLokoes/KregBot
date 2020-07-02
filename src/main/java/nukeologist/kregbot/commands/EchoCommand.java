@@ -64,7 +64,9 @@ public class EchoCommand {
         ctx.send("Make Kreg remember messages, quotes, whatever you want. Usage: \n" +
                 "!echo ADD NAME MESSAGE to save message with label NAME or\n !echo RAND for a random quote or\n" +
                 "!echo UPDATE NAME to update the message with label NAME or\n !echo NAME to see the message with label NAME\n" +
-                "!echo label OLD NEW to update message with label OLD to label NEW");
+                "!echo label OLD NEW to update message with label OLD to label NEW\n" +
+                "!echo delete NAME to delete message with label NAME\n" +
+                "!echo list to list all possible messages. Please don't spam");
     }
 
     private static void handleDelete(Context ctx) {
