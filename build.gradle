@@ -47,6 +47,7 @@ dependencies {
     }
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'io.github.classgraph:classgraph:4.8.41'
+    compile 'org.ow2.asm:asm:7.2'
     implementation 'com.google.code.gson:gson:2.8.5'
     // This doesn't work with JDA 4 at the time of writing
 //    compile ('com.sedmelluq:jda-nas:1.0.6') {
