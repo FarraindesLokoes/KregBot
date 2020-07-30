@@ -58,6 +58,11 @@ public class JshellCommand {
                 //add("java.lang.Thread#start")
         );
         whitelist = List.of(
+                add("java.lang.invoke.CallSite"),
+                add("java.util.EnumSet"),
+                add("java.util.EnumMap"),
+                add("java.lang.CharacterName"),
+                add("java.text.DecimalFormatSymbols")
                 //add("java.util.concurrent.atomic"),
                 //add("java.util.concurrent.Concurrent.*"),
                 //add("java.util.concurrent..*Queue"),
