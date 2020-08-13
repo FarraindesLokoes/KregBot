@@ -18,6 +18,10 @@ import java.util.function.Consumer;
 public class CommandImpl implements CommandContainer {
 
     private static final String ROUTE = "nukeologist.kregbot.api.Command";
+    private static final MethodHandles.Lookup lookup = MethodHandles.lookup();
+    private static final MethodType consumerType = MethodType.methodType(void.class, Object.class);
+    private static final MethodType mt = MethodType.methodType(Consumer.class);
+
 
     private final String label;
     private final Consumer<Context> command;
@@ -42,12 +46,11 @@ public class CommandImpl implements CommandContainer {
         this.canBeCalledByBot = (boolean) list.get(2).getValue();
     }
 
-    private static Consumer<Context> handleMetaFactory(Method method) {
-        final MethodHandles.Lookup lookup = MethodHandles.lookup();
+    @SuppressWarnings("unchecked")
+    public static Consumer<Context> handleMetaFactory(Method method) {
         try {
             final MethodHandle mh = lookup.unreflect(method);
-            final MethodType consumerType = MethodType.methodType(void.class, Object.class);
-            final CallSite site = LambdaMetafactory.metafactory(lookup, "accept", MethodType.methodType(Consumer.class), consumerType, mh, mh.type());
+            final CallSite site = LambdaMetafactory.metafactory(lookup, "accept", mt, consumerType, mh, mh.type());
             return (Consumer<Context>) site.getTarget().invokeExact();
         } catch (Throwable e) {
             throw new RuntimeException("Failed to make a lambda out of the command, ", e);

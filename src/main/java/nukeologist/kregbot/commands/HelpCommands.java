@@ -4,16 +4,17 @@ import io.github.classgraph.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import nukeologist.kregbot.BotManager;
+import nukeologist.kregbot.impl.CommandImpl;
 import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandContainer;
 import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.KregBot;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Nukeologist
@@ -24,7 +25,7 @@ public class HelpCommands {
     private static final String CONTEXT = "nukeologist.kregbot.api.Context";
 
     private static List<CommandContainer> commands;
-    private static Map<String, Method> helpMethods;
+    private static Map<String, Consumer<Context>> helpMethods;
 
     @Command("about")
     public static void about(Context ctx) {
@@ -39,21 +40,14 @@ public class HelpCommands {
             return;
         }
         var map = getHelpMethods();
-        for (Map.Entry<String, Method> entry : map.entrySet()) {
-            if (params[1].equals(entry.getKey())) {
-                try {
-                    entry.getValue().invoke(null, ctx);
-                    return;
-                } catch (Exception e) {
-                    ctx.send("Problem when executing help command, contact author.");
-                    KregBot.LOG.info("Failed to execute help command with label {}", params[1]);
-                    e.printStackTrace();
-                    return;
-                }
-            }
+        try {
+            map.getOrDefault(params[1], c -> c.send("Given command has no help for it. Either it is self explanatory, or we actually forgot to implement."))
+                    .accept(ctx);
+        } catch (Exception e) {
+            ctx.send("Problem when executing help command, contact author.");
+            KregBot.LOG.info("Failed to execute help command with label {}", params[1]);
+            e.printStackTrace();
         }
-        //If it got here, the command doesnt have a help.
-        ctx.send("Given command has no help for it. Either it is self explanatory, or we actually forgot to implement.");
     }
 
     @Command("commands")
@@ -83,7 +77,7 @@ public class HelpCommands {
         return commands;
     }
 
-    private static Map<String, Method> getHelpMethods() {
+    private static Map<String, Consumer<Context>> getHelpMethods() {
         if (helpMethods == null) {
             helpMethods = new HashMap<>();
             ScanResult result = BotManager.getResult();
@@ -98,7 +92,7 @@ public class HelpCommands {
                                     AnnotationInfo anno = inf.getAnnotationInfo(ROUTE);
                                     AnnotationParameterValueList list = anno.getParameterValues();
                                     String label = (String) list.get(0).getValue();
-                                    helpMethods.putIfAbsent(label, inf.loadClassAndGetMethod());
+                                    helpMethods.putIfAbsent(label, CommandImpl.handleMetaFactory(inf.loadClassAndGetMethod()));
                                 }
                             }
                         }

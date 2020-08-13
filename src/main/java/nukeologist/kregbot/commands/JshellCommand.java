@@ -72,12 +72,7 @@ public class JshellCommand {
     }
 
     private static JShell getOrCreate(long id) {
-        JShell shell = SHELLS.get(id);
-        if (shell == null) {
-            shell = create();
-            SHELLS.put(id, shell);
-        }
-        return shell;
+        return SHELLS.computeIfAbsent(id,  i -> create());
     }
 
     private static JShell create() {

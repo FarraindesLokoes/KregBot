@@ -42,7 +42,7 @@ repositories {
 
 dependencies {
 
-    compile("net.dv8tion:JDA:4.1.1_101") {
+    compile("net.dv8tion:JDA:4.2.0_189") {
         exclude module: 'opus-java'
     }
     compile 'ch.qos.logback:logback-classic:1.2.3'
