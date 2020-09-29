@@ -1,6 +1,7 @@
 package nukeologist.kregbot.commands;
 
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
@@ -88,9 +89,9 @@ public class EchoCommand {
             return;
         }
         final EchoMessage e = echo.get();
-        if (ctx.getMember().hasPermission(Permission.ADMINISTRATOR) && e.getOwner(ctx).getIdLong() != owner) {
+        if (ctx.getMember().hasPermission(Permission.ADMINISTRATOR) && e.getOwner(ctx).map(Member::getIdLong).orElse(0L) != owner) {
             ctx.send("You are not the owner, but you have perms because admin.");
-        } else if (e.getOwner(ctx).getIdLong() != owner) {
+        } else if (e.getOwner(ctx).map(Member::getIdLong).orElse(0L) != owner) {
             ctx.send("You cant delete ones made by other people.");
             return;
         }
@@ -115,7 +116,7 @@ public class EchoCommand {
         StringBuilder builder = new StringBuilder("Echo: \n");
         if (messages != null) {
             for (final EchoMessage echo : messages) {
-                builder.append(echo.getLabel()).append(MessageHelper.makeBold(" has owner " + echo.getOwner(ctx).getEffectiveName())).append("\n");
+                builder.append(echo.getLabel()).append(MessageHelper.makeBold(" has owner " + echo.getOwner(ctx).map(Member::getEffectiveName).orElse("Anonymous"))).append("\n");
                 if (builder.length() > 1600) {
                     ctx.send(builder.toString());
                     builder = new StringBuilder("Echo: \n");
@@ -131,6 +132,10 @@ public class EchoCommand {
         final long guild = ctx.getMember().getGuild().getIdLong();
         final long owner = ctx.getMember().getIdLong();
         final List<EchoMessage> messages = echoStorage.ECHOS.get(guild);
+        if (msg.length <= 2) {
+            ctx.reply("What label? and What content?");
+            return;
+        }
         final String label = msg[2];
         if (isBlacklisted(label)) {
             ctx.reply("Haha, very funny dud. NOT!");
@@ -183,9 +188,9 @@ public class EchoCommand {
         }
         EchoMessage e = echo.get();
 
-        if (ctx.getMember().hasPermission(Permission.ADMINISTRATOR) && e.getOwner(ctx).getIdLong() != person) {
+        if (ctx.getMember().hasPermission(Permission.ADMINISTRATOR) && e.getOwner(ctx).map(Member::getIdLong).orElse(0L) != person) {
             ctx.send("You are not the owner, but you have perms because admin.");
-        } else if (e.getOwner(ctx).getIdLong() != person) {
+        } else if (e.getOwner(ctx).map(Member::getIdLong).orElse(0L) != person) {
             ctx.send("You cant update ones made by other people.");
             return;
         }
@@ -238,7 +243,7 @@ public class EchoCommand {
             return;
         }
         final EchoMessage msg = echo.get();
-        if (msg.getOwner(ctx).getIdLong() != ctx.getMember().getIdLong()) {
+        if (msg.getOwner(ctx).map(Member::getIdLong).orElse(0L) != ctx.getMember().getIdLong()) {
             if (!ctx.getMember().hasPermission(Permission.ADMINISTRATOR)) {
                 ctx.send("You are not the owner of this echo, so you can't update it.");
                 return;

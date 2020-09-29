@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.entities.Member;
 import nukeologist.kregbot.api.Context;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class EchoMessage {
 
@@ -33,8 +34,8 @@ public class EchoMessage {
         this.LABEL = label;
     }
 
-    public final Member getOwner(Context ctx) {
-        return ctx.getMember().getGuild().getMemberById(OWNER);
+    public final Optional<Member> getOwner(Context ctx) {
+        return Optional.ofNullable(ctx.getMember().getGuild().getMemberById(OWNER));
     }
 
     @Override
