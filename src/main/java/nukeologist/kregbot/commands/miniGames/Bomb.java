@@ -100,10 +100,10 @@ public class Bomb implements ActionListener {
             switch (words[1]){
                 case "plant":
                     if (getInstance().activated) {
-                        context.reply("Bomb already activated.\n To defuse it '!bomb defuse'");
+                        context.reply("Bomb already activated.\n To defuse it '!bomb defuse <password>'");
                     } else {
                         getInstance().activate(context);
-                        context.send("The Bomb Has Beam Planted!\n The Bomb will explode in " + getInstance().explosionTime + " minutes\n To defuse '!defuse <password>'");
+                        context.send("The Bomb Has Beam Planted!\n The Bomb will explode in " + getInstance().explosionTime + " minutes\n To defuse '!bomb defuse <password>'");
                     }
                     break;
                 case "defuse":
@@ -119,7 +119,7 @@ public class Bomb implements ActionListener {
                             }
 
                         } else {
-                            context.reply("Password required\n The Bomb will explode in " + getInstance().explosionTime + " minutes\n To defuse '!defuse <password>'");
+                            context.reply("Password required\n The Bomb will explode in " + getInstance().explosionTime + " minutes\n To defuse '!bomb defuse <password>'");
                         }
                     }
                     break;
@@ -141,8 +141,8 @@ public class Bomb implements ActionListener {
     @CommandHelp("bomb")
     public static void bombHelp(Context context) {
         context.send("Make Kreg plant and defuse bombs for you. Usage: \n" +
-                "!echo plant to plant the bomb\n" +
-                "!echo defuse <password> to defuse the bom\n" +
-                "!echo password to get a note to discover the password\n");
+                "!bomb plant to plant the bomb\n" +
+                "!bomb defuse <password> to defuse the bom\n" +
+                "!bomb password to get a note to discover the password\n");
     }
 }
