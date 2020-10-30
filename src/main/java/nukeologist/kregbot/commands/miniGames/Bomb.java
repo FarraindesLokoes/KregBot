@@ -103,7 +103,7 @@ public class Bomb implements ActionListener {
                         context.reply("Bomb already activated.\n To defuse it '!bomb defuse <password>'");
                     } else {
                         getInstance().activate(context);
-                        context.send("The Bomb Has Beam Planted!\n The Bomb will explode in " + getInstance().explosionTime + " minutes\n To defuse '!bomb defuse <password>'");
+                        context.send("The Bomb Has Been Planted!\n The Bomb will explode in " + getInstance().explosionTime + " minutes\n To defuse '!bomb defuse <password>'");
                     }
                     break;
                 case "defuse":
