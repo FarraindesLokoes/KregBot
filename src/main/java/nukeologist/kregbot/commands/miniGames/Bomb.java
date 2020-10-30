@@ -141,8 +141,8 @@ public class Bomb implements ActionListener {
     @CommandHelp("bomb")
     public static void bombHelp(Context context) {
         context.send("Make Kreg plant and defuse bombs for you. Usage: \n" +
-                "!bomb plant to plant the bomb\n" +
-                "!bomb defuse <password> to defuse the bom\n" +
-                "!bomb password to get a note to discover the password\n");
+                "'!bomb plant' to plant the bomb\n" +
+                "'!bomb defuse <password>' to defuse the bomb\n" +
+                "'!bomb password' to get a note to discover the password");
     }
 }
