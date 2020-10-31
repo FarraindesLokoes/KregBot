@@ -100,7 +100,7 @@ public class Bomb implements ActionListener {
             switch (words[1]){
                 case "plant":
                     if (getInstance().activated) {
-                        context.reply("Bomb already activated.\n To defuse it '!bomb defuse'");
+                        context.reply("Bomb already activated.\n To defuse it '!bomb defuse <password>'");
                     } else {
                         getInstance().activate(context);
                         context.send("The Bomb Has Been Planted!\n The Bomb will explode in " + getInstance().explosionTime + " minutes\n To defuse '!bomb defuse <password>'");
@@ -141,8 +141,8 @@ public class Bomb implements ActionListener {
     @CommandHelp("bomb")
     public static void bombHelp(Context context) {
         context.send("Make Kreg plant and defuse bombs for you. Usage: \n" +
-                "!bomb plant to plant the bomb\n" +
-                "!bomb defuse <password> to defuse the bom\n" +
-                "!bomb password to get a note to discover the password\n");
+                "'!bomb plant' to plant the bomb\n" +
+                "'!bomb defuse <password>' to defuse the bomb\n" +
+                "'!bomb password' to get a note to discover the password");
     }
 }
