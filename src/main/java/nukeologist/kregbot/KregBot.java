@@ -17,7 +17,7 @@ public enum KregBot {
 
     INSTANCE;
 
-    private static final String VERSION = "1.7.2";
+    private static final String VERSION = "1.8.0";
 
     public static final Logger LOG = LoggerFactory.getLogger("[KregBot|Reborn]");
 
