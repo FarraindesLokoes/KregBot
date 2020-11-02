@@ -37,7 +37,7 @@ public class DickMeter {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Tuple<String, Integer> sData : data) {
-            stringBuilder.append("8").append("=".repeat(Math.max(0, sData.b))).append("D  ").append(sData.a);
+            stringBuilder.append("8").append("=".repeat(Math.max(0, sData.b))).append("D  ").append(sData.a).append("\n");
         }
 
         context.send(MessageHelper.makeCodeBlock(stringBuilder.toString()));
