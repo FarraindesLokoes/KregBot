@@ -1,7 +1,5 @@
-package nukeologist.kregbot.commands.miniGames;
+package nukeologist.kregbot.commands.minigames;
 
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;

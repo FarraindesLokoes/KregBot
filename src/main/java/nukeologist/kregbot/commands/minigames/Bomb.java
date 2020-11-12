@@ -1,4 +1,4 @@
-package nukeologist.kregbot.commands.miniGames;
+package nukeologist.kregbot.commands.minigames;
 
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;

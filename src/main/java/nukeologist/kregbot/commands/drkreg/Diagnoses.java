@@ -1,4 +1,4 @@
-package nukeologist.kregbot.commands.DrKreg;
+package nukeologist.kregbot.commands.drkreg;
 
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.Context;
@@ -6,6 +6,7 @@ import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.SaveHelper;
 import nukeologist.kregbot.util.Tuple;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Diagnoses {
@@ -57,10 +58,10 @@ public class Diagnoses {
 
     private static String generateDiagnose(Context context) {
         Tuple<String, String> disease = getDisease(context);
-        assert disease != null;
-        return disease.a + ".\n" + ((disease.b.equals("")) ? "I'm sorry to say, but it can't be cured." : "You ar a lucky one, it can be cured " + disease.b);
+        return disease.a + ".\n" + ((disease.b.equals("")) ? "I'm sorry to say, but it can't be cured." : "You are a lucky one, it can be cured " + disease.b);
     }
 
+    @Nonnull
     private static Tuple<String, String> getDisease(Context context) {
         boolean empty = getDiseaseList(context.getMember().getGuild().getIdLong()).isEmpty();
         if (empty) return new Tuple<>("DUMB", "by adding something to the diagnose list. '!diagnose add <disease> <cure(optional)>'");

@@ -1,16 +1,12 @@
-package nukeologist.kregbot.commands.DrKreg;
+package nukeologist.kregbot.commands.drkreg;
 
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.Context;
-import nukeologist.kregbot.commands.EchoCommand;
 import nukeologist.kregbot.data.DickInfo;
 import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.SaveHelper;
 import nukeologist.kregbot.util.Tuple;
-import org.jetbrains.annotations.NotNull;
 
-import java.sql.Array;
-import java.sql.Time;
 import java.util.*;
 
 public class DickMeter {
