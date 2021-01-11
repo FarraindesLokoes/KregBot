@@ -5,13 +5,14 @@ import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
 import net.dv8tion.jda.api.events.guild.update.GuildUpdateNameEvent;
 import net.dv8tion.jda.api.events.user.update.UserUpdateNameEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import nukeologist.kregbot.data.GuildInfo;
 import nukeologist.kregbot.util.SaveHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 import java.util.List;
@@ -52,7 +53,7 @@ public class GuildListener extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
+    public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
         Optional<TextChannel> optionalChannel = event.getGuild().getTextChannels().stream()
                 .filter(this::isThisChannelTracked)
                 .findFirst();
@@ -61,9 +62,9 @@ public class GuildListener extends ListenerAdapter {
             TextChannel textChannel = optionalChannel.get();
             eb = new EmbedBuilder();
             eb.setTitle("User left:");
-            eb.setAuthor(event.getMember().getUser().getName());
+            eb.setAuthor(event.getUser().getName());
             eb.setTimestamp(Instant.now());
-            eb.setDescription(event.getMember().getEffectiveName() + " has left the server.");
+            eb.setDescription(event.getMember() == null ? event.getUser().getName() : event.getMember().getEffectiveName() + " has left the server.");
 
             MessageBuilder message = new MessageBuilder();
             message.setEmbed(eb.build());
