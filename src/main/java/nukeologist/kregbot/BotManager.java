@@ -5,9 +5,7 @@ import nukeologist.kregbot.api.CommandContainer;
 import nukeologist.kregbot.impl.CommandImpl;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Class that handles command registry, and
@@ -17,7 +15,7 @@ import java.util.Optional;
  */
 public class BotManager {
 
-    private static final List<CommandContainer> commands = new ArrayList<>();
+    private static final Set<CommandContainer> commands = new HashSet<>();
     private static final String ROUTE = "nukeologist.kregbot.api.Command";
     private static final String CONTEXT = "nukeologist.kregbot.api.Context";
 
@@ -40,7 +38,7 @@ public class BotManager {
      *
      * @return list containing commands.
      */
-    public static List<CommandContainer> getCommands() {
+    public static Set<CommandContainer> getCommands() {
         if (commands.size() == 0) {
             //initializes the list.
             for (ClassInfo routeClassInfo : result.getClassesWithMethodAnnotation(ROUTE)) {

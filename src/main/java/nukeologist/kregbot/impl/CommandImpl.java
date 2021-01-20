@@ -10,6 +10,7 @@ import nukeologist.kregbot.api.ContextType;
 
 import java.lang.invoke.*;
 import java.lang.reflect.Method;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -76,5 +77,18 @@ public class CommandImpl implements CommandContainer {
     @Override
     public boolean canBeCalledByBot() {
         return canBeCalledByBot;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommandImpl command = (CommandImpl) o;
+        return label.equals(command.label);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(label);
     }
 }

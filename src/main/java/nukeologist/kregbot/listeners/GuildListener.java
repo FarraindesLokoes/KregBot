@@ -157,18 +157,10 @@ public class GuildListener extends ListenerAdapter {
     }
 
     private boolean isThisChannelTracked(TextChannel channel) {
-        if (INFO == null) {
-            INFO = new GuildInfo();
-            return false;
-        }
-        return INFO.isChannelTracked(channel.getIdLong());
+        return getINFO().isChannelTracked(channel.getIdLong());
     }
 
     private boolean isGuildTracked(long guildId) {
-        if (INFO == null) {
-            INFO = new GuildInfo();
-            return false;
-        }
-        return INFO.isGuildTracked(guildId);
+        return getINFO().isGuildTracked(guildId);
     }
 }

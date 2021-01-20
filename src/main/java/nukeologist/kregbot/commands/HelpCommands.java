@@ -12,7 +12,6 @@ import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.KregBot;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -24,7 +23,6 @@ public class HelpCommands {
     private static final String ROUTE = "nukeologist.kregbot.api.CommandHelp";
     private static final String CONTEXT = "nukeologist.kregbot.api.Context";
 
-    private static List<CommandContainer> commands;
     private static Map<String, Consumer<Context>> helpMethods;
 
     @Command("about")
@@ -58,7 +56,7 @@ public class HelpCommands {
         StringBuilder context = new StringBuilder();
         StringBuilder bot = new StringBuilder();
         eb.setTitle("Command List");
-        for (CommandContainer command : getCommands()) {
+        for (CommandContainer command : BotManager.getCommands()) {
             label.append("!").append(command.getLabel()).append("\n");
             context.append(command.getContextType().toString()).append("\n");
             bot.append(command.canBeCalledByBot()).append("\n");
@@ -69,12 +67,6 @@ public class HelpCommands {
         MessageBuilder msg = new MessageBuilder();
         msg.setEmbed(eb.build());
         ctx.send(msg.build());
-    }
-
-    /*Lazy initializes*/
-    private static List<CommandContainer> getCommands() {
-        if (commands == null) commands = BotManager.getCommands();
-        return commands;
     }
 
     private static Map<String, Consumer<Context>> getHelpMethods() {
