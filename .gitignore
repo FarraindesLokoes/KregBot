@@ -21,11 +21,7 @@ build
 target
 eclipse
 run
-guildtracker.json
-increments.json
-echoMessages.json
+
+*.json
 
 demoApplication.log
-
-/diseaseData.json
-/dickInfo.json
