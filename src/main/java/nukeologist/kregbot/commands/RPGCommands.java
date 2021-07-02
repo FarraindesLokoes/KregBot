@@ -2,12 +2,16 @@ package nukeologist.kregbot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Emote;
+import nukeologist.kregbot.KregBot;
 import nukeologist.kregbot.util.Constants;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;
 import nukeologist.kregbot.api.Context;
 
+import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -78,7 +82,16 @@ public class RPGCommands {
 
     @Command("character")
     public static void character(Context ctx) {
-        ctx.send("Work in Progress");
+        var sb = new StringBuilder("\n(");
+        for (int i = 0; i < 6; i++) {
+            var t = new int[]{RANDOM.nextInt(6) + 1, RANDOM.nextInt(6) + 1, RANDOM.nextInt(6) + 1, RANDOM.nextInt(6) + 1};
+            sb.append(t[0]).append(" ").append(t[1]).append(" ").append(t[2]).append(" ").append(t[3]).append(") = ");
+            Arrays.sort(t);
+            sb.append(t[1] + t[2] + t[3]).append("\n(");
+        }
+        sb.setLength(sb.length() - 1);
+        ctx.reply(sb.toString());
+
     }
 
     private static String roll(int diceAmount, int faceAmount) {

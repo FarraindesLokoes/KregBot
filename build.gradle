@@ -38,16 +38,20 @@ sourceCompatibility = targetCompatibility = 1.11
 repositories {
     jcenter()
     mavenCentral()
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
 }
 
 dependencies {
 
-    compile("net.dv8tion:JDA:4.2.0_189") {
+    implementation("net.dv8tion:JDA:4.3.0_277") {
         exclude module: 'opus-java'
     }
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'io.github.classgraph:classgraph:4.8.41'
-    compile 'org.ow2.asm:asm:7.2'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'io.github.classgraph:classgraph:4.8.41'
+    implementation 'org.ow2.asm:asm:7.2'
     implementation 'com.google.code.gson:gson:2.8.5'
     // This doesn't work with JDA 4 at the time of writing
 //    compile ('com.sedmelluq:jda-nas:1.0.6') {
