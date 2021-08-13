@@ -150,7 +150,7 @@ public class EchoCommand {
             echo.add(new EchoMessage(owner, label).updateContent(save));
             echoStorage.ECHOS.put(guild, echo);
             SAVER.saveJson(echoStorage, ECHOMESSAGES);
-            ctx.send("Added.");
+            ctx.send("Added new Echo: " + label + " with owner " + ctx.getMember().getEffectiveName());
             return;
         }
         final Set<String> labels = messages.stream().map(EchoMessage::getLabel).collect(Collectors.toSet());
@@ -160,7 +160,7 @@ public class EchoCommand {
         }
         messages.add(new EchoMessage(owner, label).updateContent(save));
         SAVER.saveJson(echoStorage, ECHOMESSAGES);
-        ctx.send("Added.");
+        ctx.send("Added new Echo: " + label + " with owner " + ctx.getMember().getEffectiveName());
     }
 
     private static void handleUpdate(Context ctx) {
