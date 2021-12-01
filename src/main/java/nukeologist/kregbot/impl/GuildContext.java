@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import nukeologist.kregbot.api.Context;
 import nukeologist.kregbot.util.Constants;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -72,6 +75,12 @@ public class GuildContext implements Context {
     @Override
     public void send(Message message) {
         event.getChannel().sendMessage(message).queue();
+    }
+
+    @Override
+    public void sendFile(String string, String fileName) {
+        final InputStream is = new ByteArrayInputStream(string.getBytes(StandardCharsets.UTF_8));
+        event.getChannel().sendFile(is, fileName + ".txt").queue();
     }
 
     @Override

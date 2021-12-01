@@ -116,13 +116,9 @@ public class EchoCommand {
         StringBuilder builder = new StringBuilder("Echo: \n");
         if (messages != null) {
             for (final EchoMessage echo : messages) {
-                builder.append(echo.getLabel()).append(MessageHelper.makeBold(" has owner " + echo.getOwner(ctx).map(Member::getEffectiveName).orElse("Anonymous"))).append("\n");
-                if (builder.length() > 1600) {
-                    ctx.send(builder.toString());
-                    builder = new StringBuilder("Echo: \n");
-                }
+                builder.append(echo.getLabel()).append(" with owner " + echo.getOwner(ctx).map(Member::getEffectiveName).orElse("Anonymous")).append("\n");
             }
-            ctx.send(builder.toString());
+            ctx.sendFile(builder.toString(), "EchoList");
         }
 
     }

@@ -85,6 +85,14 @@ public interface Context {
     void send(Message message);
 
     /**
+     * Utility to send a string as a txt file, to this context's channel.
+     *
+     * @param string   the string containing everything in the file.
+     * @param fileName name of the file to send (will add txt to it later)
+     */
+    void sendFile(String string, String fileName);
+
+    /**
      * Sends a direct message to the command caller.
      *
      * @param message the given message.

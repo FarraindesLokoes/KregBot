@@ -10,7 +10,6 @@ import nukeologist.kregbot.api.ContextType;
 import nukeologist.kregbot.data.MessageValues;
 import nukeologist.kregbot.listeners.GuildListener;
 import nukeologist.kregbot.listeners.MessageListener;
-import nukeologist.kregbot.util.MessageHelper;
 import nukeologist.kregbot.util.SaveHelper;
 
 import java.util.Map;
@@ -94,23 +93,15 @@ public class AdminCommands {
         Member member = ctx.getMember();
         //if (member.hasPermission(Permission.ADMINISTRATOR) && VALUES != null) { //TODO: add optional permission for admins to give to non admins
         if (VALUES != null) {
-            StringBuilder label = new StringBuilder("Table of Increments\nMessage : Value\n");
-            int part = 1;
+            StringBuilder label = new StringBuilder("Message : Value\n");
             long guild = ctx.getMember().getGuild().getIdLong();
             Map<String, Integer> map = VALUES.getMapOfGuild(guild);
-            //int longest = MessageHelper.getLongestString(map.keySet()).length();
             if (map != null) {
                 for (Map.Entry<String, Integer> entry : map.entrySet()) {
                     String key = entry.getKey();
                     label.append(key).append("\t").append(entry.getValue()).append("\n");
-                    if (label.length() > 1600) { //Embeds over 1024 characters get rekt by discord, and messages > 2000
-                        //Message shall format itself, but code blocks actually look worse, f u discord!
-                        ctx.send(label.toString());
-                        part++;
-                        label = new StringBuilder("Part " + part + "\n");
-                    }
                 }
-                ctx.send(label.toString());
+                ctx.sendFile(label.toString(), "Increments");
             }
         }
     }

@@ -2,8 +2,6 @@ package nukeologist.kregbot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.Emote;
-import nukeologist.kregbot.KregBot;
 import nukeologist.kregbot.util.Constants;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;
@@ -11,7 +9,6 @@ import nukeologist.kregbot.api.Context;
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
