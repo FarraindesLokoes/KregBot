@@ -1,7 +1,6 @@
 package nukeologist.kregbot.data;
 
 import nukeologist.kregbot.listeners.ReplacerListener;
-import nukeologist.kregbot.util.SaveHelper;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,5 @@
 package nukeologist.kregbot.commands;
 
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.User;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.CommandHelp;

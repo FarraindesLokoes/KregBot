@@ -1,11 +1,7 @@
 package nukeologist.kregbot.commands;
 
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import nukeologist.kregbot.api.Command;
 import nukeologist.kregbot.api.Context;
-
-import java.util.Random;
 
 /**
  * @author Nukeologist

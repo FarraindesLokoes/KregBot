@@ -35,8 +35,11 @@ public class DickMeter {
         for (Tuple<String, Integer> sData : data) {
             stringBuilder.append("8").append("=".repeat(Math.max(0, sData.b))).append("D  ").append(sData.a).append("\n");
         }
-
-        context.send(MessageHelper.makeCodeBlock(stringBuilder.toString()));
+        if (data.size() <= 1) {
+            context.send(MessageHelper.makeCodeBlock(stringBuilder.toString()));
+        } else {
+            context.sendFile(stringBuilder.toString(), "DickHistory-" + context.getAuthor().getName());
+        }
     }
 
 
