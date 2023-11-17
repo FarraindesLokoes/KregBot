@@ -24,16 +24,6 @@ public class ReplaceWordCommand {
         if (words.length < 3) {
             CommonMessagesReplays.syntaxError(context, () -> helpReplace(context));
         } else {
-            //RegEx replace
-            if (words[1].toLowerCase().startsWith("regex:")) {
-                String str = MessageHelper.sanitizeEveryone(MessageHelper.collapse(words, 2));
-                String regex = words[1].substring(6);
-                ReplacerListener.VALUES.add(context.getMember().getGuild().getIdLong(), words[1], str);
-                context.reply(", okay, " + MessageHelper.sanitizeEveryone(regex) + " will now be replaced by " + str);
-                return;
-            }
-
-            //normal replace
             String str = MessageHelper.sanitizeEveryone(MessageHelper.collapse(words, 2));
             ReplacerListener.VALUES.add(context.getMember().getGuild().getIdLong(), words[1], str);
             context.reply(", okay, " + MessageHelper.sanitizeEveryone(words[1]) + " will now be replaced by " + str);
@@ -44,8 +34,6 @@ public class ReplaceWordCommand {
     public static void helpReplace(Context context) {
         CommonMessagesReplays.embedMessage(context,"Use !replace <word A> <word or sentence B>\n" +
                 "  Messages containing A will be replaced by B instead of the original word A.\n" +
-                "Use !replace regex:<regex A> <word or sentence B>\n" +
-                "  Messages containing A - even if is not separated by spaces - will be replaced by B instead of the original word A.\n" +
                 "Use !replaceRemove <word A>\n" +
                 "  Messages containing A will no longer be replaced.\n" +
                 "Use !replaceTable\n" +
