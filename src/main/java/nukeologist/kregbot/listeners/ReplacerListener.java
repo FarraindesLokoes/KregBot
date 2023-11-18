@@ -38,19 +38,12 @@ public class ReplacerListener implements EventListener {
         boolean replaced = false;
 
         // Split the maps
-        Map<String, String> mapRegex = new HashMap<>();
-        Map<String, String> mapNormal = new HashMap<>();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (entry.getKey().startsWith("regex:")) {
-                mapRegex.put(entry.getKey().substring(6), entry.getValue());
-            } else {
-                mapNormal.put(entry.getKey(), entry.getValue());
-            }
-        }
+        Map<String, String> mapRegex = map.entrySet().stream().filter(e -> e.getKey().startsWith("regex:")).collect(MessageHelper.toMap());
+        Map<String, String> mapNormal = map.entrySet().stream().filter(e -> !e.getKey().startsWith("regex:")).collect(MessageHelper.toMap());
 
         // Check for in regex map for a match and replace
         for (Map.Entry<String, String> entry : mapRegex.entrySet()) {
-            String key = entry.getKey();
+            String key = entry.getKey().substring(6);
             String value = entry.getValue();
             if (msgFull.contains(key)) {
                 replaced = true;
