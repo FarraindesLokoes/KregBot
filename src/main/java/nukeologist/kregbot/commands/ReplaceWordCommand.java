@@ -34,6 +34,8 @@ public class ReplaceWordCommand {
     public static void helpReplace(Context context) {
         CommonMessagesReplays.embedMessage(context,"Use !replace <word A> <word or sentence B>\n" +
                 "  Messages containing A will be replaced by B instead of the original word A.\n" +
+                "Use !replace regex:<regex A> <word or sentence B>\n" +
+                "  Messages containing A - even if is not separated by spaces - will be replaced by B instead of the original word A.\n" +
                 "Use !replaceRemove <word A>\n" +
                 "  Messages containing A will no longer be replaced.\n" +
                 "Use !replaceTable\n" +

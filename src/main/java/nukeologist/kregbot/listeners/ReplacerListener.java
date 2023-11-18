@@ -33,21 +33,42 @@ public class ReplacerListener implements EventListener {
     private void onGuildMessage(GuildMessageReceivedEvent event) {
         if (event.getAuthor().isBot() || event.getMessage().getContentRaw().charAt(0) == '!') return;
         if (VALUES == null) VALUES = new MessageReplacer();
-        String[] msg = event.getMessage().getContentRaw().split(" ");
+        String msgFull = event.getMessage().getContentRaw();
         Map<String, String> map = VALUES.getMapOfGuild(event.getGuild().getIdLong());
         boolean replaced = false;
-        for (int i = 0; i < msg.length; i++) {
 
+        // Split the maps
+        Map<String, String> mapRegex = new HashMap<>();
+        Map<String, String> mapNormal = new HashMap<>();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().startsWith("regex:")) {
+                mapRegex.put(entry.getKey().substring(6), entry.getValue());
+            } else {
+                mapNormal.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        // Check for in regex map for a match and replace
+        for (Map.Entry<String, String> entry : mapRegex.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if (msgFull.contains(key)) {
+                replaced = true;
+                msgFull = msgFull.replace(key, value);
+            }
+        }
+        String[] msg = msgFull.split(" ");
+
+        // Check for in normal map for a match
+        for (int i = 0; i < msg.length; i++) {
             String str = msg[i];
             String c = String.valueOf(str.charAt(str.length() - 1));
             str = str.replaceAll("[!,.*]", "");
-            if (map.containsKey(str)) {
+            if (mapNormal.containsKey(str)) {
                 replaced = true;
-                String fstr;
-                if (map.get(str).toCharArray()[map.get(str).toCharArray().length -1] == ' ') {
-                    fstr = new StringBuilder(map.get(str)).deleteCharAt(map.get(str).length() -1).toString();
-                } else {
-                    fstr = map.get(str);
+                String fstr = mapNormal.get(str);
+                if (fstr.endsWith(" ")) {
+                    fstr = fstr.substring(0, fstr.length() - 1);
                 }
                 msg[i] = fstr + (Constants.PUNCTUATION.matcher(c).matches() ? c : "");
             }
