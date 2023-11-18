@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @author SpicyFerret
@@ -20,7 +20,6 @@ import java.util.Random;
 public class ReplacerListener implements EventListener {
     private static final Logger LOG = LoggerFactory.getLogger("Chat");
     public static final SaveHelper<MessageReplacer> SAVER = new SaveHelper<>(MessageReplacer.class);
-    private static final Random RANDOM = new Random();
     public static MessageReplacer VALUES = SAVER.fromJson("replacers");
 
 
@@ -38,8 +37,13 @@ public class ReplacerListener implements EventListener {
         boolean replaced = false;
 
         // Split the maps
-        Map<String, String> mapRegex = map.entrySet().stream().filter(e -> e.getKey().startsWith("regex:")).collect(MessageHelper.toMap());
-        Map<String, String> mapNormal = map.entrySet().stream().filter(e -> !e.getKey().startsWith("regex:")).collect(MessageHelper.toMap());
+        Map<String, String> mapRegex = map.entrySet().stream()
+            .filter(e -> e.getKey().startsWith("regex:"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        Map<String, String> mapNormal = map.entrySet().stream()
+            .filter(e -> !e.getKey().startsWith("regex:"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         // Check for in regex map for a match and replace
         for (Map.Entry<String, String> entry : mapRegex.entrySet()) {
